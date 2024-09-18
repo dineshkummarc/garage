@@ -112,7 +112,14 @@
 			</table>
 			<table class="table" style="border:1px solid #ddd" width="100%">
 				<tbody>
-					<tr> <?php $Currentstock = $total - $celltotal; ?>
+					<tr>
+						<td colspan="2" class="text-right" align="right">{{ trans('app.Service Stock')}}: &nbsp; &nbsp; <?php echo $product_service_stocks_total;?></td>			
+					</tr>
+				</tbody>
+			</table>
+			<table class="table" style="border:1px solid #ddd" width="100%">
+				<tbody>
+					<tr> <?php $Currentstock = $total - $sale_service_stock; ?>
 						<td colspan="2" class="text-right" align="right">{{ trans('app.Current Stock:')}} &nbsp; &nbsp; <?php echo $Currentstock;?></td>		
 					</tr>
 				</tbody>

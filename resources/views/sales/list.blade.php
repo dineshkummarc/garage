@@ -1,8 +1,7 @@
 @extends('layouts.app')
 @section('content')
-		<!-- page content -->
-<?php $userid = Auth::user()->id; ?>
-@if (getAccessStatusUser('Sales',$userid)=='yes')
+
+<!-- page content -->
     <div class="right_col" role="main">
 		<div id="myModal" class="modal fade" role="dialog">
 			<div class="modal-dialog modal-lg">
@@ -23,8 +22,8 @@
                 <div class="nav_menu">
 					<nav>
 						<div class="nav toggle">
-							@if(getActiveCustomer($userid)=='yes' || getActiveEmployee($userid)=='yes')
-								<a id="menu_toggle"><i class="fa fa-bars"> </i><span class="titleup">&nbsp {{ trans('app.Sales')}}</span></a>
+							@if(getActiveCustomer(Auth::user()->id)=='yes' || getActiveEmployee(Auth::user()->id)=='yes')
+								<a id="menu_toggle"><i class="fa fa-bars"> </i><span class="titleup">&nbsp {{ trans('app.Vehicle Sale')}}</span></a>
 							@else
 								<a id="menu_toggle"><i class="fa fa-bars"> </i><span class="titleup">&nbsp {{ trans('app.Purchase')}}</span></a>
 							@endif
@@ -39,11 +38,11 @@
 					<div class="checkbox checkbox-success checkbox-circle">
 						 @if(session('message') == 'Successfully Submitted')
 							<label for="checkbox-10 colo_success"> {{trans('app.Successfully Submitted')}}  </label>
-						   @elseif(session('message')=='Successfully Updated')
+						@elseif(session('message')=='Successfully Updated')
 						   <label for="checkbox-10 colo_success"> {{ trans('app.Successfully Updated')}}  </label>
-						   @elseif(session('message')=='Successfully Deleted')
+						@elseif(session('message')=='Successfully Deleted')
 						   <label for="checkbox-10 colo_success"> {{ trans('app.Successfully Deleted')}}  </label>
-						   @endif
+						@endif
 					</div>
 				</div>
 			</div>
@@ -52,13 +51,20 @@
 				<div class="col-md-12 col-sm-12 col-xs-12" >
 					<div class="x_content">
 						<ul class="nav nav-tabs bar_tabs" role="tablist">
-						@if(getActiveCustomer($userid)=='yes' || getActiveEmployee($userid)=='yes')
-							<li role="presentation" class="active"><a href="{!! url('/sales/list')!!}"><span class="visible-xs"></span> </span><i class="fa fa-list fa-lg">&nbsp;</i><b>{{ trans('app.List Of Sales')}}</b></a></li>
-							@if(getActiveEmployee($userid)=='no')
-								<li role="presentation" class=""><a href="{!! url('/sales/add')!!}"><span class="visible-xs"></span> <i class="fa fa-plus-circle fa-lg">&nbsp;</i>{{ trans('app.Add Sales')}}</span></a></li>
-							@endif
-						@else
-							<li role="presentation" class="active"><a href="{!! url('/sales/list')!!}"><span class="visible-xs"></span> </span><i class="fa fa-list fa-lg">&nbsp;</i><b>{{ trans('app.Purchase List')}}</b></a></li>
+						@if(getActiveCustomer(Auth::user()->id)=='yes' || getActiveEmployee(Auth::user()->id)=='yes')
+							@can('sales_view')
+								<li role="presentation" class="active"><a href="{!! url('/sales/list')!!}"><span class="visible-xs"></span> </span><i class="fa fa-list fa-lg">&nbsp;</i><b>{{ trans('app.List Of Vehicle Sale')}}</b></a></li>
+							@endcan
+							@can('sales_add')
+								<li role="presentation" class=""><a href="{!! url('/sales/add')!!}"><span class="visible-xs"></span> <i class="fa fa-plus-circle fa-lg">&nbsp;</i>{{ trans('app.Add Vehicle Sale')}}</span></a></li>
+							@endcan
+						@elseif(getCustomersactive(Auth::user()->id) == 'yes')
+							@can('sales_view')
+								<li role="presentation" class="active"><a href="{!! url('/sales/list')!!}"><span class="visible-xs"></span> </span><i class="fa fa-list fa-lg">&nbsp;</i><b>{{ trans('app.Purchase List')}}</b></a></li>
+							@endcan
+							@can('sales_add')
+								<li role="presentation" class=""><a href="{!! url('/sales/add')!!}"><span class="visible-xs"></span> <i class="fa fa-plus-circle fa-lg">&nbsp;</i>{{ trans('app.Add Vehicle Sale')}}</span></a></li>
+							@endcan
 						@endif
 						</ul>
 					</div>
@@ -89,30 +95,71 @@
 										<td>{{ getModelName($sale->vehicle_id) }}</td>
 										<td>{{ getAssignedName($sale->salesmanname) }}</td>
 										<td>{{ getAssignedName($sale->assigne_to) }}</td>
+										
 										<td>
-											@if(getActiveCustomer($userid)=='yes')
-												  <?php $sales_invoice = getInvoiceNumber($sale->id); ?>
-												  @if($sales_invoice == "No data")
-													<a href="{!! url('invoice/add/'.$sale->id) !!}" ><button type="button" class="btn btn-round btn-info">{{ trans('app.Create Invoice')}}</button></a>
-												  @else
-													<button type="button" data-toggle="modal" data-target="#myModal" saleid="{{ $sale->id }}" invoice_number="{{ getInvoiceNumber($sale->id) }}" url="{!! url('/sales/list/modal') !!}" class="btn btn-round btn-info save">{{ trans('app.View Invoices')}}</button>
-												  @endif
-													<a href="{!! url('sales/list/edit/'.$sale->id) !!}" ><button type="button" class="btn btn-round btn-success">{{ trans('app.Edit')}}</button></a>
-													<a url="{!! url('sales/list/delete/'.$sale->id) !!}" class="sa-warning"><button type="button" class="btn btn-round btn-danger">{{ trans('app.Delete')}}</button></a>
+										@if(getUserRoleFromUserTable(Auth::User()->id) == 'admin' || getUserRoleFromUserTable(Auth::User()->id) == 'supportstaff' || getUserRoleFromUserTable(Auth::User()->id) == 'accountant' || getUserRoleFromUserTable(Auth::User()->id) == 'employee')
+										
+											<?php $sales_invoice = getInvoiceNumber($sale->id); ?>
+
+											@if($sales_invoice == "No data")
+												@if(Gate::allows('sales_add'))
+													@can('sales_add')
+														<a href="{!! url('invoice/add/'.$sale->id) !!}" ><button type="button" class="btn btn-round btn-info">{{ trans('app.Create Invoice')}}</button></a>
+													@endcan
+												@else
+													@can('sales_view')
+														<a href="{!! url('invoice/add/') !!}" ><button type="button" class="btn btn-round btn-info" disabled>{{ trans('app.View Invoices')}}</button></a>
+													@endcan
+												@endif
+
 											@else
-													
-													<?php $sales_invoice = getInvoiceNumber($sale->id); ?>
-												  @if($sales_invoice == "No data")
-													<a href="{!! url('invoice/add/') !!}" ><button type="button" class="btn btn-round btn-info" disabled>{{ trans('app.View Invoices')}}</button></a>
-												  @else
-													<button type="button" data-toggle="modal" data-target="#myModal" saleid="{{ $sale->id }}" invoice_number="{{ getInvoiceNumber($sale->id) }}" url="{!! url('/sales/list/modal') !!}" class="btn btn-round btn-info save">{{ trans('app.View Invoices')}}</button>
-												  @endif
+
+												@can('sales_view')
+												<button type="button" data-toggle="modal" data-target="#myModal" saleid="{{ $sale->id }}" invoice_number="{{ getInvoiceNumber($sale->id) }}" url="{!! url('/sales/list/modal') !!}" class="btn btn-round btn-info save">{{ trans('app.View Invoices')}}</button>
+												@endcan
 											@endif
+												
+											@can('sales_edit')
+												<a href="{!! url('sales/list/edit/'.$sale->id) !!}" ><button type="button" class="btn btn-round btn-success">{{ trans('app.Edit')}}</button></a>
+											@endcan
+											
+											@can('sales_delete')
+												<a url="{!! url('sales/list/delete/'.$sale->id) !!}" class="sa-warning"><button type="button" class="btn btn-round btn-danger">{{ trans('app.Delete')}}</button></a>
+											@endcan
+										
+										@else
+
+											<?php $sales_invoice = getInvoiceNumber($sale->id); ?>
+												
+											@if($sales_invoice == "No data")
+												@if(Gate::allows('sales_add'))
+													@can('sales_add')
+														<a href="{!! url('invoice/add/'.$sale->id) !!}" ><button type="button" class="btn btn-round btn-info">{{ trans('app.Create Invoice')}}</button></a>
+													@endcan
+												@else
+													@can('sales_view')
+														<a href="{!! url('invoice/add/') !!}" ><button type="button" class="btn btn-round btn-info" disabled>{{ trans('app.View Invoices')}}</button></a>
+													@endcan
+												@endif
+											@else
+												@can('sales_view')
+													<button type="button" data-toggle="modal" data-target="#myModal" saleid="{{ $sale->id }}" invoice_number="{{ getInvoiceNumber($sale->id) }}" url="{!! url('/sales/list/modal') !!}" class="btn btn-round btn-info save">{{ trans('app.View Invoices')}}</button>
+												@endcan
+											@endif
+
+											@can('sales_edit')
+												<a href="{!! url('sales/list/edit/'.$sale->id) !!}" ><button type="button" class="btn btn-round btn-success">{{ trans('app.Edit')}}</button></a>
+											@endcan
+											
+											@can('sales_delete')
+												<a url="{!! url('sales/list/delete/'.$sale->id) !!}" class="sa-warning"><button type="button" class="btn btn-round btn-danger">{{ trans('app.Delete')}}</button></a>
+											@endcan
+
+										@endif
 										</td>
 									</tr>
 									<?php $i++; ?>
 									@endforeach
-							
 							</tbody>
 						</table>
 					</div>
@@ -120,15 +167,9 @@
             </div>
         </div>
     </div>
-@else
-	<div class="right_col" role="main">
-		<div class="nav_menu main_title" style="margin-top:4px;margin-bottom:15px;">
-            <div class="nav toggle" style="padding-bottom:16px;">
-               <span class="titleup">&nbsp {{ trans('app.You are not authorize this page.')}}</span>
-            </div>
-        </div>
-	</div>
-@endif  
+<!-- page content end -->
+
+ 
 <script src="{{ URL::asset('vendors/jquery/dist/jquery.min.js') }}"></script>
 <!-- language change in user selected -->	
 <script>
@@ -190,7 +231,8 @@ $('body').on('click', '.save', function() {
 						$(".modal-body").html("<center><h2 class=text-muted><b>Loading...</b></h2></center>");
 					},
 error: function(e) {
-       alert("An error occurred: " + e.responseText);
+       swal("Attention", "There are some errors found in the code", "error")
+		window.location.reload();
        console.log(e);	
 }
        });

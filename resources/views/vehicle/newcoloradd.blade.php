@@ -11,6 +11,6 @@
 		</select>
 	</td>
 	<td>
-		<span class="remove_color" data-id="<?php echo $idc;?>"><i class="fa fa-trash"></i> {{ trans('app.Delete')}}</span>
+		<span class="remove_color" style="cursor: pointer;" data-id="<?php echo $idc;?>"><i class="fa fa-trash"></i> {{ trans('app.Delete')}}</span>
 	</td>
 </tr>

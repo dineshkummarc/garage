@@ -1,7 +1,5 @@
 @extends('layouts.app')
 @section('content')
-<?php $userid = Auth::user()->id; ?>
-@if (getAccessStatusUser('Reports',$userid)=='yes')
 
 <script src="{{ URL::asset('js/jquery.min.js') }}"></script>
 
@@ -56,10 +54,15 @@ $chart = $GoogleCharts->load('column','product_report')->get($chart_array,$optio
 ?>
 	
 <style>
-body .top_nav .right_col.servi{
-	min-height: 1150px!important;
-}
+	body .top_nav .right_col.servi{
+		min-height: 1150px!important;
+	}
 </style>
+
+<!-- CSS For Chart -->
+<link rel="stylesheet" type="text/css" href="{{ URL::asset('public/js/49/css/tooltip.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ URL::asset('public/js/49/css/util.css') }}">
+
 <div class="right_col servi" role="main">
 	<div class="page-title">
         <div class="nav_menu">
@@ -74,15 +77,21 @@ body .top_nav .right_col.servi{
 	
 	<div class="x_content">
         <ul class="nav nav-tabs bar_tabs tabconatent" role="tablist">
-			<li role="presentation" class="suppo_llng_li floattab"><a href="{!! url('/report/salesreport')!!}" class="anchor_tag "><span class="visible-xs"></span><i class="fa fa-tty image_icon"> </i> {{ trans('app.Vehicle Sales')}} </a></li>
-			
-            <li class="suppo_llng_li_add floattab"><a href="{!! url('/report/servicereport') !!}" class="anchor_tag anchr"><i class="fa fa-slack image_icon"> </i> {{ trans('app.Services')}} </a></li>
-			
-			<li class="active suppo_llng_li_add floattab"><a href="{!! url('/report/productreport') !!}" class="anchor_tag anchr"><i class="fa fa-product-hunt" aria-hidden="true"></i> <b>{{ trans('app.Product Stock')}}</b> </a></li>
-			
-			<li class="suppo_llng_li_add floattab"><a href="{!! url('/report/productuses') !!}" class="anchor_tag anchr"><i class="fa fa-product-hunt" aria-hidden="true"></i> {{ trans('app.Product Usage')}} </a></li>
-			
-			<li class="suppo_llng_li_add floattab"><a href="{!! url('/report/servicebyemployee') !!}" class="anchor_tag anchr"><i class="fa fa-slack image_icon"> </i> {{ trans('app.Emp. Services')}}</a></li>
+        	@can('report_view')
+				<li role="presentation" class=""><a href="{!! url('/report/salesreport')!!}" class="anchor_tag "><span class="visible-xs"></span><i class="fa fa-tty image_icon"> </i> {{ trans('app.Vehicle Sales')}} </a></li>
+			@endcan
+			@can('report_view')
+            	<li class=""><a href="{!! url('/report/servicereport') !!}" class="anchor_tag anchr"><i class="fa fa-slack image_icon"> </i> {{ trans('app.Services')}} </a></li>
+			@endcan
+			@can('report_view')
+				<li class="active setMarginForReportOnSmallDeviceProductStock"><a href="{!! url('/report/productreport') !!}" class="anchor_tag anchr"><i class="fa fa-product-hunt" aria-hidden="true"></i> <b>{{ trans('app.Product Stock')}}</b> </a></li>
+			@endcan
+			@can('report_view')
+				<li class="setMarginForReportOnSmallDeviceProductUsage"><a href="{!! url('/report/productuses') !!}" class="anchor_tag anchr"><i class="fa fa-product-hunt" aria-hidden="true"></i> {{ trans('app.Product Usage')}} </a></li>
+			@endcan
+			@can('report_view')
+				<li class="setMarginForReportOnSmallDeviceServiceByEmployee"><a href="{!! url('/report/servicebyemployee') !!}" class="anchor_tag anchr"><i class="fa fa-slack image_icon"> </i> {{ trans('app.Emp. Services')}}</a></li>
+			@endcan
 		</ul>
 	</div>
 	
@@ -91,39 +100,9 @@ body .top_nav .right_col.servi{
             <div class="x_panel">
                 <div class="x_content">
                     <form method="post" action="{!! url('/report/record_product') !!}" enctype="multipart/form-data"  class="form-horizontal upperform">
-					<!--
-						<div class="col-md-6 col-sm-6 col-xs-12 form-group {{ $errors->has('start_date') ? ' has-error' : '' }}">
-							<label class="control-label col-md-3 col-sm-5 col-xs-12" for="Country">{{ trans('app.Strat Date')}} <label class="text-danger">*</label>
-							</label>
-							<div class="col-md-9 col-sm-7 col-xs-12 input-group date start_date" id="start_dates">
-									<span class="input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-							  
-							 <input type="text" name="start_date" id="start_date" class="form-control" value="<?php if(!empty($s_date)) { echo date(getDateFormat(),strtotime($s_date));}else{ echo old('start_date'); }?>"  placeholder="<?php echo getDatepicker();?>" required/>
-							</div>
-							@if ($errors->has('start_date'))
-									<span class="help-block denger" style="margin-left: 27%;">
-										<strong>{{ $errors->first('start_date') }}</strong>
-									</span>
-								@endif
-						</div>
 					  
-						<div class="col-md-6 col-sm-6 col-xs-12 form-group {{ $errors->has('end_date') ? ' has-error' : '' }}">
-							<label class="control-label col-md-3 col-sm-5 col-xs-12" for="Country">{{ trans('app.End Date')}} <label class="text-danger">*</label>
-							</label>
-							<div class="col-md-9 col-sm-7 col-xs-12 input-group date end_date">
-									<span class="input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-							  
-							 <input type="text" name="end_date" id="end_date" class="form-control" value="<?php if(!empty($e_date)) { echo date(getDateFormat(),strtotime($e_date));}else{ echo old('end_date'); }?>"  placeholder="<?php echo getDatepicker();?>" required/>
-							</div>
-							@if ($errors->has('end_date'))
-									<span class="help-block denger" style="margin-left: 27%;">
-										<strong>{{ $errors->first('end_date') }}</strong>
-									</span>
-								@endif
-						</div>   
-                     -->     
 						<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-						   <label class="control-label col-md-3 col-sm-5 col-xs-12"  for="option">{{ trans('app.Manufacturer Name')}} <label class="text-danger">*</label> </label>
+						   <label class="control-label col-md-3 col-sm-5 col-xs-12"  for="option">{{ trans('app.Manufacturer Name')}} <label class="color-danger">*</label> </label>
 							<div class="col-md-9 col-sm-7 col-xs-12">
 								<select class="form-control select_producttype" name="s_product" m_url="{!! url('/report/producttype/name') !!}" required>
 									<option value="all"<?php if($all_product=='all'){ echo 'selected'; } ?>>{{ trans('app.All')}}</option>
@@ -138,7 +117,7 @@ body .top_nav .right_col.servi{
 						</div> 
 						
 						<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-						   <label class="control-label col-md-3 col-sm-5 col-xs-12"  for="option">{{ trans('app.Product Name')}} <label class="text-danger">*</label> </label>
+						   <label class="control-label col-md-3 col-sm-5 col-xs-12"  for="option">{{ trans('app.Product Name')}} <label class="color-danger">*</label> </label>
 							<div class="col-md-9 col-sm-7 col-xs-12">
 								<select class="form-control select_productname" name="product_name" required>
 									<option value="item"<?php if($all_item=='item'){ echo 'selected'; } ?>>{{ trans('app.Items')}}</option>
@@ -155,7 +134,6 @@ body .top_nav .right_col.servi{
 						<div class="form-group">
 							<div class="col-md-10 col-sm-6 col-xs-12 col-md-offset-2 text-right">
 								<button type="submit" class="btn btn-success">{{ trans('app.Go')}}</button>
-								<!-- <button type="button" onclick="myFunction()" class="btn btn-success" id="chartshow">{{ trans('app.View Chart')}}</button> -->
 							</div>
 						</div>
 
@@ -177,7 +155,17 @@ body .top_nav .right_col.servi{
 	</div>
 	
 	@endif
-		 <script type="text/javascript" src="https://www.google.com/jsapi"></script> 
+	
+	<!-- <script type="text/javascript" src="https://www.google.com/jsapi"></script>  -->
+	
+	<!-- All Js file for Charts -->
+	<script type="text/javascript" src="{{ URL::asset('public/js/loader.min.js') }}"></script>
+	<script type="text/javascript" src="{{ URL::asset('public/js/49/loader.js') }}" defer="defer"></script>
+	<script type="text/javascript" src="{{ URL::asset('public/js/49/jsapi_compiled_default_module.js') }}" defer="defer"></script>
+	<script type="text/javascript" src="{{ URL::asset('public/js/49/jsapi_compiled_graphics_module.js') }}" defer="defer"></script>
+	<script type="text/javascript" src="{{ URL::asset('public/js/49/jsapi_compiled_ui_module.js') }}" defer="defer"></script>
+	<script type="text/javascript" src="{{ URL::asset('public/js/49/jsapi_compiled_corechart_module.js') }}" defer="defer"></script>
+
 					<script type="text/javascript">
 						<?php if(!empty($chart)) {echo $chart; }?>
 					</script>
@@ -240,23 +228,27 @@ body .top_nav .right_col.servi{
          
     </div>
 </div>
-@else
-	<div class="right_col" role="main">
-		<div class="nav_menu main_title" style="margin-top:4px;margin-bottom:15px;">
-           
-              <div class="nav toggle" style="padding-bottom:16px;">
-               <span class="titleup">&nbsp {{ trans('app.You are not authorize this page.')}}</span>
-              </div>
-          </div>
-	</div>
-	
-@endif   
+<!-- content page code -->  
+
 <script src="{{ URL::asset('vendors/jquery/dist/jquery.min.js') }}"></script>
+
+<!-- <script src="{{ URL::asset('build/js/jszip/3.1.3/jszip.min.js') }}" defer="defer"></script>
+<script src="{{ URL::asset('build/js/pdfmake.min.js') }}" defer="defer"></script>
+<script src="{{ URL::asset('build/js/vfs_fonts.js') }}" defer="defer"></script> -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.32/pdfmake.min.js"></script>
+<script src="{{ URL::asset('build/js/vfs_fonts.js') }}"></script>
+
 <!-- language change in user selected -->	
 <script>
 $(document).ready(function() {
     $('#datatable').DataTable( {
 		responsive: true,
+		dom: 'Bfrtip',
+        buttons: [
+            'pdf', 'print', 'excel'
+        ],
         "language": {
 			
 				"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/<?php echo getLanguageChange(); 

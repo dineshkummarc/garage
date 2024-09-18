@@ -1,9 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-		<!-- page content -->
-<?php $userid = Auth::user()->id; ?>
-@if (getAccessStatusUser('Accounts & Tax Rates',$userid)=='yes')
+
+<!-- page content -->
         <div class="right_col" role="main">
           <div class="">
            <div class="page-title">
@@ -33,34 +32,45 @@
 			@endif
 		
             <div class="row" >
-              <div class="col-md-12 col-sm-12 col-xs-12" >
-               
-                  
-                  <div class="x_content">
-                   <ul class="nav nav-tabs bar_tabs tabconatent" role="tablist">
-						<li role="presentation" class="active suppo_llng_li floattab"><a href="{!! url('/income/list')!!}" class="anchr"><span class="visible-xs"></span><i class="fa fa-list fa-lg">&nbsp;</i><b>{{ trans('app.Income List')}}</b></a></li>
-						
-						<li role="presentation" class=" suppo_llng_li_add floattab"><a href="{!! url('/income/add')!!}" class="anchr"><span class="visible-xs"></span><i class="fa fa-plus-circle fa-lg">&nbsp;</i>{{ trans('app.Add Income')}}</a></li>
-						
-						<li role="presentation" class=" suppo_llng_li_add floattab"><a href="{!! url('/income/month_income')!!}" class="anchr"><span class="visible-xs"></span> <i class="fa fa-area-chart fa-lg">&nbsp;</i>{{ trans('app.Monthly Income Reports')}}</a></li>
-			
+              	<div class="col-md-12 col-sm-12 col-xs-12" >                  
+                  	<div class="x_content">
+                   	<ul class="nav nav-tabs bar_tabs tabconatent" role="tablist">
+                   		@can('income_view')
+							<li role="presentation" class="active"><a href="{!! url('/income/list')!!}" class="anchr"><span class="visible-xs"></span><i class="fa fa-list fa-lg">&nbsp;</i><b>{{ trans('app.Income List')}}</b></a></li>
+						@endcan
+						@can('income_add')
+							<li role="presentation" class=""><a href="{!! url('/income/add')!!}" class="anchr"><span class="visible-xs"></span><i class="fa fa-plus-circle fa-lg">&nbsp;</i>{{ trans('app.Add Income')}}</a></li>
+						@endcan
+						@can('income_view')
+							<li role="presentation" class="setSizeForMonthlyIncomeReportForSmallDevice"><a href="{!! url('/income/month_income')!!}" class="anchr"><span class="visible-xs"></span> <i class="fa fa-area-chart fa-lg">&nbsp;</i>{{ trans('app.Monthly Income Reports')}}</a></li>
+						@endcan
 					</ul>
-			</div>
-			 <div class="x_panel table_up_div">
+					</div>
+			 	<div class="x_panel table_up_div">
                    <table id="datatable" class="table table-striped jambo_table" style="margin-top:20px;">
                       <thead>
                         <tr>
-						<th>#</th>
-						 <th>{{ trans('app.Customer Name')}}</th>
-						 <th>{{ trans('app.Invoice Number')}}</th>
-						 <th>{{ trans('app.Amount')}} (<?php echo getCurrencySymbols(); ?>)</th>
-                         <th>{{ trans('app.Payment Type')}}</th>
-						 <th>{{ trans('app.Date')}}</th>
-                         <th>{{ trans('app.Main Label')}}</th>
-                         <th>{{ trans('app.Action')}}</th>
+							<th>#</th>
+						 	<th>{{ trans('app.Customer Name')}}</th>
+						 	<th>{{ trans('app.Invoice Number')}}</th>
+						 	<th>{{ trans('app.Amount')}} (<?php echo getCurrencySymbols(); ?>)</th>
+                         	<th>{{ trans('app.Payment Type')}}</th>
+						 	<th>{{ trans('app.Date')}}</th>
+                         	<th>{{ trans('app.Main Label')}}</th>
+
+	                    <!-- Custom Field Data Label Name-->
+							@if(!empty($tbl_custom_fields))
+								@foreach($tbl_custom_fields as $tbl_custom_field)	
+									<th>{{$tbl_custom_field->label}}</th>
+								@endforeach
+							@endif
+						<!-- Custom Field Data End -->
+
+							@canany(['income_edit','income_delete'])
+                         		<th>{{ trans('app.Action')}}</th>
+                         	@endcanany
                         </tr>
                       </thead>
-
 
                       <tbody>
 					  <?php $i = 1; ?>   
@@ -68,59 +78,70 @@
 						@foreach ($income as $incomes)
 						@if(getSumOfIncome($incomes->tbl_income_id) != 0)
                         <tr>
-							<td>{{ $i }}</td>
-							
+							<td>{{ $i }}</td>							
 							<td>{{ getCustomerName($incomes->customer_id) }}</td>
-							
 							<td>{{ $incomes->invoice_number }}</td>
-							
 							<td>{{ number_format(getSumOfIncome($incomes->tbl_income_id),2) }}</td>
-							
 							<td>{{ GetPaymentMethod($incomes->payment_type) }}</td>
-							
-							
-							
 							<td>{{  date(getDateFormat(),strtotime($incomes->date)) }}</td>
-							
 							<td>{{ $incomes->main_label }}</td>
-                          <td>
-						
-						  <a href="{!! url('/income/edit/'.$incomes->tbl_income_id) !!}" ><button type="button" class="btn btn-round btn-success">{{ trans('app.Edit')}}</button></a>
-						  <a url="{!! url('/income/delete/'.$incomes->tbl_income_id) !!}" class="sa-warning"><button type="button" class="btn btn-round btn-danger dgr">{{ trans('app.Delete')}}</button></a>
-						  </td>
+
+						<!-- Custom Field Data Value-->
+							@if(!empty($tbl_custom_fields))
+		
+								@foreach($tbl_custom_fields as $tbl_custom_field)	
+									<?php 
+										$tbl_custom = $tbl_custom_field->id;
+										$userid = $incomes->tbl_income_id;
+																				
+										$datavalue = getCustomDataIncome($tbl_custom,$userid);
+									?>
+									
+									@if($tbl_custom_field->type == "radio")
+										@if($datavalue != "")
+											<?php
+												$radio_selected_value = getRadioSelectedValue($tbl_custom_field->id, $datavalue);
+											?>
+											<td>{{$radio_selected_value}}</td>
+										@else
+											<td>{{ trans('app.Data not available') }}</td>
+										@endif
+									@else
+										@if($datavalue != null)
+											<td>{{$datavalue}}</td>
+										@else
+											<td>{{ trans('app.Data not available') }}</td>
+										@endif
+									@endif
+								@endforeach
+							@endif
+						<!-- Custom Field Data End -->
+
+						<!-- Have Access Right then do it -->
+							@canany(['income_edit','income_delete'])
+                          	<td>
+                          		@can('income_edit')
+						  			<a href="{!! url('/income/edit/'.$incomes->tbl_income_id) !!}" ><button type="button" class="btn btn-round btn-success">{{ trans('app.Edit')}}</button></a>
+						  		@endcan
+						  		@can('income_delete')
+						  			<a url="{!! url('/income/delete/'.$incomes->tbl_income_id) !!}" class="sa-warning"><button type="button" class="btn btn-round btn-danger dgr">{{ trans('app.Delete')}}</button></a>
+						  		@endcan
+						  	</td>
+						  	@endcanany
+
                         </tr>
-                         <?php $i++; ?>
-						 @endif
-							@endforeach	
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              
-
-              
-
-            
+                        <?php $i++; ?>
+						@endif
+						@endforeach	
+                    </tbody>
+                </table>
+            </div>
+            </div>
             </div>
           </div>
         </div>
-		 @else
-	<div class="right_col" role="main">
-		<div class="nav_menu main_title" style="margin-top:4px;margin-bottom:15px;">
-           
-              <div class="nav toggle" style="padding-bottom:16px;">
-               <span class="titleup">&nbsp {{ trans('app.You are not authorize this page.')}}</span>
-              </div>
+<!-- page content end -->
 
-              
-                
-           
-          </div>
-       
-		
-	</div>
-	
-@endif   
 <script src="{{ URL::asset('vendors/jquery/dist/jquery.min.js') }}"></script>
 <!-- language change in user selected -->	
 <script>

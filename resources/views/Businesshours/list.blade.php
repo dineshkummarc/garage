@@ -1,40 +1,19 @@
 @extends('layouts.app')
 @section('content')
 <style>
-.error_color{color:red; font-weight:bold;}
-.delete_hours {
-	color:red;
-	text-align: center;
-}
-.listdata{
-border-top: 1px solid #e5e5e5;
-    color: #fff;
-    background-color: #fff;
-    height: 1px;
-}
-.delete_holiday {
-	color:red;
-	text-align: center;
-}
-.appendhours{text-align:center;}
-
+	.error_color{color:red; font-weight:bold;}
+	.delete_hours {color:red;text-align: center;}
+	.listdata{
+		border-top: 1px solid #e5e5e5;
+	    color: #fff;
+	    background-color: #fff;
+	    height: 1px;
+	}
+	.delete_holiday {color:red;text-align: center;}
+	.appendhours{text-align:center;}
 </style>
+
 <!-- page content -->
-<?php $userid = Auth::user()->id; ?>
-@if (getAccessStatusUser('Settings',$userid)=='yes')
-	@if(!empty(getActiveAdmin($userid)=='no'))
-	<div class="right_col" role="main" style="background-color: #e6e6e6;">
-		<div class="page-title">
-			<div class="nav_menu">
-				<nav>
-					<div class="nav toggle titleup">
-						<span>&nbsp {{ trans('app.You are not authorize this page.')}}</span>
-					</div>
-				</nav>
-			</div>
-		</div>
-	</div>
-	@else
 	<div class="right_col" role="main">
         <div class="">
             <div class="page-title">
@@ -65,13 +44,11 @@ border-top: 1px solid #e5e5e5;
 				</div>
 			@endif
            
-			 @if(session('message1'))
+			@if(session('message1'))
 				<style>
-					.checkbox-success{
-						background-color: #cad0cc!important;
-						 color:red;
-					}
+					.checkbox-success{background-color: #cad0cc!important;color:red;}
 				</style>
+
 				<div class="row massage">
 					<div class="col-md-12 col-sm-12 col-xs-12">
 						<div class="checkbox checkbox-success checkbox-circle">
@@ -90,14 +67,28 @@ border-top: 1px solid #e5e5e5;
 			
 			<div class="x_content">
 				<ul class="nav nav-tabs bar_tabs tabconatent" role="tablist">
-					
-					<li role="presentation" class="suppo_llng_li floattab"><a href="{!! url('setting/general_setting/list')!!}" class="anchor_tag anchr"><span class="visible-xs"></span><i class="fa fa-cogs">&nbsp;</i>{{ trans('app.General Settings')}}</a></li>
-					
-					<li role="presentation" class="suppo_llng_li_add floattab"><a href="{!! url('setting/timezone/list')!!}" class="anchor_tag anchr"><span class="visible-xs"></span><i class="fa fa-cog">&nbsp;</i>{{ trans('app.Other Settings')}}</a></li>
-					
-					<li role="presentation" class="suppo_llng_li_add floattab"><a href="{!! url('setting/accessrights/list')!!}" class="anchor_tag anchr"><span class="visible-xs"></span><i class="fa fa-universal-access">&nbsp;</i> {{ trans('app.Access Rights')}}</a></li>
-					
-					<li role="presentation" class="active suppo_llng_li_add floattab"><a href="{!! url('setting/hours/list')!!}" class="anchor_tag anchr"><span class="visible-xs"></span><i class="fa fa-hourglass-end">&nbsp;</i><b>{{ trans('app.Business Hours')}}</b></a></li>
+					@can('generalsetting_view')
+						<li role="presentation" class="suppo_llng_li floattab"><a href="{!! url('setting/general_setting/list')!!}" class="anchor_tag anchr"><span class="visible-xs"></span><i class="fa fa-cogs">&nbsp;</i>{{ trans('app.General Settings')}}</a></li>
+					@endcan
+					@can('timezone_view')
+						<li role="presentation" class="suppo_llng_li_add floattab"><a href="{!! url('setting/timezone/list')!!}" class="anchor_tag anchr"><span class="visible-xs"></span><i class="fa fa-cog">&nbsp;</i>{{ trans('app.Other Settings')}}</a></li>
+					@endcan
+
+					<!-- <li role="presentation" class="suppo_llng_li_add floattab"><a href="{!! url('setting/accessrights/list')!!}" class="anchor_tag anchr"><span class="visible-xs"></span><i class="fa fa-universal-access">&nbsp;</i> {{ trans('app.Access Rights')}}</a></li> -->
+
+				<!-- New Access Rights Starting -->
+					@can('accessrights_view')				
+						<li role="presentation" class="suppo_llng_li_add floattab"><a href="{!! url('setting/accessrights/show')!!}" class="anchor_tag anchr"><span class="visible-xs"></span><i class="fa fa-universal-access">&nbsp;</i>{{ trans('app.Access Rights')}}</a></li>
+					@endcan
+				<!-- New Access Rights Ending -->
+
+					@can('businesshours_view')
+						<li role="presentation" class="active suppo_llng_li_add floattab"><a href="{!! url('setting/hours/list')!!}" class="anchor_tag anchr"><span class="visible-xs"></span><i class="fa fa-hourglass-end">&nbsp;</i><b>{{ trans('app.Business Hours')}}</b></a></li>
+					@endcan
+
+					@can('stripesetting_view')
+						<li role="presentation" class="suppo_llng_li_add floattab"><a href="{!! url('setting/stripe/list')!!}" class="anchor_tag anchr"><span class="visible-xs"></span><i class="fa fa-cc-stripe">&nbsp;</i>{{ trans('app.Stripe Settings')}}</a></li>
+					@endcan
 					
 				</ul>
 			</div>
@@ -116,7 +107,10 @@ border-top: 1px solid #e5e5e5;
 										<div class="col-md-2 col-sm-3 col-xs-3"><b>{{ trans('app.Day')}}</b></div>
 										<div class="col-md-2 col-sm-3 col-xs-3 hours_title"><b>{{ trans('app.Open')}}</b> </div>
 										<div class="col-md-2 col-sm-3 col-xs-3 hours_title"><b>{{ trans('app.Close')}}</b></div>
-										<div class="col-md-1 col-sm-3 col-xs-3 hours_title"><b>{{ trans('app.Action')}}</b></div>
+
+										@can('businesshours_delete')
+											<div class="col-md-1 col-sm-3 col-xs-3 hours_title"><b>{{ trans('app.Action')}}</b></div>
+										@endcan
 									</div>
 									<div class="col-md-12 col-sm-12 col-xs-12">
 									<p class="col-md-7 col-sm-12 col-xs-12 listdata"></p>
@@ -134,7 +128,9 @@ border-top: 1px solid #e5e5e5;
 											<div class="col-md-2 col-sm-3 col-xs-3 tbl_hourss">{{ getOpenHours($tbl_hourss->from)}} </div>
 											<div class="col-md-2 col-sm-3 col-xs-3 tbl_hourss">{{ getCloseHours($tbl_hourss->to)}}</div>
 										@endif
-											<div class="col-md-1 col-sm-3 col-xs-2 delete_hours remv_padding" deletehours="{{$tbl_hourss->id}}" url="{!! url('/setting/deletehours/'.$tbl_hourss->id) !!}"><i class="fa fa-trash fa-2x"></i></div>
+											@can('businesshours_delete')
+												<div class="col-md-1 col-sm-3 col-xs-2 delete_hours remv_padding" deletehours="{{$tbl_hourss->id}}" url="{!! url('/setting/deletehours/'.$tbl_hourss->id) !!}"><i class="fa fa-trash fa-2x"></i></div>
+											@endcan
 										</div>
 									@endforeach
 									@endif
@@ -143,9 +139,11 @@ border-top: 1px solid #e5e5e5;
 									</div>
 								</div>
 							</div>
+								
+							@can('businesshours_add')
 								<form method="post" action="{{ url('setting/hours/store') }}" enctype="multipart/form-data" class="form-horizontal upperform">
 									<div class="form-group col-md-12 col-sm-12 col-xs-12 ">
-										<label class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('app.Business Hours')}} <label class="text-danger">*</label></label>
+										<label class="control-label col-md-2 col-sm-2 col-xs-12">{{ trans('app.Business Hours')}} <label class="color-danger">*</label></label>
 										<div class="col-md-2 col-sm-3 col-xs-6">
 											<select class="form-control day" name="day">
 												<option value="1">Monday</option>
@@ -220,6 +218,8 @@ border-top: 1px solid #e5e5e5;
 											</div>
 									</div>
 								</form>
+							@endcan
+
 							<div class="col-md-12 col-sm-12 col-xs-12 space">
 									<h4><b>{{ trans('app.Business Holiday') }}</b></h4>
 									<p class="col-md-12 col-sm-12 col-xs-12 ln_solid"></p>
@@ -230,7 +230,10 @@ border-top: 1px solid #e5e5e5;
 										<div class="col-md-2 col-sm-3"><b>{{ trans('app.Date')}}</b></div>
 										<div class="col-md-2 col-sm-3"><b>{{ trans('app.Title')}}</b> </div>
 										<div class="col-md-2 col-sm-3"><b>{{ trans('app.Description')}}</b></div>
-										<div class="col-md-2 col-sm-3"><b>{{ trans('app.Action')}}</b></div>
+										
+										@can('businesshours_delete')
+											<div class="col-md-2 col-sm-3"><b>{{ trans('app.Action')}}</b></div>
+										@endcan
 									</div>
 									<div class="col-md-12 col-sm-12 col-xs-12">
 										<p class="col-md-7 col-sm-12 col-xs-12 listdata" ></p>
@@ -244,7 +247,10 @@ border-top: 1px solid #e5e5e5;
 											<div class="col-md-2 col-sm-3">{{date(getDateFormat(),strtotime($tbl_holidayss->date))}}</div>
 											<div class="col-md-2 col-sm-3">{{$tbl_holidayss->title}}</div>
 											<div class="col-md-2 col-sm-3">{{$tbl_holidayss->description}}</div>
-											<div class="col-md-1 col-sm-3 col-xs-12 delete_holiday" holidayurl="{!! url('/setting/deleteholiday/'.$tbl_holidayss->id) !!}"><i class="fa fa-trash fa-2x"></i></div>
+											
+											@can('businesshours_delete')
+												<div class="col-md-1 col-sm-3 col-xs-12 delete_holiday" holidayurl="{!! url('/setting/deleteholiday/'.$tbl_holidayss->id) !!}"><i class="fa fa-trash fa-2x"></i></div>
+											@endcan
 										</div>
 										@endforeach
 									@endif
@@ -253,56 +259,60 @@ border-top: 1px solid #e5e5e5;
 									</div>
 								</div>
 							</div>
-								<form method="post" action="{{ url('setting/holiday/store') }}" enctype="multipart/form-data" class="form-horizontal upperform">	
-								
-									<div class="form-group col-md-12 col-sm-12 col-xs-12 {{ $errors->has('adddate') ? ' has-error' : 'Date inst' }}" >
-										<label class="control-label col-md-3 col-sm-3 col-xs-12" for="Country">{{ trans('app.Date')}} <label class="text-danger">*</label></label>
+
+							@can('businesshours_add')
+								<form id="business_hours_edit_form" method="post" action="{{ url('setting/holiday/store') }}" enctype="multipart/form-data" class="form-horizontal upperform">
+
+									<div class="form-group col-md-12 col-sm-12 col-xs-12 {{ $errors->has('adddate') ? ' has-error' : 'Date inst' }} my-form-group" >
+										<div>
+										<label class="control-label col-md-3 col-sm-3 col-xs-12" for="Country">{{ trans('app.Date')}} <label class="color-danger">*</label></label>
 										<div class="col-md-5 col-sm-5 col-xs-12 input-group date datepicker">
-													<span class="input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-											<input type="text" name="adddate" class="form-control adddate" placeholder="<?php echo getDatepicker();?>" onkeypress="return false;" required>
+											<span class="input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
+
+											<input type="text" name="adddate" class="form-control adddate businessDate" id="bus_date" autocomplete="off" placeholder="<?php echo getDatepicker();?>" onkeypress="return false;" required>
 											@if ($errors->has('adddate'))
 											   <span class="help-block">
 												   <strong>{{ $errors->first('adddate') }}</strong>
 											   </span>
 											@endif
 										</div>
-									</div>
-									<div class="form-group col-md-12 col-sm-12 col-xs-12">
-										<label class="control-label col-md-3 col-sm-3 col-xs-12" for="Country">{{ trans('app.Title')}} <label class="text-danger">*</label></label>
-										<div class="col-md-5 col-sm-5 col-xs-12">
-											<input type="text" name="addtitle" class="form-control" placeholder="{{ trans('app.Enter Title') }}" maxlength="30" required />
 										</div>
 									</div>
-									<div class="form-group col-md-12 col-sm-12 col-xs-12">
+
+									<div class="form-group col-md-12 col-sm-12 col-xs-12 my-form-group businessTitleMainDiv" style="">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12" for="Country">{{ trans('app.Title')}} <label class="color-danger">*</label></label>
+										<div class="col-md-5 col-sm-5 col-xs-12">
+											<input type="text" name="addtitle" class="form-control" placeholder="{{ trans('app.Enter Title') }}" maxlength="100" required />
+										</div>
+									</div>
+
+									<div class="form-group col-md-12 col-sm-12 col-xs-12 my-form-group businessDescriptionMainDiv" style="">
 										<label class="control-label col-md-3 col-sm-3 col-xs-12" for="Country">{{ trans('app.Description')}}</label>
 										<div class="col-md-5 col-sm-5 col-xs-12">
-											<textarea name="adddescription" class="form-control adddescription" rows="2" maxlength="100" placeholder="{{ trans('app.Enter Holiday Description') }} "></textarea>
+											<textarea name="adddescription" class="form-control adddescription" rows="2" maxlength="300" placeholder="{{ trans('app.Enter Holiday Description') }} "></textarea>
 										</div>
 									</div>
+
 									<input type="hidden" name="_token" value="{{ csrf_token() }}">
+
 									<div class="form-group col-md-12 col-sm-12 col-xs-12">
 										<div class="col-md-9 col-sm-9 col-xs-12 text-center">
 											<a class="btn btn-primary" href="{{ URL::previous() }}">{{ trans('app.Cancel')}}</a>
 											<button type="submit" class="btn btn-success">{{ trans('app.Submit')}}</button>
 										</div>
 									</div>
+
 								</form>	
+							@endcan
+
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	@endif
-@else
-	<div class="right_col" role="main">
-		<div class="nav_menu main_title" style="margin-top:4px;margin-bottom:15px;">
-            <div class="nav toggle" style="padding-bottom:16px;">
-               <span class="titleup">&nbsp {{ trans('app.You are not authorize this page.')}}</span>
-            </div>
-        </div>
-	</div>
-@endif 
+<!-- page content end -->
+
 <script src="{{ URL::asset('vendors/jquery/dist/jquery.min.js') }}"></script>
 
 
@@ -359,4 +369,26 @@ $('body').on('click', '.delete_holiday', function() {
         });
 });
 </script>
+
+
+<script>
+	/*If select box have value then error msg and has error class remove*/
+	$('body').on('change','.businessDate',function(){
+
+		var dateValue = $(this).val();
+
+		if (dateValue != null) {
+			$('#bus_date-error').css({"display":"none"});
+		}
+
+		if (dateValue != null) {
+			$(this).parent().parent().parent().removeClass('has-error');
+		}
+	});
+</script>
+
+<!-- Form field validation -->
+{!! JsValidator::formRequest('App\Http\Requests\StoreBusinessHoursEditFormRequest', '#business_hours_edit_form'); !!}
+<script type="text/javascript" src="{{ asset('public/vendor/jsvalidation/js/jsvalidation.js') }}"></script>
+
 @endsection

@@ -1,9 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-		<!-- page content -->
-	<?php $userid = Auth::user()->id; ?>
-@if (getAccessStatusUser('Job Card',$userid)=='yes')
+
+<!-- page content start -->
 	<div class="right_col" role="main">
 		<!--gate pass view modal-->
 		<div id="myModal-gateview" class="modal fade" role="dialog">
@@ -51,10 +50,12 @@
 				<div class="col-md-12 col-sm-12 col-xs-12" >
 					<div class="x_content">
 						<ul class="nav nav-tabs bar_tabs" role="tablist">
-							<li role="presentation" class="active"><a href="{!! url('/gatepass/list')!!}"><span class="visible-xs"></span> <i class="fa fa-list fa-lg">&nbsp;</i><b>{{ trans('app.Gatepass List')}}</b></span></a></li>
-						@if(getActiveCustomer($userid)=='yes')
-							<li role="presentation" class=""><a href="{!! url('/gatepass/add') !!}"><span class="visible-xs"></span><i class="fa fa-plus-circle fa-lg">&nbsp;</i>{{ trans('app.Add Gatepass')}}</span></a></li>
-						@endif
+							@can('gatepass_view')
+								<li role="presentation" class="active"><a href="{!! url('/gatepass/list')!!}"><span class="visible-xs"></span> <i class="fa fa-list fa-lg">&nbsp;</i><b>{{ trans('app.Gatepass List')}}</b></span></a></li>
+							@endcan
+							@can('gatepass_add')
+								<li role="presentation" class=""><a href="{!! url('/gatepass/add') !!}"><span class="visible-xs"></span><i class="fa fa-plus-circle fa-lg">&nbsp;</i>{{ trans('app.Add Gatepass')}}</span></a></li>
+							@endcan
 						</ul>
 					</div>
 					<div class="x_panel table_up_div">
@@ -80,18 +81,16 @@
 										<td>{{ getCustomerName($gatepasss->customer_id) }}</td>
 										<td>{{ getVehicleName($gatepasss->vehicle_id) }}</td>
 										<td>
-											<?php $userid=Auth::User()->id; ?>
-										@if(getActiveCustomer($userid)=='yes')
-												<button type="button" data-toggle="modal" data-target="#myModal-gateview" 
-												serviceid="" class="btn getgetpass btn-round btn-info" getpassid="{{ $gatepasss->jobcard_id }}">{{ trans('app.View')}}</button>
-												
-												<a href="{!! url('/gatepass/list/edit/'.$gatepasss->id) !!}" ><button type="button" class="btn btn-round btn-success">{{ trans('app.Edit')}}</button></a>
-												
-												<a url="{!! url('/gatepass/list/delete/'.$gatepasss->id) !!}" class="sa-warning"><button type="button" class="btn btn-round btn-danger">{{ trans('app.Delete')}}</button></a>
-										@else
-												<button type="button" data-toggle="modal" data-target="#myModal-gateview" 
-												serviceid="" class="btn getgetpass btn-round btn-info" getpassid="{{ $gatepasss->jobcard_id }}">{{ trans('app.View')}}</button>
-										@endif
+												@can('gatepass_view')
+													<button type="button" data-toggle="modal" data-target="#myModal-gateview" serviceid="" class="btn getgetpass btn-round btn-info" getpassid="{{ $gatepasss->jobcard_id }}">{{ trans('app.View')}}</button>
+												@endcan
+												@can('gatepass_edit')
+													<a href="{!! url('/gatepass/list/edit/'.$gatepasss->id) !!}" ><button type="button" class="btn btn-round btn-success">{{ trans('app.Edit')}}</button></a>
+												@endcan
+												@can('gatepass_delete')
+													<a url="{!! url('/gatepass/list/delete/'.$gatepasss->id) !!}" class="sa-warning"><button type="button" class="btn btn-round btn-danger">{{ trans('app.Delete')}}</button></a>
+												@endcan
+											
 										</td>
 									</tr>
 									<?php $i++; ?>
@@ -103,7 +102,9 @@
 			</div>
 		</div>
 	</div>
-@endif
+<!-- page content end -->
+
+
 <script src="{{ URL::asset('vendors/jquery/dist/jquery.min.js') }}"></script>
 <!-- language change in user selected -->	
 <script>

@@ -59,6 +59,8 @@ return[
 	 'Employees'=>'कर्मचारियों',
 	 'Clients'=>'ग्राहकों',
 	 'Sales'=>'बिक्री',
+	 /*Solved by Mukesh [Bug list row number 592]*/
+	 'Sale Part'=>'बिक्री भाग',
 	 'Products'=>'उत्पाद',
 	 'Service'=>'सर्विस',
 	 'Calendar Events'=>'कैलेंडर ईवेंट',
@@ -150,8 +152,8 @@ return[
 	'Open'=>'खुला',
 	'Close'=>'बंद करे',
 	'Remove'=>'हटाना',
-	//Custom Field
 	
+	//Custom Field
 	'Custom Field'=>'कस्टम फील्ड',
 	'Add Custom Field'=>'कस्टम फील्ड जोड़ें',
 	'List Custom Field'=>'सूची कस्टम फ़ील्ड',
@@ -173,7 +175,6 @@ return[
 	'Enter Colom Field Name'=>'कॉलम फ़ील्ड नाम दर्ज करें',
 	
 	//Currency list 
-	
 	"Currency"=>"मुद्रा",
 	"Select Currency"=>"मुद्रा चुनें",
 	
@@ -959,6 +960,388 @@ return[
 	"Purchase Number"=>"खरीदने की संख्या",
 	"RTO"=>"आर टी ओ",
 	"Regional Transport Office"=>"क्षेत्रीय परिवहन कार्यालय",
+
+	// New lables added 8/06/2020
+	"Number Plate" => "नंबर प्लेट",
+	"Enter Number Plate" => "नंबर प्लेट डालें",
+	"Maintenance History not available." => "रखरखाव इतिहास उपलब्ध नहीं है।",
+	"Description not available" => "विवरण उपलब्ध नहीं है",
+	"Maintenance History" => "रखरखाव का इतिहास",
+	"Company Name" => "कंपनी का नाम",
+	"Enter Company Name" => "कंपनी का नाम दर्ज करें",
+	"Not Added" => "नहीं जोड़ा गया",
+
+	// stripe
+	"Stripe API Key Information" => "धारी एपीआई कुंजी जानकारी",
+	"Update Your Live Stripe Keys Here!" => "अपनी लाइव स्ट्राइप कुंजी यहां अपडेट करें!",
+	"Stripe Settings" => "धारीदार सेटिंग्स",
+	"Stripe Secret key" => "स्ट्राइप सीक्रेट की",
+	"Enter Stripe Publishable Key" => "धारी सार्वजनिक प्रकाशन कुंजी दर्ज करें",
+	"Enter Stripe Secret Key" => "धारी गुप्त कुंजी दर्ज करें",
+	"Stripe Publishable key" => "धारी पबलिशबल की",
+	"Please update stripe API key details to take payment directly from the card!" => "कृपया कार्ड से सीधे भुगतान लेने के लिए स्ट्राइप एपीआई कुंजी विवरण अपडेट करें!",
+	"You can not pay more than 999999 using the card." => "आप कार्ड का उपयोग करके 999999 से अधिक का भुगतान नहीं कर सकते हैं।",
+
+
+	//MOT Module
+	"MOT Test" => "एम.ओ.टी. टेस्ट",
+
+	"MOT Test View" => "एम.ओ.टी. टेस्ट देखें",
+	"Step 1: Fill MOT Details" => "चरण 1: एम.ओ.टी. विवरण भरें",
+	"OK = Satisfactory" => "ठीक = संतोषप्रद",
+	"X = Safety Item Defact" => "एक्स = सुरक्षा आइटम की कमी",
+	"R = Repair Required" => "आर = मरम्मत आवश्यक",
+	"NA = Not Applicable" => "एन. ए. = लागू नहीं",
+	"Inside Cab" => "कैब के अंदर",
+	"Code" => "कोड",
+	"Inspection Details" => "निरीक्षण विवरण",
+	"Answer" => "उत्तर",
+	"Ground Level and Under Vehicle" => "ग्राउंड लेवल और अंडर व्हीकल",
+	"Step 2: Show Filled MOT Details" => "चरण 2: भरा हुआ एम.ओ.टी. विवरण",
+
+	"MOT Test Service Charge" => "एम.ओ.टी. टेस्ट सर्विस चार्ज",
+
+	"MOT TEST SERVICE CHARGE" => "एम.ओ.टी. टेस्ट सर्विस चार्ज",
+	"MOT Charge Detail" => "एम.ओ.टी. चार्ज डिटेल",
+	"MOT Testing Charges" => "एम.ओ.टी. परीक्षण शुल्क",
+	"Completed" => "संपूर्ण",
+
+	"MOT Test Details" => "एम.ओ.टी. परीक्षण विवरण",
+	"Vehicle Id" => "वाहन आईडी",
+	"Service Id" => "सर्विस आईडी",
+	"MOT Test Status" => "एम.ओ.टी. परीक्षण की स्थिति",
+	"MOT Test Number" => "एम.ओ.टी. टेस्ट नंबर",
+	"MOT Test Details are not Available for This Vehicle" => "एम.ओ.टी. परीक्षण विवरण इस वाहन के लिए उपलब्ध नहीं हैं",
+	"Point" => "अंक",
+	
+	//Custom Field for(Product, Purchase, Vehicle, VehicleType, VehicleBrand, Color, Service, Invoice, Sale, Salepart, Income, Expense, Rto)
+	"Data not available" => "डेटा उपलब्ध नहीं है",
+	"OTHER INFORMATION" => "अन्य सूचना",
+
+	"OTHER INFORMATION OF INVOICE" => "निवेश की अन्य जानकारी",
+
+	"CUSTOMER OTHER DETAILS" => "ग्राहक अन्य विवरण",
+	"Customer Other Details" => "ग्राहक अन्य विवरण",
+
+	"Please enter correct purchase key" => "कृपया सही खरीद कुंजी दर्ज करें",
+	"This purchase key is already registered with the different domain. If you have any issue please contact us at sales@dasinfomedia.com" => "यह खरीद कुंजी पहले से ही अलग डोमेन के साथ पंजीकृत है। यदि आपके पास कोई समस्या है, तो कृपया हमसे sales@dasinfomedia.com पर संपर्क करें",
+	"There seems to be some problem please try after sometime or contact us on sales@dasinfomedia.com" => "ऐसा लगता है कि कुछ समस्या है कृपया कुछ समय बाद कोशिश करें या हमें sales@dasinfomedia.com पर संपर्क करें",
+	"Please enter correct purchase key for this plugin." => "कृपया इस प्लगइन के लिए सही खरीद कुंजी दर्ज करें।",
+	"Connection Problem occurs because server is down." => "कनेक्शन समस्या होती है क्योंकि सर्वर डाउन है।",
+
+	"Vehicle Sale" => "वाहन बिक्री",
+	"List Of Vehicle Sale" => "वाहन बिक्री की सूची",
+	"Add Vehicle Sale" => "वाहन बिक्री जोड़ें",
+	"Edit Vehicle Sale" => "वाहन बिक्री संपादित करें",
+	"Part Sales" => "भाग बिक्री",
+	"List Of Part Sales" => "भाग बिक्री की सूची",
+	"Add Part Sales" => "भाग बिक्री जोड़ें",
+	"Edit Part Sales" => "भाग बिक्री संपादित करें",
+	"Service Stock" => "सेवा स्टॉक",
+	"Product Service" => "उत्पाद सेवा",
+
+
+	"Quotation" => "उद्धरण",
+	"Quotation List" => "उद्धरण सूची",
+	"Add Quotation" => "उद्धरण जोड़ना ",
+	"Edit Quotation" => "उद्धरण संपादित करें",
+	"Quotation Process" => "उद्धरण प्रक्रिया ...",
+	"Quotation Process for..." => "उद्धरण प्रक्रिया",
+	"Do you want to final submit?, if yes so tick mark on checkbox." => "क्या आप अंतिम सबमिट करना चाहते हैं ?, यदि हां तो चेकबॉक्स पर टिक मार्क करें।",
+	"Quotation Service Details for Jobcard Number" => "जॉबकार्ड नंबर के लिए उद्धरण सेवा विवरण",
+	"Any kind of Tax not included inside quotation" => "किसी भी प्रकार के कर को कोटेशन के अंदर शामिल नहीं किया गया है",
+	"Step - 1 : Add Quotation Service Details..." => "चरण - 1: उद्धरण सेवा विवरण जोड़ें ...",
+	"Step - 2 : Add Quotation Service Details..." => "चरण - 2: उद्धरण सेवा विवरण जोड़ें ...",
+	"Service Payment History" => "सेवा भुगतान इतिहास",
+	"Due Amount Reminder" => "देय राशि अनुस्मारक",
+
+	'Add'=>'जोड़ें',
+	'Own Data'=>'जोड़ें',
+	"Quotation Service Details" => "उद्धरण सेवा विवरण",
+	"Gatepass" => "गेट पास",
+	"Observation Library" => "अवलोकन पुस्तकालय",
+	"Other Setting [Timezone]" => "अन्य सेटिंग [टाइमज़ोन]",
+	"Other Setting [Language]" => "अन्य सेटिंग [भाषा]",
+	"Other Setting [Date Format]" => "अन्य सेटिंग [दिनांक प्रारूप]",
+	"Other Setting [Currency]" => "अन्य सेटिंग [मुद्रा]",
+	"Quotation No" => "संविदा दर संख्या",
+	"Quotation Number" => "उद्धरण संख्या",
+	"Quotaion is final, then click here." => "उद्धरण अंतिम है, फिर यहां क्लिक करें।",
+
+
+
+	/************ Custom field radio and checkbox ************/
+	"Radio" => "रेडियो",
+	"Checkbox" => "चेकबॉक्स",
+	"Radio Field Label" => "रेडियो फील्ड लेबल",
+	"Enter radio label name" => "रेडियो लेबल नाम दर्ज करें",
+	"Checkbox Field Label" => "चेकबॉक्स फ़ील्ड लेबल",
+	"Enter checkbox label name" => "चेकबॉक्स लेबल नाम दर्ज करें",
+
+	/********* Custom validation message translation (Customer, Employee, Supportstaff, Accountatnt, Supplyer) **********/
+	"First name is required." => "पहला नाम आवश्यक है।",
+	"First name is only alphabets and space." => "पहला नाम केवल अक्षर और स्थान है।",
+	"First name should not more than 50 character." => "पहला नाम 50 से अधिक वर्ण नहीं होना चाहिए।",
+	"Last name is required." => "अंतिम नाम आवश्यक है।",
+	"Last name is only alphabets and space." => "अंतिम नाम केवल अक्षर और स्थान है।",
+	"Last name should not more than 50 character." => "अंतिम नाम 50 से अधिक वर्ण नहीं होना चाहिए।",
+	"Display name is required." => "प्रदर्शन नाम आवश्यक है।",
+	"Display name is only alphabets and space." => "प्रदर्शन नाम केवल अक्षर और स्थान है।",
+	"Display name should not more than 50 character." => "प्रदर्शन का नाम 50 से अधिक वर्ण नहीं होना चाहिए।",
+	"Only alphanumeric, space, dot, @, _, and - are allowed." => "केवल अल्फ़ान्यूमेरिक, स्पेस, डॉट, @, _, और - की अनुमति है।",
+	"Company name should not more than 100 character." => "कंपनी का नाम 100 से अधिक वर्ण नहीं होना चाहिए।",
+	"Email is required." => "ईमेल आवश्यक है।",
+	"Please enter a valid email address. Like : sales@dasinfomedia.com" => "कृपया एक मान्य ईमेल पता दर्ज करें। जैसे: sales@dasinfomedia.com",
+	"Email you entered is already registered." => "आपके द्वारा दर्ज ईमेल पहले से पंजीकृत है।",
+	"Password is required." => "पासवर्ड आवश्यक है।",
+	"Password must be combination of letters and numbers." => "पासवर्ड अक्षरों और संख्याओं का संयोजन होना चाहिए।",
+	"Password length minimum 6 character." => "पासवर्ड की लंबाई न्यूनतम 6 वर्ण।",
+	"Password length maximum 12 character." => "पासवर्ड की लंबाई अधिकतम 12 वर्ण।",
+	"Confirm password is required." => "पासवर्ड की पुष्टि करना आवश्यक है।",
+	"Password and Confirm Password does not match." => "पासवर्ड और कन्फर्म पासवर्ड मेल नहीं खाते।",
+	"Password length minimum 6 character." => "पासवर्ड की लंबाई न्यूनतम 6 वर्ण।",
+	"Password length maximum 12 character." => "पासवर्ड की लंबाई अधिकतम 12 वर्ण।",
+	"Contact number is required." => "संपर्क नंबर आवश्यक है।",
+	"Contact number minimum 6 digits." => "संपर्क संख्या न्यूनतम 6 अंक।",
+	"Contact number maximum 16 digits." => "संपर्क नंबर अधिकतम 16 अंक।",
+	"Contact number must be number, plus, minus and space only." => "संपर्क नंबर केवल संख्या, प्लस, ऋण और स्थान होना चाहिए।",
+	"Landline number only numbers are allowed." => "लैंडलाइन नंबर केवल संख्याओं की अनुमति है।",
+	"Landline number minimum 6 digits." => "लैंडलाइन नंबर न्यूनतम 6 अंक।",
+	"Landline number maximum 16 digits." => "लैंडलाइन नंबर अधिकतम 16 अंक।",
+	"Landline number must be number, plus, minus and space only." => "लैंडलाइन नंबर केवल संख्या, प्लस, माइनस और स्पेस होना चाहिए।",
+	"Image must be a file of type: Jpg, Jpeg and Png." => "छवि प्रकार की एक फ़ाइल होनी चाहिए: Jpg, Jpeg और Png।",
+	"Country field is required." => "देश के क्षेत्र की आवश्यकता है।",
+	"Address field is required." => "पता फ़ील्ड आवश्यक है।",
+
+	"Join date is required." => "ज्वाइन डेट आवश्यक है",
+	"Designation is required." => "पदनाम आवश्यक है",
+	"Designation is only alphabets and space." => "पदनाम केवल अक्षर और स्थान है।",
+	"Designation should not more than 50 character." => "पदनाम 50 से अधिक वर्ण नहीं होना चाहिए।",
+	
+	"Company name is required." => "कंपनी का नाम आवश्यक है।",
+	"Company name should not more than 100 character." => "कंपनी का नाम 100 से अधिक वर्ण नहीं होना चाहिए।",
+
+	/********* Custom validation message translation (Color Module) **********/
+	"Color name is required." => "रंग नाम की आवश्यकता है।",
+	"Maximum 50 characters allowed." => "अधिकतम 50 वर्ण अनुमत हैं।",
+	"Special symbols are not allowed." => "विशेष प्रतीकों की अनुमति नहीं है।",
+
+	/********* Custom validation message translation (Invoice Module) **********/
+	"Invoice type is required." => "चालान प्रकार की आवश्यकता है।",
+	"Invoice number is required." => "चालान संख्या आवश्यक है।",
+	"Customer name is required." => "ग्राहक का नाम आवश्यक है।",
+	"Jobcard number is required." => "जॉबकार्ड नंबर की आवश्यकता है।",
+	"Vehicle name is required." => "वाहन का नाम आवश्यक है।",
+	"Customer name is required." => "ग्राहक का नाम आवश्यक है।",
+	"Invoice date is required." => "चालान तिथि की आवश्यकता है।",
+	"Total amount is required." => "कुल राशि की आवश्यकता है।",
+	"Status is required." => "स्थिति आवश्यक है।",
+	"Payment type is required." => "भुगतान प्रकार आवश्यक है।",
+	"Grand total is required." => "ग्रैंड टोटल की आवश्यकता है।",
+	"Paid amount is required." => "भुगतान राशि की आवश्यकता है।",
+
+	/********* Custom validation message translation (Product Module) **********/
+	"Product date is required." => "उत्पाद की तारीख आवश्यक है।",
+	"Name is required." => "नाम आवश्यक है।",
+	"Name is only alphanumeric and space." => "नाम केवल अल्फ़ान्यूमेरिक और स्थान है।",
+	"Name should not more than 100 character." => "नाम 100 से अधिक वर्ण नहीं होना चाहिए।",
+	"The type of the uploaded file should be an image." => "अपलोड की गई फ़ाइल का प्रकार एक छवि होना चाहिए।",
+	"Unit of measurement is required." => "माप की इकाई की आवश्यकता है।",
+	"Price is required." => "मूल्य की आवश्यकता है।",
+	"Supplier is required." => "आपूर्तिकर्ता की आवश्यकता है।",
+
+	/********* Custom validation message translation (Purchase Module) **********/
+	"Purchase number is required." => "खरीद संख्या आवश्यक है।",
+	"Purchase date is required." => "खरीद की तारीख आवश्यक है।",
+	"Supplier name is required." => "आपूर्तिकर्ता नाम आवश्यक है।",
+
+	/********* Custom validation message translation (Service Module) **********/
+	"Jobcard number is required." => "जॉबकार्ड नंबर की आवश्यकता है।",
+	"Customer name is required." => "ग्राहक का नाम आवश्यक है।",
+	"Vehicle name is required." => "वाहन का नाम आवश्यक है।",
+	"Service date is required." => "सेवा की तारीख आवश्यक है।",
+	"Assigne to is required." => "असाइन करना आवश्यक है।",
+	"Repair category is required." => "मरम्मत श्रेणी की आवश्यकता है।",
+	"Service charge is required." => "सेवा शुल्क की आवश्यकता है।",
+	"Service charge is only numeric data." => "सेवा शुल्क केवल संख्यात्मक डेटा है।",
+	"Service charge is only number data." => "सेवा शुल्क केवल संख्या डेटा है।",
+	"First character is an alphabet after alphanumeric, space, dot, comma, hyphen and underscore are allowed." => "अल्फ़ान्यूमेरिक के बाद पहला वर्ण एक वर्णमाला है, अंतरिक्ष, डॉट, अल्पविराम, हाइफ़न और अनकोरकोर की अनुमति है।",
+
+
+	/********* Custom validation message translation (Tax Module) **********/
+	"Tax name is required." => "कर नाम आवश्यक है।",
+	"Only alphanumeric, space, dot, @, _, % and - are allowed." => "केवल अल्फ़ान्यूमेरिक, स्पेस, डॉट, @, _,% और - की अनुमति है।",
+	"Tax name should not more than 50 character." => "कर नाम 50 वर्ण से अधिक नहीं होना चाहिए।",
+	"Tax rate is required." => "कर की दर आवश्यक है।",
+	"The tax must be between 1 and 4 digits." => "कर 1 और 4 अंकों के बीच होना चाहिए।",
+
+	/********* Custom validation message translation (Business Module) **********/
+	"Date is required." => "तिथि आवश्यक है।",
+	"Title is required." => "शीर्षक आवश्यक है।",
+	"After alphabet alphanumeric, space, dot, @, _, and - are allowed." => "वर्णमाला के बाद अल्फ़ान्यूमेरिक, स्पेस, डॉट, @, _, और - की अनुमति है।",
+	"Title field should not more than 100 character." => "शीर्षक फ़ील्ड में 100 से अधिक वर्ण नहीं होना चाहिए।",
+	"After alphabet alphanumeric, space, dot, @, _, and - are allowed." => "वर्णमाला के बाद अल्फ़ान्यूमेरिक, स्पेस, डॉट, @, _, और - की अनुमति है।",
+	"Description should not more than 300 character." => "विवरण 300 से अधिक वर्ण नहीं होना चाहिए।",
+
+	/********* Custom validation message translation (Custom Field Module) **********/
+	"Form name is required." => "फॉर्म नाम की आवश्यकता है।",
+	"Label name is required." => "लेबल नाम की आवश्यकता है।",
+	"Start should be alphabets only after supports alphanumeric, space, dot, @, _, and - are allowed." => "अल्फ़ान्यूमेरिक, स्पेस, डॉट, @, _, और - को अनुमति देने के बाद ही वर्णमाला शुरू की जानी चाहिए,",
+	"Label name should not more than 50 character." => "लेबल का नाम 50 से अधिक वर्ण नहीं होना चाहिए।",
+	"Type is required." => "प्रकार आवश्यक है।",
+
+
+	/********* Custom validation message translation (Expenses Module) **********/
+	"Main label is required." => "मुख्य लेबल की आवश्यकता है।",
+	"Only alphanumeric and space allowed." => "केवल अल्फ़ान्यूमेरिक और स्पेस की अनुमति है।",
+	"Status field is required." => "स्थिति फ़ील्ड आवश्यक है।",
+	"Expense entry field is required." => "व्यय क्षेत्र की आवश्यकता है।",
+	"Only numeric data allowed." => "केवल संख्यात्मक डेटा की अनुमति है।",
+	"After point two digit allowed." => "बिंदु के बाद दो अंक की अनुमति है।",
+	"Expense entry field is required." => "व्यय क्षेत्र की आवश्यकता है।",
+	"Only numeric data allowed." => "केवल संख्यात्मक डेटा की अनुमति है।",
+	"After point two digit allowed." => "बिंदु के बाद दो अंक की अनुमति है।",
+
+
+	/********* Custom validation message translation (Expenses Module) **********/
+	"Start date is required." => "प्रारंभ तिथि आवश्यक है।",
+	"End date is required." => "अंतिम तिथि आवश्यक है।",
+
+	/********* Custom validation message translation (Gatepass Module) **********/
+	"Jobcard is required." => "जॉबकार्ड की आवश्यकता है।",
+	"Gatepass number is required." => "गेटपास नंबर की आवश्यकता है।",
+	"First name is required." => "पहला नाम आवश्यक है।",
+	"Last name is required." => "अंतिम नाम आवश्यक है।",
+	"Email is required." => "ईमेल आवश्यक है।",
+	"Contact number is required." => "संपर्क नंबर आवश्यक है।",
+	"Vehicle name is required." => "वाहन का नाम आवश्यक है।",
+	"Vehicle type is required." => "वाहन का प्रकार आवश्यक है।",
+	"Kilometre is required." => "किलोमीटर की आवश्यकता है।",
+	"Enter only numeric data." => "केवल संख्यात्मक डेटा दर्ज करें।",
+	"Out date is required." => "आउट डेट की आवश्यकता है।",
+
+	/********* Custom validation message translation (GeneralSetting Module) **********/
+	"System name is required." => "सिस्टम नाम की आवश्यकता है।",
+	"System name must be alphabets, numbers and space." => "सिस्टम नाम अक्षर, संख्या और स्थान होना चाहिए।",
+	"Phone number is required." => "फ़ोन नंबर आवश्यक है।",
+	"Phone number minimum 6 digits." => "फ़ोन नंबर न्यूनतम 6 अंक।",
+	"Phone number maximum 16 digits." => "फ़ोन नंबर अधिकतम 16 अंक।",
+	"Phone number must be number, plus, minus and space only." => "फ़ोन नंबर केवल संख्या, प्लस, ऋण और स्थान होना चाहिए।",
+	"Image must be Jpg, Jpeg and Png only." => "छवि केवल Jpg, Jpeg और Png की होनी चाहिए।",
+	"Please enter valid email address." => "कृपया मान्य ईमेल पता दर्ज करें।",
+	"Address is required." => "पता आवश्यक है।",
+	
+
+	/********* Custom validation message translation (Income Module) **********/
+	"Payment status is required." => "भुगतान की स्थिति आवश्यक है।",
+	"Income date is required." => "आय तिथि आवश्यक है।",
+	"Main label is required." => "मुख्य लेबल की आवश्यकता है।",
+	"Main label should be less than 50 charachters." => "मुख्य लेबल 50 से कम चरखा होना चाहिए।",
+	"First character is an alphabet after number, space, dot, comma, hyphen,  underscore, at are allowed." => "पहला वर्ण संख्या, स्थान, डॉट, अल्पविराम, हाइफ़न, अंडरस्कोर, के बाद एक वर्णमाला है, जिसे शामिल किया गया है",
+	"Payment method is required." => "भुगतान विधि आवश्यक है।",
+	"Income entry is required." => "आय प्रविष्टि की आवश्यकता है।",
+
+
+	"Invoice number is required." => "चालान संख्या आवश्यक है।",
+	"Payment status is required." => "भुगतान की स्थिति आवश्यक है।",
+	"Income date is required." => "आय तिथि आवश्यक है।",
+	"Main label is required." => "मुख्य लेबल की आवश्यकता है।",
+	"Main label should be less than 50 charachters." => "मुख्य लेबल 50 से कम चरखा होना चाहिए।",
+	"First character is an alphabet after number, space, dot, comma, hyphen,  underscore, at are allowed." => "पहला वर्ण संख्या, स्थान, डॉट, अल्पविराम, हाइफ़न, अंडरस्कोर, के बाद एक वर्णमाला है, जिसे शामिल किया गया है",
+	"Payment method is required." => "भुगतान विधि आवश्यक है।",
+	"Income entry is required." => "आय प्रविष्टि की आवश्यकता है।",
+
+	/********* Custom validation message translation (Invoice Module) **********/
+	"Vehicle name is required." => "वाहन का नाम आवश्यक है।",
+	"Invoice date is required." => "चालान तिथि की आवश्यकता है।",
+	"Status is required." => "स्थिति आवश्यक है।",
+	"Payment type is required." => "भुगतान प्रकार आवश्यक है।",
+	"Grand total is required." => "ग्रैंड टोटल जरूरी है।",
+	"Paid amount is required." => "भुगतान राशि की आवश्यकता है।",
+
+	/********* Custom validation message translation (Observation Library Module) **********/
+	"Vehicle name is required." => "वाहन का नाम आवश्यक है।",
+	"Checkpoint category is required." => "चेकपॉइंट श्रेणी की आवश्यकता है।",
+	"Check point is required." => "चेक प्वाइंट की आवश्यकता है।",
+	"Start should be alphabets only after supports alphanumeric, space, dot, @, _, and - are allowed." =>  "अल्फ़ान्यूमेरिक, स्पेस, डॉट, @, _, और - का समर्थन करने के बाद ही वर्णमाला शुरू की जानी चाहिए",
+	"Check point should not more than 30 character." => "चेक प्वाइंट 30 से अधिक वर्ण नहीं होना चाहिए।",
+	
+	/********* Custom validation message translation (Other setting Module) **********/
+	"Timezone is required." => "टाइमजोन की आवश्यकता है।",
+	"Language is required." => "भाषा की आवश्यकता है।",
+	"Date format is required." => "तिथि प्रारूप आवश्यक है।",
+	"Currency is required." => "मुद्रा की आवश्यकता है।",
+
+	/********* Custom validation message translation (Payment Method Module) **********/
+	"Payment method is required." => "भुगतान विधि आवश्यक है।",
+	"Payment method allowed only alphabets and space." => "भुगतान पद्धति में केवल अक्षर और स्थान की अनुमति है।",
+	"Payment method should not more than 50 character." => "भुगतान विधि 50 से अधिक वर्ण नहीं होनी चाहिए।",
+
+	/*** Custom validation message translation (Pay Payment(Inside Invoice Module) Form Module) ***/
+	"Invoice date is required." => "चालान तिथि की आवश्यकता है।",
+	"Payment type is required." => "भुगतान प्रकार आवश्यक है।",
+	"Amount received is required." => "प्राप्त राशि की आवश्यकता है।",
+
+
+	/*** Custom validation message translation (Quotation Module) ***/
+	"Customer name is required." => "ग्राहक का नाम आवश्यक है।",
+	"Vehicle name is required." => "वाहन का नाम आवश्यक है।",
+	"Service date is required." => "सेवा की तारीख आवश्यक है।",
+	"Repair category is required." => "मरम्मत श्रेणी की आवश्यकता है।",
+	"Service charge is required." => "सेवा शुल्क की आवश्यकता है।",
+	"Service charge is only number data." => "सेवा शुल्क केवल संख्या डेटा है।",
+	"First character is an alphabet after alphanumeric, space, dot, comma, hyphen and underscore are allowed." => "अल्फ़ान्यूमेरिक के बाद पहला वर्ण एक वर्णमाला है, अंतरिक्ष, डॉट, अल्पविराम, हाइफ़न और अनकोरकोर की अनुमति है।",
+
+	/*** Custom validation message translation (Rto tax Module) ***/
+	"Vehicle name is required." => "वाहन का नाम आवश्यक है।",
+	"RTO tax is required." => "आरटीओ कर की आवश्यकता है।",
+	"RTO tax must be numeric data only." => "आरटीओ टैक्स केवल संख्यात्मक डेटा होना चाहिए।",
+	"After point only two digit allowed." => "बिंदु के बाद केवल दो अंक की अनुमति है।",
+	"Number plate charge is required." => "नंबर प्लेट चार्ज की आवश्यकता है।",
+	"Number plate charge must be numeric data only." => "नंबर प्लेट चार्ज केवल संख्यात्मक डेटा होना चाहिए।",
+	"Municiple road tax is required." => "मुनिकीरेत रोड टैक्स की आवश्यकता है।",
+	"Municiple road tax must be numeric data only." => "मुनिकीरेत रोड टैक्स केवल संख्यात्मक डेटा होना चाहिए।",
+
+	/*** Custom validation message translation (Service second step (Service Module)) ***/
+	"Out time date is required." => "समय की आवश्यकता है।",
+	"Kilometre is required." => "किलोमीटर की आवश्यकता है।",
+
+	/*** Custom validation message translation (Stripe setting Module) ***/
+	"Publish key is required." => "प्रकाशन कुंजी की आवश्यकता है।",
+	"Secret key is required." => "गुप्त कुंजी की आवश्यकता है।",
+
+
+	/*** Custom validation message translation (Vehicle Sale Module) ***/
+	"Bill no is required." => "बिल नंबर की आवश्यकता नहीं है।",
+	"Sales date is required." => "बिक्री की तारीख आवश्यक है।",
+	"Customer name is required." => "ग्राहक का नाम आवश्यक है।",
+	"Salesman name is required." => "विक्रेता का नाम आवश्यक है।",
+	"Brand name is required." => "ब्रांड नाम की आवश्यकता है।",
+	"Model name is required." => "मॉडल का नाम आवश्यक है।",
+	"Price is only numeric data allowed." => "मूल्य केवल संख्यात्मक डेटा की अनुमति है।",
+	"Price is only numeric data." => "मूल्य केवल संख्यात्मक डेटा है।",
+	"Color is required." => "रंग आवश्यक है।",
+	"Total price is required." => "कुल मूल्य की आवश्यकता है।",
+	"After point only two digits allowed." => "बिंदु के बाद केवल दो अंक की अनुमति है।",
+	"Total price is only numeric data." => "कुल मूल्य केवल संख्यात्मक डेटा है।",
+	"Interval is required." => "अंतराल की आवश्यकता है।",
+	"Number of service field is required." => "सेवा क्षेत्र की संख्या आवश्यक है।",
+	"Assigned to field is required." => "असाइन फ़ील्ड आवश्यक है।",
+
+
+	/*** Custom validation message translation (Vehicle Module) ***/
+	//"Vehicle type is required." => "वाहन प्रकार फ़ील्ड आवश्यक है।",
+	"Vehicle brand is required." => "वाहन ब्रांड फ़ील्ड आवश्यकता है।",
+	"Fuel type is required." => "ईंधन प्रकार फ़ील्ड आवश्यकता है।",
+	"Model name is required." => "मॉडल का नाम आवश्यक है।",
+	"Manufacturer name is required." => "निर्माता का नाम आवश्यक है।",
+	"Product name is required." => "उत्पाद का नाम आवश्यक है।",
+	"Quantity is required." => "मात्रा आवश्यक है।",
+	
+	"Employees" => "कर्मचारी",
+	"Support Staffs" => "सपोर्ट स्टाफ",
+	"Accountants" => "लेखाकार",
+	
 ];
  
  

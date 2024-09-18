@@ -2,49 +2,46 @@
 @section('content')
 
 <!-- page content -->
-<?php $userid = Auth::user()->id; ?>
-@if (getAccessStatusUser('Accounts & Tax Rates',$userid)=='yes')
-        <div class="right_col" role="main">
-          <div class="">
+    <div class="right_col" role="main">
+        <div class="">
             <div class="page-title">
-               <div class="nav_menu">
-            <nav>
-              <div class="nav toggle">
-                <a id="menu_toggle"><i class="fa fa-bars"></i><span class="titleup">&nbsp {{ trans('app.Expense')}}</span></a>
-              </div>
+               	<div class="nav_menu">
+            	<nav>
+              		<div class="nav toggle">
+                		<a id="menu_toggle"><i class="fa fa-bars"></i><span class="titleup">&nbsp {{ trans('app.Expense')}}</span></a>
+              		</div>
                     @include('dashboard.profile')
-            </nav>
-          </div>
-        </div>
+            	</nav>
+          		</div>
+        	</div>
 		
-		@if(session('message'))
-			<div class="row massage">
-			 <div class="col-md-12 col-sm-12 col-xs-12">
-				<div class="checkbox checkbox-success checkbox-circle">
-                
-                  <label for="checkbox-10 colo_success"> {{session('message')}} </label>
-                </div>
-			</div>
-			</div>
-		@endif
-              
-            </div>
-			 <div class="x_content">
-             <ul class="nav nav-tabs bar_tabs tabconatent" role="tablist">
-			<li role="presentation" class="suppo_llng_li floattab"><a href="{!! url('/expense/list')!!}"><span class="visible-xs"></span><i class="fa fa-list fa-lg">&nbsp;</i> {{ trans('app.Expense List')}}</a></li>
-			
-			<li role="presentation" class="suppo_llng_li_add floattab"><a href="{!! url('/expense/add')!!}"><span class="visible-xs"></span> <i class="fa fa-plus-circle fa-lg i">&nbsp;</i>{{ trans('app.Add Expense')}}</a></li>
-			
-			<li role="presentation" class="active suppo_llng_li_add floattab"><a href="{!! url('/expense/month_expense')!!}"><span class="visible-xs"></span> <i class="fa fa-area-chart fa-lg">&nbsp;</i><b>{{ trans('app.Monthly Expense Reports')}}</b></a></li>
-			
+			@if(session('message'))
+				<div class="row massage">
+			 		<div class="col-md-12 col-sm-12 col-xs-12">
+						<div class="checkbox checkbox-success checkbox-circle">
+                  			<label for="checkbox-10 colo_success"> {{session('message')}} </label>
+                		</div>
+					</div>
+				</div>
+			@endif  
+        </div>
+		<div class="x_content">
+            <ul class="nav nav-tabs bar_tabs tabconatent" role="tablist">
+            	@can('expense_view')
+					<li role="presentation" class="suppo_llng_li floattab"><a href="{!! url('/expense/list')!!}"><span class="visible-xs"></span><i class="fa fa-list fa-lg">&nbsp;</i> {{ trans('app.Expense List')}}</a></li>
+				@endcan
+				@can('expense_add')
+					<li role="presentation" class="suppo_llng_li_add floattab"><a href="{!! url('/expense/add')!!}"><span class="visible-xs"></span> <i class="fa fa-plus-circle fa-lg i">&nbsp;</i>{{ trans('app.Add Expense')}}</a></li>
+				@endcan
+				@can('expense_view')
+					<li role="presentation" class="active suppo_llng_li_add floattab"><a href="{!! url('/expense/month_expense')!!}"><span class="visible-xs"></span> <i class="fa fa-area-chart fa-lg">&nbsp;</i><b>{{ trans('app.Monthly Expense Reports')}}</b></a></li>
+				@endcan
             </ul>
-			</div>
-			
-            
-            <div class="row">
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <div class="x_panel">
-                   <div class="x_content">
+		</div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+            	<div class="x_panel">
+                   	<div class="x_content">
                     <form method="post" action="{{ url('/expense/expense_report') }}" enctype="multipart/form-data"  class="form-horizontal upperform">
 					<div class="col-md-12 col-xs-12 col-sm-12">
 					  <h4><b>{{ trans('app.Expenses Details')}}</b></h4><hr style="margin-top:0px;">
@@ -108,23 +105,13 @@
                      
                     </form>
 					</div>
-                
-              </div>
-			  
+              </div>	  
             </div>
            </div>
 		 </div>
-         @else
-	<div class="right_col" role="main">
-		<div class="nav_menu main_title" style="margin-top:4px;margin-bottom:15px;">
-           
-              <div class="nav toggle" style="padding-bottom:16px;">
-               <span class="titleup">&nbsp {{ trans('app.You are not authorize this page.')}}</span>
-              </div>
-          </div>
-	</div>
-	
-@endif   
+<!-- page content end -->
+
+
 <script src="{{ URL::asset('vendors/jquery/dist/jquery.min.js') }}"></script>
 <!-- language change in user selected -->	
 <script>

@@ -18,11 +18,8 @@
     width: 100%;
 }
 </style>
-		<!-- page content -->
-<?php $userid = Auth::user()->id; ?>
-@if (getAccessStatusUser('Accountants',$userid)=='yes')
-	
-	
+
+<!-- page content -->
     <div class="right_col" role="main" >
 		<!-- vehicle model-->
 		<div id="myModal" class="modal fade" role="dialog">
@@ -144,9 +141,13 @@
 			<div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_content">
 					<ul class="nav nav-tabs bar_tabs tabconatent" role="tablist">
-						<li role="presentation" class="suppo_llng_li floattab"><a href="{!! url('/accountant/list')!!}"><span class="visible-xs"></span><i class="fa fa-list fa-lg">&nbsp; </i> {{ trans('app.Accountant List') }}</a></li>
-					
-						<li role="presentation" class="active suppo_llng_li_add floattab"><a href="{!! url('/accountant/list/'.$viewid)!!}"><span class="visible-xs"></span><i class="fa fa-user">&nbsp; </i> <b> {{ trans('app.View Accountant') }}</b></a></li>
+						@can('accountant_view')
+							<li role="presentation" class=""><a href="{!! url('/accountant/list')!!}"><span class="visible-xs"></span><i class="fa fa-list fa-lg">&nbsp; </i> {{ trans('app.Accountant List') }}</a></li>
+						@endcan
+
+						@can('accountant_view')
+							<li role="presentation" class="active"><a href="{!! url('/accountant/list/'.$viewid)!!}"><span class="visible-xs"></span><i class="fa fa-user">&nbsp; </i> <b> {{ trans('app.View Accountant') }}</b></a></li>
+						@endcan
 					</ul>
 			    </div>
 				<div class="row">
@@ -191,8 +192,13 @@
 										<div class="col-md-5 col-sm-12 col-xs-12 table_td">
 											<i class="fa fa-calendar"></i><b> {{ trans('app.Date Of Birth')}}</b>	
 										</div>
-										<div class="col-md-7 col-sm-12 col-xs-12 table_td">
-											<span class="txt_color">{{ date(getDateFormat(),strtotime($accountant->birth_date)) }}</span>
+										<div class="col-md-7 col-sm-12 col-xs-12 table_td">				<span class="txt_color">
+												@if(!empty($accountant->birth_date))
+													{{ date(getDateFormat(),strtotime($accountant->birth_date)) }}
+												@else
+													{{ trans('app.Not Added') }}
+												@endif
+											</span>
 										</div>
 									</div>
 									<div class="table_row">
@@ -215,28 +221,72 @@
 										</div>
 										<div class="col-md-7 col-sm-12 col-xs-12 table_td">
 											<span class="txt_color">
-											  {{ $accountant->address }},<br/>{{ getCityName($accountant->city_id) }},<br/>{{ getStateName($accountant->state_id)}},{{ getCountryName($accountant->country_id)}}.
+											  {{ $accountant->address }},<br/>
+											  <?php echo (getCityName($accountant->city_id) != null) ? getCityName($accountant->city_id) .",<br>" : "";?>
+											  {{ getStateName($accountant->state_id)}}, {{ getCountryName($accountant->country_id)}}.
 											</span>
 										</div>
 									</div>
 								</div>
                         </div>
 					</div>
+
+					<div class="col-md-4 col-sm-12 col-xs-12 morinfo">
+						<div class="x_panel">
+							<div class="col-md-12 col-sm-12 col-xs-12 right_side">
+								<span class="report_title">
+									<span class="fa-stack cutomcircle">
+										<i class="fa fa-align-left fa-stack-1x"></i>
+									</span> 
+									<span class="shiptitle">{{ trans('app.More Info')}}</span>		
+								</span>
+							@if(!empty($tbl_custom_fields))		
+								@foreach($tbl_custom_fields as $tbl_custom_field)	
+									<?php 
+									$tbl_custom = $tbl_custom_field->id;
+									$userid = $accountant->id;
+								
+									$datavalue = getCustomData($tbl_custom,$userid);
+									?>
+
+									@if($tbl_custom_field->type == "radio")
+										@if($datavalue != "")
+											<?php
+												$radio_selected_value = getRadioSelectedValue($tbl_custom_field->id, $datavalue);
+											?>
+										
+											<div class="table_row">									
+												<div class="col-md-6 col-sm-12 table_td">
+													<b>{{$tbl_custom_field->label}}</b>
+												</div>
+												<div class="col-md-6 col-sm-12 table_td">
+													<span class="txt_color">{{$radio_selected_value}}</span>
+												</div>						
+											</div>
+										@endif
+									@else
+										@if($datavalue != "")
+											<div class="table_row">									
+												<div class="col-md-6 col-sm-12 table_td">
+													<b>{{$tbl_custom_field->label}}</b>
+												</div>
+												<div class="col-md-6 col-sm-12 table_td">
+													<span class="txt_color">{{$datavalue}}</span>
+												</div>						
+											</div>
+										@endif
+									@endif		
+								@endforeach
+							@endif					
+							</div>
+						</div>
+					</div>
+                </div>
                 </div>       
 			 </div>
 		</div>
 	</div>
-	
-@else
-	<div class="right_col" role="main">
-		<div class="nav_menu main_title" style="margin-top:4px;margin-bottom:15px;">
-              <div class="nav toggle" style="padding-bottom:16px;">
-               <span class="titleup">&nbsp {{ trans('app.You are not authorize this page.')}}</span>
-              </div>
-          </div>
-	</div>
-	
-@endif   
+
   <script src="{{ URL::asset('vendors/jquery/dist/jquery.min.js') }}"></script>
  <!-- sales in only person -->
     

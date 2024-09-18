@@ -10,22 +10,90 @@
   <!-- Custom Theme Style -->
     <link href="{{ URL::asset('build/css/custom.min.css') }} " rel="stylesheet">
     
-  <style>
-  body {
-    color: #73879C;
-		background: #fff;
-  }
-  </style>
+
+<style>
+	body { color: #73879C; background: #fff; }
+  	.error-message{background-color: #ffe6e6; padding: 13px 0px; font-size: 15px;
+		border-left: #a94442 5px solid;
+	}
+	.error-message-line { padding-left: 10px; }
+</style>
     
   
 
 	<div class="pg-header">
 		<h4 class="install_title">Garage Management System Wizard</h4>
 	</div>
+
+	<!-- Error Message Display Code -->
+	@if(session('message'))
+	<div class="step-content">
+		<div class="error-message">
+         	@if(session('message') == '1')
+				<label class="text-danger error-message-line"> {{trans('app.Please enter correct purchase key')}}  </label>
+		   	@elseif(session('message') == '2')
+		   		<label class="text-danger error-message-line"> {{ trans('app.This purchase key is already registered with the different domain. If you have any issue please contact us at sales@dasinfomedia.com')}}  </label>
+		   	@elseif(session('message') == '3')
+		   		<label class="text-danger error-message-line"> {{ trans('app.There seems to be some problem please try after sometime or contact us on sales@dasinfomedia.com')}}  </label>
+		   	@elseif(session('message') == '4')
+		   		<label class="text-danger error-message-line"> {{ trans('app.Please enter correct purchase key for this plugin.')}}  </label>
+		   	@elseif(session('message') == '5')
+		   		<label class="text-danger error-message-line"> {{ trans('app.Connection Problem occurs because server is down.')}}  </label>
+	    	@endif
+        </div>
+	</div>
+	<br>
+	@endif
+	<!-- Error Message Display Code End-->
+
 	<div class="step-content">
 		<form id="install-form" method="post" action="{!! url('/installation') !!}" enctype="multipart/form-data" class="form-horizontal"> 
 
 			<div>
+
+				<h3>Purchase Information</h3>
+				<section>
+					<h4>Purchase Information</h4>
+					<hr/>
+					<div class="form-group">
+						<label class="control-label col-md-3">Servername<span class="text-danger"> *</span></label>
+						<div class="col-md-5">
+						<div class="input text">
+							<input type="text" name="server_name" value="{{ $_SERVER['SERVER_NAME'] }}" class="form-control required" readonly="">
+						</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-3">Purchase Key<span class="text-danger"> *</span></label>
+						<div class="col-md-5">
+						<div class="input text">
+						<input type="text" name="purchase_key" value="{{ old('purchase_key') }}" class="form-control required" placeholder="Enter your purchase key">
+						@if ($errors->has('purchase_key'))
+							<span class="help-block">
+								<strong class="text-danger">{{ $errors->first('purchase_key') }}</strong>
+							</span>
+						@endif
+						</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-md-3">E-Mail<span class="text-danger"> *</span></label>
+						<div class="col-md-5">
+						<div class="input text">
+						<input type="email" name="purchase_email" value="{{ old('purchase_email') }}" class="form-control required" placeholder="Enter your purchase key time email">
+						@if ($errors->has('purchase_email'))
+							<span class="help-block ">
+								<strong class="text-danger">{{ $errors->first('purchase_email') }}</strong>
+							</span>
+						@endif
+						</div>
+						</div>
+					</div>
+					<div class="col-md-offset-3">
+						<p>(*) Fields are required.</p>
+					</div>
+				</section>
+
 				<h3>Database Setup</h3>
 				<section>
 					<h4>Database Setup</h4>

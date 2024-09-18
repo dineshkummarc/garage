@@ -31,7 +31,8 @@
 				<div class="col-md-6 col-sm-12 col-xs-12 ">
 					<p>
 					<?php 
-					echo $logo->address;
+					echo $logo->address." ";
+					echo "<br>".getCityName($logo->city_id);
 					echo ", ".getStateName($logo->state_id);
 					echo ", ".getCountryName($logo->country_id);
 					echo "<br>".$logo->email;

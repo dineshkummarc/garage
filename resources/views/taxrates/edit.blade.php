@@ -1,13 +1,14 @@
 @extends('layouts.app')
 @section('content')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <style>
 .checkbox-success{
 	background-color: #cad0cc!important;
 	 color:red;
 }
 </style>
-<?php $userid = Auth::user()->id; ?>
-@if (getAccessStatusUser('Accounts & Tax Rates',$userid)=='yes')
+
+<!-- page content start-->
 	<div class="right_col" role="main">
         <div class="">
             <div class="page-title">
@@ -35,26 +36,29 @@
 					<div class="x_content">
 						<div class="">
 							<ul class="nav nav-tabs bar_tabs tabconatent" role="tablist">
-								<li role="presentation" class="suppo_llng_li floattab"><a href="{!! url('/taxrates/list')!!}"><span class="visible-xs"></span> <i class="fa fa-list fa-lg">&nbsp;</i>{{ trans('app.List Account Tax')}}</a></li>
-	   
-								<li role="presentation" class="active suppo_llng_li_add floattab"><a href="{!! url('/taxrates/list/edit/'.$editid )!!}"><span class="visible-xs"></span> <i class="fa fa-pencil-square-o" aria-hidden="true">&nbsp;</i><b>{{ trans('app.Edit Account Tax')}}</b></a></li>
+								@can('taxrate_view')
+									<li role="presentation" class=""><a href="{!! url('/taxrates/list')!!}"><span class="visible-xs"></span> <i class="fa fa-list fa-lg">&nbsp;</i>{{ trans('app.List Account Tax')}}</a></li>
+								@endcan
+	   							@can('taxrate_edit')
+									<li role="presentation" class="active setMarginForAddAccountTaxForSmallDevices"><a href="{!! url('/taxrates/list/edit/'.$editid )!!}"><span class="visible-xs"></span> <i class="fa fa-pencil-square-o" aria-hidden="true">&nbsp;</i><b>{{ trans('app.Edit Account Tax')}}</b></a></li>
+								@endcan
 							</ul>
 							<div class="clearfix"></div>
 						</div>
 						<div class="x_panel">
-							<form action="update/{{ $account->id }}" method="post"  enctype="multipart/form-data" data-parsley-validate class="form-horizontal form-label-left">
+							<form action="update/{{ $account->id }}" method="post"  enctype="multipart/form-data" data-parsley-validate class="form-horizontal form-label-left" id="tax-rates-add-form">
 
-								<div class="form-group col-md-12 col-sm-12 col-xs-12">
-									<label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">{{ trans('app.Tax name')}} <label class="text-danger">*</label></label>
+								<div class="form-group col-md-12 col-sm-12 col-xs-12 my-form-group">
+									<label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">{{ trans('app.Tax name')}} <label class="color-danger">*</label></label>
 									<div class="col-md-5 col-sm-5 col-xs-12">
 									  <input type="text"  required="required" name="taxrate" value="{{ $account->taxname }}" class="form-control col-md-7 col-xs-12" maxlength="20">
 									</div>
 								</div>
-								<div class="form-group col-md-12 col-sm-12 col-xs-12 {{ $errors->has('tax') ? ' has-error' : '' }}">
+								<div class="form-group col-md-12 col-sm-12 col-xs-12 my-form-group">
 									<label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">
-									{{ trans('app.Tax Rates')}} (%) <label class="text-danger">*</label></label>
+									{{ trans('app.Tax Rates')}} (%) <label class="color-danger">*</label></label>
 									<div class="col-md-5 col-sm-5 col-xs-12">
-									  <input type="text"  required="required" name="tax" value="{{ $account->tax }}" maxlength="3" class="form-control col-md-7 col-xs-12">
+									  <input type="text"  required="required" name="tax" value="{{ $account->tax }}" class="form-control col-md-7 col-xs-12">
 									   @if ($errors->has('tax'))
 										   <span class="help-block">
 											 <strong>{{ $errors->first('tax') }}</strong>
@@ -77,13 +81,12 @@
 			</div>
 		</div>
     </div> 
-@else
-	<div class="right_col" role="main">
-		<div class="nav_menu main_title" style="margin-top:4px;margin-bottom:15px;">
-              <div class="nav toggle" style="padding-bottom:16px;">
-               <span class="titleup">&nbsp {{ trans('app.You Are Not Authorize This page.')}}</span>
-              </div>
-        </div>
-	</div>
-@endif   
+<!-- page content end-->
+
+
+<!-- For form field validate -->
+{!! JsValidator::formRequest('App\Http\Requests\StoreAccountTaxRatesRequest', '#tax-rates-add-form'); !!}
+<script type="text/javascript" src="{{ asset('public/vendor/jsvalidation/js/jsvalidation.js') }}"></script>
+
+</script>  
 @endsection

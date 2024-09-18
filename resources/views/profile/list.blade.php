@@ -33,12 +33,12 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_panel">
 					<div class="x_content">
-						<form  action="profile/update/{{ $profile->id }}" method="post" enctype="multipart/form-data" 
-					            class="form-horizontal upperform">
-							<div class="form-group col-md-12 col-sm-12 col-xs-12 has-feedback {{ $errors->has('firstname') ? ' has-error' : '' }}">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12"  for="first-name">{{ trans('app.First Name')}} <label class="text-danger">*</label></label>
+						<form id="profileEditForm"  action="profile/update/{{ $profile->id }}" method="post" enctype="multipart/form-data" class="form-horizontal upperform">
+
+							<div class="form-group col-md-12 col-sm-12 col-xs-12 has-feedback {{ $errors->has('firstname') ? ' has-error' : '' }} my-form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12"  for="first-name">{{ trans('app.First Name')}} <label class="color-danger">*</label></label>
 								<div class="col-md-5 col-sm-5 col-xs-12">
-									<input type="text"  name="firstname" placeholder="{{ trans('app.Enter First Name')}}" maxlength="25" value="{{$profile->name}}" class="form-control" required >
+									<input type="text"  name="firstname" placeholder="{{ trans('app.Enter First Name')}}" maxlength="50" value="{{$profile->name}}" class="form-control" required >
 											   @if ($errors->has('firstname'))
 											   <span class="help-block">
 												   <strong>{{ $errors->first('firstname') }}</strong>
@@ -47,11 +47,11 @@
 								</div>
 							</div>
 						  
-							<div class="form-group col-md-12 col-sm-12 col-xs-12 has-feedback {{ $errors->has('lastname') ? ' has-error' : '' }}">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">{{ trans('app.Last Name')}} <label class="text-danger">*</label>
+							<div class="form-group col-md-12 col-sm-12 col-xs-12 has-feedback {{ $errors->has('lastname') ? ' has-error' : '' }} my-form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">{{ trans('app.Last Name')}} <label class="color-danger">*</label>
 								</label>
 								<div class="col-md-5 col-sm-5 col-xs-12">
-								  <input type="text" id="lastname"  name="lastname" placeholder="{{ trans('app.Enter Last Name')}}" maxlength="25" value="{{$profile->lastname}}"
+								  <input type="text" id="lastname"  name="lastname" placeholder="{{ trans('app.Enter Last Name')}}" maxlength="50" value="{{$profile->lastname}}"
 								  class="form-control" >
 								  @if ($errors->has('lastname'))
 								   <span class="help-block">
@@ -62,7 +62,7 @@
 							</div>
 						  
 							<div class="form-group col-md-12 col-sm-12 col-xs-12 has-feedback">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12">{{ trans('app.Gender') }} <label class="text-danger">*</label></label>
+								<label class="control-label col-md-3 col-sm-3 col-xs-12">{{ trans('app.Gender') }} <label class="color-danger">*</label></label>
 								<div class="col-md-5 col-sm-5 col-xs-12 gender">
 								  
 								   
@@ -72,6 +72,7 @@
 								   
 								</div>
 							</div>
+
 							<div class="form-group col-md-12 col-sm-12 col-xs-12 {{ $errors->has('dob') ? ' has-error' : '' }}">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12">{{ trans('app.Date Of Birth') }}</label>
 								<div class="col-md-5 col-sm-5 col-xs-12 input-group date datepicker">
@@ -95,8 +96,9 @@
 								   </span>
 								@endif
 							</div>
-							<div class="form-group col-md-12 col-sm-12 col-xs-12 has-feedback {{ $errors->has('email') ? ' has-error' : '' }}">
-								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="Email">{{ trans('app.Email') }} <label class="text-danger">*</label>
+
+							<div class="form-group col-md-12 col-sm-12 col-xs-12 has-feedback {{ $errors->has('email') ? ' has-error' : '' }} my-form-group">
+								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="Email">{{ trans('app.Email') }} <label class="color-danger">*</label>
 								</label>
 								<div class="col-md-5 col-sm-5 col-xs-12">
 								  <input type="text"  name="email" placeholder="{{ trans('app.Enter Email')}}" value="{{$profile->email}}" class="form-control " maxlength="50" required>
@@ -108,7 +110,7 @@
 								</div>
 							</div>
 						  
-							<div class="form-group col-md-12 col-sm-12 col-xs-12 has-feedback {{ $errors->has('password') ? ' has-error' : '' }}">
+							<div class="form-group col-md-12 col-sm-12 col-xs-12 has-feedback {{ $errors->has('password') ? ' has-error' : '' }} my-form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="Password">{{ trans('app.New Password') }} </label>
 								<div class="col-md-5 col-sm-5 col-xs-12">
 								  <input type="password"  name="password" placeholder="{{ trans('app.Enter Password')}}" maxlength="20" class="form-control col-md-7 col-xs-12" >
@@ -120,7 +122,7 @@
 								</div>
 							</div>
 							
-							<div class="form-group has-feedback col-md-12 col-sm-12 col-xs-12 {{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
+							<div class="form-group has-feedback col-md-12 col-sm-12 col-xs-12 {{ $errors->has('password_confirmation') ? ' has-error' : '' }} my-form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="Password">
 								{{ trans('app.Confirm Password') }}</label>
 								<div class="col-md-5 col-sm-5 col-xs-12">
@@ -133,10 +135,10 @@
 								</div>
 							</div>
 						  
-							<div class="form-group col-md-12 col-sm-12 col-xs-12 has-feedback {{ $errors->has('mobile') ? 'has-error' : '' }}">
+							<div class="form-group col-md-12 col-sm-12 col-xs-12 has-feedback {{ $errors->has('mobile') ? 'has-error' : '' }} my-form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="mobile">{{ trans('app.Mobile No')}}</label>
 								<div class="col-md-5 col-sm-5 col-xs-12">
-								  <input type="text"  name="mobile" placeholder="{{ trans('app.Enter Mobile No')}}" value="{{$profile->mobile_no}}" maxlength="15"  class="form-control">
+								  <input type="text"  name="mobile" placeholder="{{ trans('app.Enter Mobile No')}}" value="{{$profile->mobile_no}}" min="6" max="16"  class="form-control">
 								   @if ($errors->has('mobile'))
 								   <span class="help-block">
 									   <strong>{{ $errors->first('mobile') }}</strong>
@@ -145,7 +147,7 @@
 								</div>
 							</div>
 						
-							<div class="form-group col-md-12 col-sm-12 col-xs-12 has-feedback {{ $errors->has('image') ? 'has-error' : '' }}">
+							<div class="form-group col-md-12 col-sm-12 col-xs-12 has-feedback {{ $errors->has('image') ? 'has-error' : '' }} my-form-group">
 								<label class="control-label col-md-3 col-sm-3 col-xs-12" for="image">{{ trans('app.Image') }} 
 								</label>
 								<div class="col-md-5 col-sm-5 col-xs-12">
@@ -196,4 +198,11 @@
 		
     });
 </script>
+
+
+<!-- Form field validation -->
+{!! JsValidator::formRequest('App\Http\Requests\StoreProfileSettingEditFormRequest', '#profileEditForm'); !!}
+<script type="text/javascript" src="{{ asset('public/vendor/jsvalidation/js/jsvalidation.js') }}"></script>
+
+
 @endsection

@@ -1,6 +1,7 @@
 <?php
 
 return[
+		// Swedish
         //APP Menu page
       'Garrage Management System'=>'Garrage Management System',
 	  'Welcome'=>'Välkommen',
@@ -961,6 +962,389 @@ return[
 	"Purchase Number"=>"Köpnummer",
 	"RTO"=>"RTO",
 	"Regional Transport Office"=>"Regionalt transportkontor",
+
+	// New lables added 8/06/2020
+	"Number Plate" => "Nummerplåt",
+	"Enter Number Plate" => "Ange nummerplatta",
+	"Maintenance History not available." => "Histórico de manutenção não disponível.",
+	"Description not available" => "Beskrivning inte tillgänglig",
+	"Maintenance History" => "Underhållshistoria",
+	"Company Name" => "Företagsnamn",
+	"Enter Company Name" => "Ange företagsnamn",
+	"Not Added" => "Inte tillagd",
+
+	// stripe
+	"Stripe API Key Information" => "Stripe API-nyckelinformation",
+	"Update Your Live Stripe Keys Here!" => "Uppdatera dina Live Stripe-nycklar här!",
+	"Stripe Settings" => "Bandinställningar",
+	"Stripe Secret key" => "Stripe Secret nyckel",
+	"Enter Stripe Publishable Key" => "Ange Stripe Publiceringsnyckel",
+	"Enter Stripe Secret Key" => "Ange Stripe Secret Key",
+	"Stripe Publishable key" => "Stripe-nyckel",
+	"Please update stripe API key details to take payment directly from the card!" => "Uppdatera nyckeldetaljer för stripe API för att ta betalning direkt från kortet!",
+	"You can not pay more than 999999 using the card." => "Du kan inte betala mer än 999999 med kortet.",
+
+
+	//MOT Module
+	"MOT Test" => "MOT-test",
+
+	"MOT Test View" => "MOT-testvy",
+	"Step 1: Fill MOT Details" => "Steg 1: Fyll MOT-detaljer",
+	"OK = Satisfactory" => "OK = Tillfredsställande",
+	"X = Safety Item Defact" => "X = Fel på säkerhetsartiklar",
+	"R = Repair Required" => "R = reparation krävs",
+	"NA = Not Applicable" => "NA = Ej tillämpligt",
+	"Inside Cab" => "Inuti hytten",
+	"Code" => "Koda",
+	"Inspection Details" => "Inspektionsdetaljer",
+	"Answer" => "Svar",
+	"Ground Level and Under Vehicle" => "Marknivå och under fordon",
+	"Step 2: Show Filled MOT Details" => "Steg 2: Visa fyllda MOT-detaljer",
+
+	"MOT Test Service Charge" => "MOT-serviceavgift",
+
+	"MOT TEST SERVICE CHARGE" => "MOT TEST SERVICE CHARGE",
+	"MOT Charge Detail" => "MOT-laddningsdetalj",
+	"MOT Testing Charges" => "MOT-testavgifter",
+	"Completed" => "Avslutad",
+
+	"MOT Test Details" => "MOT-testdetaljer",
+	"Vehicle Id" => "Fordons ID",
+	"Service Id" => "Service-ID",
+	"MOT Test Status" => "MOT-teststatus",
+	"MOT Test Number" => "MOT-testnummer",
+	"MOT Test Details are not Available for This Vehicle" => "MOT-testdetaljer är inte tillgängliga för detta fordon",
+	"Point" => "Punkt",
+	
+	//Custom Field for(Product, Purchase, Vehicle, VehicleType, VehicleBrand, Color, Service, Invoice, Sale, Salepart, Income, Expense, Rto)
+	"Data not available" => "Data är inte tillgängliga",
+	"OTHER INFORMATION" => "ANNAN INFORMATION",
+
+	"OTHER INFORMATION OF INVOICE" => "ÖVRIG INFORMATION AV FAKTUR",
+
+	"OTHER INFORMATION OF SERVICE" => "ÖVRIG INFORMATION OM TJÄNSTEN",
+	"Enter" => "Stiga på",
+
+	"CUSTOMER OTHER DETAILS" => "KUNDENS ÖVRIGA UPPGIFTER",
+	"Customer Other Details" => "Kundens övriga detaljer",
+
+	"Please enter correct purchase key" => "Ange rätt köpnyckel",
+	"This purchase key is already registered with the different domain. If you have any issue please contact us at sales@dasinfomedia.com" => "Denna inköpsnyckel är redan registrerad på den andra domänen. Kontakta oss på sales@dasinfomedia.com om du har några problem",
+	"There seems to be some problem please try after sometime or contact us on sales@dasinfomedia.com" => "Det verkar finnas några problem, försök efter någon gång eller kontakta oss på sales@dasinfomedia.com",
+	"Please enter correct purchase key for this plugin." => "Ange rätt köpnyckel för detta plugin.",
+	"Connection Problem occurs because server is down." => "Anslutningsproblem uppstår eftersom servern är nere.",
+	"Vehicle Sale" => "Fordonsförsäljning",
+	"List Of Vehicle Sale" => "Lista över fordonsförsäljning",
+	"Add Vehicle Sale" => "Lägg till fordonsförsäljning",
+	"Edit Vehicle Sale" => "Redigera fordonsförsäljning",
+	"Part Sales" => "Delförsäljning",
+	"List Of Part Sales" => "Lista över reservdelsförsäljning",
+	"Add Part Sales" => "Lägg till delförsäljning",
+	"Edit Part Sales" => "Redigera delförsäljning",
+	"Service Stock" => "Service lager",
+	"Product Service" => "Produktservice",
+
+	"Quotation" => "Citat",
+	"Quotation List" => "Citat Lista",
+	"Add Quotation" => "Lägg till Citat",
+	"Edit Quotation" => "Redigera Citat",
+	"Quotation Process" => "Offertprocess",
+	"Quotation Process for..." => "Offertprocess för ...",
+	"Do you want to final submit?, if yes so tick mark on checkbox." => "Vill du slutligt skicka in ?, om ja så kryssa i kryssrutan.",
+	"Quotation Service Details for Jobcard Number" => "Offerttjänstinformation för jobbkortnummer",
+	"Any kind of Tax not included inside quotation" => "Alla typer av skatt ingår inte i offerten",
+	"Step - 1 : Add Quotation Service Details..." => "Steg - 1: Lägg till offerttjänstinformation ...",
+	"Step - 2 : Add Quotation Service Details..." => "Steg - 2: Lägg till offerttjänstinformation ...",
+	"Service Payment History" => "Tjänstebetalningshistorik",
+	"Due Amount Reminder" => "Påminnelse om förfallet belopp",
+
+	"Quotation Service Details" => "Information om offerttjänst",
+	"Add" => "Lägg till",
+	"Own Data" => "Egna data",
+	"Gatepass" => "Portpass",
+	"Observation Library" => "Observationsbibliotek",
+	"Other Setting [Timezone]" => "Annan inställning [Tidszon]",
+	"Other Setting [Language]" => "Annan inställning [språk]",
+	"Other Setting [Date Format]" => "Annan inställning [Datumformat]",
+	"Other Setting [Currency]" => "Annan inställning [Valuta]",
+	"Quotation No" => "Offert nr",
+	"Quotation Number" => "Offertnummer",
+	"Quotaion is final, then click here." => "Offertet är slutgiltigt, klicka sedan här.",
+
+
+
+	/************ Custom field radio and checkbox ************/
+	"Radio" => "Radio",
+	"Checkbox" => "kryssruta",
+	"Radio Field Label" => "Radio fältetikett",
+	"Enter radio label name" => "Ange radioetikettnamn",
+	"Checkbox Field Label" => "Fältetikett för kryssrutan",
+	"Enter checkbox label name" => "Ange namn på kryssrutan",
+
+	/********* Custom validation message translation (Customer, Employee, Supportstaff, Accountatnt, Supplyer) **********/
+	"First name is required." => "Förnamn krävs.",
+	"First name is only alphabets and space." => "Förnamn är endast alfabet och mellanslag.",
+	"First name should not more than 50 character." => "Förnamn får inte vara mer än 50 tecken.",
+	"Last name is required." => "Efternamn krävs.",
+	"Last name is only alphabets and space." => "Efternamnet är endast alfabet och mellanslag.",
+	"Last name should not more than 50 character." => "Efternamnet får inte vara mer än 50 tecken.",
+	"Display name is required." => "Visningsnamn krävs.",
+	"Display name is only alphabets and space." => "Visningsnamn är endast alfabet och mellanslag.",
+	"Display name should not more than 50 character." => "Visningsnamn får inte vara mer än 50 tecken.",
+	"Only alphanumeric, space, dot, @, _, and - are allowed." => "Endast alfanumeriska, mellanslag, punkt, @, _ och - är tillåtna.",
+	"Company name should not more than 100 character." => "Företagets namn får inte vara mer än 100 tecken.",
+	"Email is required." => "E-post krävs.",
+	"Please enter a valid email address. Like : sales@dasinfomedia.com" => "Ange en giltig e-postadress. Gilla: sales@dasinfomedia.com",
+	"Email you entered is already registered." => "E-post som du angav är redan registrerad.",
+	"Password is required." => "Lösenord krävs.",
+	"Password must be combination of letters and numbers." => "Lösenordet måste vara en kombination av bokstäver och siffror.",
+	"Password length minimum 6 character." => "Lösenordslängd minst 6 tecken.",
+	"Password length maximum 12 character." => "Lösenordslängd maximalt 12 tecken.",
+	"Confirm password is required." => "Bekräfta lösenord krävs.",
+	"Password and Confirm Password does not match." => "Lösenord och bekräfta lösenord matchar inte.",
+	"Password length minimum 6 character." => "Lösenordslängd minst 6 tecken.",
+	"Password length maximum 12 character." => "Lösenordslängd maximalt 12 tecken.",
+	"Contact number is required." => "Kontaktnummer krävs.",
+	"Contact number minimum 6 digits." => "Kontaktnummer minst 6 siffror.",
+	"Contact number maximum 16 digits." => "Kontaktnummer högst 16 siffror.",
+	"Contact number must be number, plus, minus and space only." => "Kontaktnummer måste vara nummer, plus, minus och endast mellanslag.",
+	"Landline number only numbers are allowed." => "Endast nummer till fasta telefoner är tillåtna.",
+	"Landline number minimum 6 digits." => "Fast nummer minst 6 siffror.",
+	"Landline number maximum 16 digits." => "Högsta fasta nummer 16 siffror.",
+	"Landline number must be number, plus, minus and space only." => "Fasttelefonnummer måste vara nummer, plus, minus och endast mellanslag.",
+	"Image must be a file of type: Jpg, Jpeg and Png." => "Bilden måste vara en fil av typen: Jpg, Jpeg och Png.",
+	"Country field is required." => "Landsfält krävs.",
+	"Address field is required." => "Adressfält krävs.",
+
+	"Join date is required." => "Anslutningsdatum krävs",
+	"Designation is required." => "Beteckning krävs",
+	"Designation is only alphabets and space." => "Beteckning är endast alfabet och rymd.",
+	"Designation should not more than 50 character." => "Beteckningen får inte vara mer än 50 tecken.",
+	
+	"Company name is required." => "Företagsnamn krävs.",
+	"Company name should not more than 100 character." => "Företagets namn får inte vara mer än 100 tecken.",
+
+	/********* Custom validation message translation (Color Module) **********/
+	"Color name is required." => "Färgnamn krävs.",
+	"Maximum 50 characters allowed." => "Maximalt 50 tecken tillåtet.",
+	"Special symbols are not allowed." => "Specialsymboler är inte tillåtna.",
+
+	/********* Custom validation message translation (Invoice Module) **********/
+	"Invoice type is required." => "Fakturatyp krävs.",
+	"Invoice number is required." => "Fakturanummer krävs.",
+	"Customer name is required." => "Kundnamn krävs.",
+	"Jobcard number is required." => "Jobbkortnummer krävs.",
+	"Vehicle name is required." => "Fordonsnamn krävs.",
+	"Customer name is required." => "Kundnamn krävs.",
+	"Invoice date is required." => "Fakturadatum krävs.",
+	"Total amount is required." => "Totalt belopp krävs.",
+	"Status is required." => "Status krävs.",
+	"Payment type is required." => "Betalningstyp krävs.",
+	"Grand total is required." => "Totalsumma krävs.",
+	"Paid amount is required." => "Betalt belopp krävs.",
+
+	/********* Custom validation message translation (Product Module) **********/
+	"Product date is required." => "Produktdatum krävs.",
+	"Name is required." => "Namn krävs.",
+	"Name is only alphanumeric and space." => "Namnet är endast alfanumeriskt och mellanslag.",
+	"Name should not more than 100 character." => "Namnet får inte vara mer än 100 tecken.",
+	"The type of the uploaded file should be an image." => "Typen av den uppladdade filen ska vara en bild.",
+	"Unit of measurement is required." => "Måttenhet krävs.",
+	"Price is required." => "Pris krävs.",
+	"Supplier is required." => "Leverantör krävs.",
+
+	/********* Custom validation message translation (Purchase Module) **********/
+	"Purchase number is required." => "Köpnummer krävs.",
+	"Purchase date is required." => "Köpdatum krävs.",
+	"Supplier name is required." => "Leverantörsnamn krävs.",
+
+	/********* Custom validation message translation (Service Module) **********/
+	"Jobcard number is required." => "Jobbkortnummer krävs.",
+	"Customer name is required." => "Kundnamn krävs.",
+	"Vehicle name is required." => "Fordonsnamn krävs.",
+	"Service date is required." => "Servicedatum krävs.",
+	"Assigne to is required." => "Tilldela till krävs.",
+	"Repair category is required." => "Reparationskategori krävs.",
+	"Service charge is required." => "Serviceavgift krävs.",
+	"Service charge is only numeric data." => "Serviceavgift är endast numerisk data.",
+	"Service charge is only number data." => "Serviceavgift är endast nummerdata.",
+	"First character is an alphabet after alphanumeric, space, dot, comma, hyphen and underscore are allowed." => "Första tecknet är ett alfabet efter alfanumeriska tecken, mellanslag, punkt, komma, bindestreck och understrykning är tillåtna.",
+
+
+	/********* Custom validation message translation (Tax Module) **********/
+	"Tax name is required." => "Skattnamn krävs.",
+	"Only alphanumeric, space, dot, @, _, % and - are allowed." => "Endast alfanumeriska, mellanslag, punkt, @, _,% och - är tillåtna.",
+	"Tax name should not more than 50 character." => "Skattenamnet får inte vara mer än 50 tecken.",
+	"Tax rate is required." => "Skattesats krävs.",
+	"The tax must be between 1 and 4 digits." => "Skatten måste vara mellan 1 och 4 siffror.",
+
+	/********* Custom validation message translation (Business Module) **********/
+	"Date is required." => "Datum krävs.",
+	"Title is required." => "Titel krävs.",
+	"After alphabet alphanumeric, space, dot, @, _, and - are allowed." => "Efter alfanumeriska alfabetiska tecken är blanksteg, punkt, @, _ och - tillåtna.",
+	"Title field should not more than 100 character." => "Titelfältet får inte vara mer än 100 tecken.",
+	"After alphabet alphanumeric, space, dot, @, _, and - are allowed." => "Efter alfanumeriska alfabetiska tecken är blanksteg, punkt, @, _ och - tillåtna.",
+	"Description should not more than 300 character." => "Beskrivningen får inte vara mer än 300 tecken.",
+
+	/********* Custom validation message translation (Custom Field Module) **********/
+	"Form name is required." => "Formulärnamn krävs.",
+	"Label name is required." => "Etikettnamn krävs.",
+	"Start should be alphabets only after supports alphanumeric, space, dot, @, _, and - are allowed." => "Start bör vara alfabet endast efter att stödja alfanumeriska, mellanslag, punkt, @, _ och - är tillåtna.",
+	"Label name should not more than 50 character." => "Etikettnamnet får inte vara mer än 50 tecken.",
+	"Type is required." => "Typ krävs.",
+
+
+	/********* Custom validation message translation (Expenses Module) **********/
+	"Main label is required." => "Huvudetikett krävs.",
+	"Only alphanumeric and space allowed." => "Endast alfanumeriskt och utrymme tillåtet.",
+	"Status field is required." => "Statusfält krävs.",
+	"Expense entry field is required." => "Inmatningsfält krävs.",
+	"Only numeric data allowed." => "Endast numeriska data tillåtna.",
+	"After point two digit allowed." => "Efter punkt tvåsiffrig tillåten.",
+	"Expense entry field is required." => "Inmatningsfält krävs.",
+	"Only numeric data allowed." => "Endast numeriska data tillåtna.",
+	"After point two digit allowed." => "Efter punkt tvåsiffrig tillåten.",
+
+
+	/********* Custom validation message translation (Expenses Module) **********/
+	"Start date is required." => "Startdatum krävs.",
+	"End date is required." => "Slutdatum krävs.",
+
+	/********* Custom validation message translation (Gatepass Module) **********/
+	"Jobcard is required." => "Jobbkort krävs.",
+	"Gatepass number is required." => "Gatepass-nummer krävs.",
+	"First name is required." => "Förnamn krävs.",
+	"Last name is required." => "Efternamn krävs.",
+	"Email is required." => "E-post krävs.",
+	"Contact number is required." => "Kontaktnummer krävs.",
+	"Vehicle name is required." => "Fordonsnamn krävs.",
+	"Vehicle type is required." => "Fordonstyp krävs.",
+	"Kilometre is required." => "Kilometer krävs.",
+	"Enter only numeric data." => "Ange endast numeriska data.",
+	"Out date is required." => "Utgångsdatum krävs.",
+
+	/********* Custom validation message translation (GeneralSetting Module) **********/
+	"System name is required." => "Systemnamn krävs.",
+	"System name must be alphabets, numbers and space." => "Systemnamnet måste vara alfabet, siffror och mellanslag.",
+	"Phone number is required." => "Telefonnummer krävs.",
+	"Phone number minimum 6 digits." => "Telefonnummer minst 6 siffror.",
+	"Phone number maximum 16 digits." => "Telefonnummer maximalt 16 siffror.",
+	"Phone number must be number, plus, minus and space only." => "Telefonnummer måste vara nummer, plus, minus och endast mellanslag.",
+	"Image must be Jpg, Jpeg and Png only." => "Bilden måste endast vara Jpg, Jpeg och Png.",
+	"Please enter valid email address." => "Ange giltig e-postadress.",
+	"Address is required." => "Adress krävs.",
+	
+
+	/********* Custom validation message translation (Income Module) **********/
+	"Payment status is required." => "Betalningsstatus krävs.",
+	"Income date is required." => "Inkomstdatum krävs.",
+	"Main label is required." => "Huvudetikett krävs.",
+	"Main label should be less than 50 charachters." => "Huvudetiketten bör vara mindre än 50 charachters.",
+	"First character is an alphabet after number, space, dot, comma, hyphen,  underscore, at are allowed." => "Första tecknet är ett alfabet efter nummer, mellanslag, punkt, komma, bindestreck, understrykning, vid är tillåtna.",
+	"Payment method is required." => "Betalningsmetod krävs.",
+	"Income entry is required." => "Inkomster krävs.",
+
+
+	"Invoice number is required." => "Fakturanummer krävs.",
+	"Payment status is required." => "Betalningsstatus krävs.",
+	"Income date is required." => "Inkomstdatum krävs.",
+	"Main label is required." => "Huvudetikett krävs.",
+	"Main label should be less than 50 charachters." => "Huvudetiketten bör vara mindre än 50 charachters.",
+	"First character is an alphabet after number, space, dot, comma, hyphen,  underscore, at are allowed." => "Första tecknet är ett alfabet efter nummer, mellanslag, punkt, komma, bindestreck, understrykning, vid är tillåtna.",
+	"Payment method is required." => "Betalningsmetod krävs.",
+	"Income entry is required." => "Inkomster krävs.",
+
+	/********* Custom validation message translation (Invoice Module) **********/
+	"Vehicle name is required." => "Fordonsnamn krävs.",
+	"Invoice date is required." => "Fakturadatum krävs.",
+	"Status is required." => "Status krävs.",
+	"Payment type is required." => "Betalningstyp krävs.",
+	"Grand total is required." => "Totalsumma krävs.",
+	"Paid amount is required." => "Betalt belopp krävs.",
+
+	/********* Custom validation message translation (Observation Library Module) **********/
+	"Vehicle name is required." => "Fordonsnamn krävs.",
+	"Checkpoint category is required." => "Kontrollpunktskategori krävs.",
+	"Check point is required." => "Kontrollpunkt krävs.",
+	"Start should be alphabets only after supports alphanumeric, space, dot, @, _, and - are allowed." => "Start bör vara alfabet endast efter att stödja alfanumeriska, mellanslag, punkt, @, _ och - är tillåtna.",
+	"Check point should not more than 30 character." => "Kontrollpunkten får inte vara mer än 30 tecken.",
+	
+	/********* Custom validation message translation (Other setting Module) **********/
+	"Timezone is required." => "Tidszon krävs.",
+	"Language is required." => "Språk krävs.",
+	"Date format is required." => "Datumformat krävs.",
+	"Currency is required." => "Valuta krävs.",
+
+	/********* Custom validation message translation (Payment Method Module) **********/
+	"Payment method is required." => "Betalningsmetod krävs.",
+	"Payment method allowed only alphabets and space." => "Betalningsmetod tillåts endast alfabet och utrymme.",
+	"Payment method should not more than 50 character." => "Betalningsmetod får inte vara mer än 50 tecken.",
+
+	/*** Custom validation message translation (Pay Payment(Inside Invoice Module) Form Module) ***/
+	"Invoice date is required." => "Fakturadatum krävs.",
+	"Payment type is required." => "Betalningstyp krävs.",
+	"Amount received is required." => "Mottaget belopp krävs.",
+
+
+	/*** Custom validation message translation (Quotation Module) ***/
+	"Customer name is required." => "Kundnamn krävs.",
+	"Vehicle name is required." => "Fordonsnamn krävs.",
+	"Service date is required." => "Servicedatum krävs.",
+	"Repair category is required." => "Reparationskategori krävs.",
+	"Service charge is required." => "Serviceavgift krävs.",
+	"Service charge is only number data." => "Serviceavgift är endast nummerdata.",
+	"First character is an alphabet after alphanumeric, space, dot, comma, hyphen and underscore are allowed." => "Första tecknet är ett alfabet efter alfanumeriska tecken, mellanslag, punkt, komma, bindestreck och understrykning är tillåtna.",
+
+	/*** Custom validation message translation (Rto tax Module) ***/
+	"Vehicle name is required." => "Fordonsnamn krävs.",
+	"RTO tax is required." => "RTO-skatt krävs.",
+	"RTO tax must be numeric data only." => "RTO-skatt får endast vara numeriska data.",
+	"After point only two digit allowed." => "Efter punkten är endast två siffror tillåtna.",
+	"Number plate charge is required." => "Laddning med nummerskylt krävs.",
+	"Number plate charge must be numeric data only." => "Nummerplattans laddning får endast vara numeriska data.",
+	"After point only two digit allowed." => "Efter punkten är endast tvåsiffrigt tillåtet.",
+	"Municiple road tax is required." => "Kommunal vägskatt krävs.",
+	"Municiple road tax must be numeric data only." => "Kommunal vägskatt får endast vara numeriska data.",
+
+	/*** Custom validation message translation (Service second step (Service Module)) ***/
+	"Out time date is required." => "Datum för slutdatum krävs.",
+	"Kilometre is required." => "Kilometer krävs.",
+
+	/*** Custom validation message translation (Stripe setting Module) ***/
+	"Publish key is required." => "Publiceringsnyckel krävs.",
+	"Secret key is required." => "Hemlig nyckel krävs.",
+
+
+	/*** Custom validation message translation (Vehicle Sale Module) ***/
+	"Bill no is required." => "Bill no krävs.",
+	"Sales date is required." => "Försäljningsdatum krävs.",
+	"Customer name is required." => "Kundnamn krävs.",
+	"Salesman name is required." => "Säljarens namn krävs.",
+	"Brand name is required." => "Varumärke krävs.",
+	"Model name is required." => "Modellnamn krävs.",
+	"Price is only numeric data allowed." => "Priset är endast numeriskt tillåtet.",
+	"Price is only numeric data." => "Priset är endast numerisk data.",
+	"Color is required." => "Färg krävs.",
+	"Total price is required." => "Totalt pris krävs.",
+	"After point only two digits allowed." => "Efter punkten är endast två siffror tillåtna.",
+	"Total price is only numeric data." => "Totalt pris är endast numeriska data.",
+	"Interval is required." => "Intervall krävs.",
+	"Number of service field is required." => "Antal servicefält krävs.",
+	"Assigned to field is required." => "Tilldelad fält krävs.",
+
+
+	/*** Custom validation message translation (Vehicle Module) ***/
+	//"Vehicle type is required." => "Fordonstyp krävs.",
+	"Vehicle brand is required." => "Fordonsmärke krävs.",
+	"Fuel type is required." => "Bränsletyp krävs.",
+	"Model name is required." => "Modellnamn krävs.",
+	"Manufacturer name is required." => "Tillverkarens namn krävs.",
+	"Product name is required." => "Produktnamn krävs.",
+	"Quantity is required." => "Antal krävs.",
+	
+	"Employees" => "Anställd",
+	"Support Staffs" => "Stödpersonal",
+	"Accountants" => "Revisor",
 ];
  
  

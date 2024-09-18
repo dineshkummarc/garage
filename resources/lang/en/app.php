@@ -83,10 +83,7 @@ return[
 	 'Monthly service progress'=>'Monthly service progress',
 	 'Ontime Service'=>'Ontime Service',
 	 'Opening Hours'=>'Opening Hours',
-	 'Holiday List'=>'Holiday List',
-	
-	 
-	 
+	 'Holiday List'=>'Holiday List',	 
 	
 	 
 	//Purchase page
@@ -791,7 +788,7 @@ return[
 	'Address:'=>'Address:',
 	'Contact:'=>'Contact:',
 	'Coupon Number'=>'Coupon Number',
-	'Regi. No.'=>'Regi. No.',
+	'Regi. No.'=>'Reg. No.',
 	'In Date'=>'In Date',
 	'Out Date'=>'Out Date',
 	'Assigned To'=>'Assigned To',
@@ -976,6 +973,392 @@ return[
 	"Part Details" => "Part Details",
 	"Sales Part Invoice" => "Sales Part Invoice",
 	"Add Sale Part Invoice" => "Add Sale Part Invoice",
+
+	// New lables added on 06/08/2020
+	"Number Plate" => "Number Plate",
+	"Enter Number Plate" => "Enter Number Plate",
+	"Maintenance History not available." => "Maintenance History not available.",
+	"Description not available" => "Description not available",
+	"Maintenance History" => "Maintenance History",
+	"Company Name" => "Company Name",
+	"Enter Company Name" => "Enter Company Name",
+	"Not Added" => "Not Added",
+
+	// stripe
+	"Stripe API Key Information" => "Stripe API Key Information",
+	"Update Your Live Stripe Keys Here !" => "Update Your Live Stripe Keys Here!",
+	"Stripe Settings" => "Stripe Settings",
+	"Stripe Secret key" => "Stripe Secret key",
+	"Stripe Publishable key" => "Stripe Publishable key",
+	"Enter Stripe Publishable Key" => "Enter Stripe Publishable Key",
+	"Enter Stripe Secret Key" => "Enter Stripe Secret Key",
+	"Stripe API Key Information" => "Stripe API Key Information",
+	"Please update stripe API key details to take payment directly from the card!" => "Please update stripe API key details to take payment directly from the card!",
+	"You can not pay more than 999999 using the card." => "You can not pay more than 999999 using the card.",
+
+
+	//MOT Module
+	"MOT Test" => "MOT Test",	
+	"MOT Test View" => "MOT Test View",
+	"Step 1: Fill MOT Details" => "Step 1: Fill MOT Details",
+	"OK = Satisfactory" => "OK = Satisfactory",
+	"X = Safety Item Defact" => "X = Safety Item Defact",
+	"R = Repair Required" => "R = Repair Required",
+	"NA = Not Applicable" => "NA = Not Applicable",
+	"Inside Cab" => "Inside Cab",
+	"Code" => "Code",
+	"Inspection Details" => "Inspection Details",
+	"Answer" => "Answer",
+	"Ground Level and Under Vehicle" => "Ground Level and Under Vehicle",
+	"Step 2: Show Filled MOT Details" => "Step 2: Show Filled MOT Details",	
+	"MOT Test Service Charge" => "MOT Test Service Charge",
+	"MOT TEST SERVICE CHARGE" => "MOT TEST SERVICE CHARGE",
+	"MOT Charge Detail" => "MOT Charge Detail",
+	"MOT Testing Charges" => "MOT Testing Charges",
+	"Completed" => "Completed",
+	"MOT Test Details" => "MOT Test Details",
+	"Vehicle Id" => "Vehicle Id",
+	"Service Id" => "Service Id",
+	"MOT Test Status" => "MOT Test Status",
+	"MOT Test Number" => "MOT Test Number",
+	"MOT Test Details are not Available for This Vehicle" => "MOT Test Details are not Available for This Vehicle",
+	"Point" => "Point",
+
+	//Custom Field for(Product, Purchase, Vehicle, VehicleType, VehicleBrand, Color, Service, Invoice, Sale, Salepart, Income, Expense, Rto)
+	"Data not available" => "Data not available",
+	"OTHER INFORMATION" => "OTHER INFORMATION",
+	"OTHER INFORMATION OF INVOICE" => "OTHER INFORMATION OF INVOICE",
+	"OTHER INFORMATION OF SERVICE" => "OTHER INFORMATION OF SERVICE",
+	"Enter" => "Enter",
+	"CUSTOMER OTHER DETAILS" => "CUSTOMER OTHER DETAILS",
+	"Customer Other Details" => "Customer Other Details",
+
+	"Please enter correct purchase key" => "Please enter correct purchase key",
+	"This purchase key is already registered with the different domain. If you have any issue please contact us at sales@dasinfomedia.com" => "This purchase key is already registered with the different domain. If you have any issue please contact us at sales@dasinfomedia.com",
+	"There seems to be some problem please try after sometime or contact us on sales@dasinfomedia.com" => "There seems to be some problem please try after sometime or contact us on sales@dasinfomedia.com",
+	"Please enter correct purchase key for this plugin." => "Please enter correct purchase key for this plugin.",
+	"Connection Problem occurs because server is down." => "Connection Problem occurs because server is down.",
+
+	"Vehicle Sale" => "Vehicle Sale",
+	"List Of Vehicle Sale" => "List Of Vehicle Sale",
+	"Add Vehicle Sale" => "Add Vehicle Sale",
+	"Edit Vehicle Sale" => "Edit Vehicle Sale",
+
+	"Part Sales" => "Part Sales",
+	"List Of Part Sales" => "List Of Part Sales",
+	"Add Part Sales" => "Add Part Sales",
+	"Edit Part Sales" => "Edit Part Sales",
+
+	"Service Stock" => "Service Stock",
+	"Product Service" => "Product Service",
+	
+	/*For Quotation module related language translations*/
+	"Quotation" => "Quotation",
+	"Quotation List" => "Quotation List",
+	"Add Quotation" => "Add Quotation",
+	"Edit Quotation" => "Edit Quotation",
+	"Quotation Process" => "Quotation Process",
+	"Quotation Process for..." => "Quotation Process for...",
+	"Do you want to final submit?, if yes so tick mark on checkbox." => "Do you want to final submit?, if yes so tick mark on checkbox.",
+	"Quotation Service Details for Jobcard Number" => "Quotation Service Details for Jobcard Number",
+	"Any kind of Tax not included inside quotation" => "Any kind of Tax not included inside quotation",
+	"Step - 1 : Add Quotation Service Details..." => "Step - 1 : Add Quotation Service Details...",
+	"Step - 2 : Add Quotation Service Details..." => "Step - 2 : Add Quotation Service Details...",
+	"Service Payment History" => "Service Payment History",
+	"Due Amount Reminder" => "Due Amount Reminder",
+
+	"Quotation Service Details" => "Quotation Service Details",
+	"Add" => "Add",
+	"Own Data" => "Own Data",
+	"Gatepass" => "Gate Pass",
+	"Observation Library" => "Observation Library",
+	"Other Setting [Timezone]" => "Other Setting [Timezone]",
+	"Other Setting [Language]" => "Other Setting [Language]",
+	"Other Setting [Date Format]" => "Other Setting [Date Format]",
+	"Other Setting [Currency]" => "Other Setting [Currency]",
+	"Quotation No" => "Quotation No",
+	"Quotation Number" => "Quotation Number",
+	"Quotaion is final, then click here." => "Quotaion is final, then click here.",
+	
+
+	/************ Custom field radio and checkbox ************/
+	"Radio" => "Radio",
+	"Checkbox" => "Checkbox",
+	"Radio Field Label" => "Radio Field Label",
+	"Enter radio label name" => "Enter radio label name",
+	"Checkbox Field Label" => "Checkbox Field Label",
+	"Enter checkbox label name" => "Enter checkbox label name",
+
+	/********* Custom validation message translation (Customer, Employee, Supportstaff, Accountatnt, Supplyer) **********/
+	"First name is required." => "First name is required.",
+	"First name is only alphabets and space." => "First name is only alphabets and space.",
+	"First name should not more than 50 character." => "First name should not more than 50 character.",
+	"Last name is required." => "Last name is required.",
+	"Last name is only alphabets and space." => "Last name is only alphabets and space.",
+	"Last name should not more than 50 character." => "Last name should not more than 50 character.",
+	"Display name is required." => "Display name is required.",
+	"Display name is only alphabets and space." => "Display name is only alphabets and space.",
+	"Display name should not more than 50 character." => "Display name should not more than 50 character.",
+	"Only alphanumeric, space, dot, @, _, and - are allowed." => "Only alphanumeric, space, dot, @, _, and - are allowed.",
+	"Company name should not more than 100 character." => "Company name should not more than 100 character.",
+	"Email is required." => "Email is required.",
+	"Please enter a valid email address. Like : sales@dasinfomedia.com" => "Please enter a valid email address. Like : sales@dasinfomedia.com",
+	"Email you entered is already registered." => "Email you entered is already registered.",
+	"Password is required." => "Password is required.",
+	"Password must be combination of letters and numbers." => "Password must be combination of letters and numbers.",
+	"Password length minimum 6 character." => "Password length minimum 6 character.",
+	"Password length maximum 12 character." => "Password length maximum 12 character.",
+	"Confirm password is required." => "Confirm password is required.",
+	"Password and Confirm Password does not match." => "Password and Confirm Password does not match.",
+	"Password length minimum 6 character." => "Password length minimum 6 character.",
+	"Password length maximum 12 character." => "Password length maximum 12 character.",
+	"Contact number is required." => "Contact number is required.",
+	"Contact number minimum 6 digits." => "Contact number minimum 6 digits.",
+	"Contact number maximum 16 digits." => "Contact number maximum 16 digits.",
+	"Contact number must be number, plus, minus and space only." => "Contact number must be number, plus, minus and space only.",
+	"Landline number only numbers are allowed." => "Landline number only numbers are allowed.",
+	"Landline number minimum 6 digits." => "Landline number minimum 6 digits.",
+	"Landline number maximum 16 digits." => "Landline number maximum 16 digits.",
+	"Landline number must be number, plus, minus and space only." => "Landline number must be number, plus, minus and space only.",
+	"Image must be a file of type: Jpg, Jpeg and Png." => "Image must be a file of type: Jpg, Jpeg and Png.",
+	"Country field is required." => "Country field is required.",
+	"Address field is required." => "Address field is required.",
+
+	"Join date is required." => "Join date is required",
+	"Designation is required." => "Designation is required",
+	"Designation is only alphabets and space." => "Designation is only alphabets and space.",
+	"Designation should not more than 50 character." => "Designation should not more than 50 character.",
+	
+	"Company name is required." => "Company name is required.",
+	"Company name should not more than 100 character." => "Company name should not more than 100 character.",
+
+	/********* Custom validation message translation (Color Module) **********/
+	"Color name is required." => "Color name is required.",
+	"Maximum 50 characters allowed." => "Maximum 50 characters allowed.",
+	"Special symbols are not allowed." => "Special symbols are not allowed.",
+
+	/********* Custom validation message translation (Invoice Module) **********/
+	"Invoice type is required." => "Invoice type is required.",
+	"Invoice number is required." => "Invoice number is required.",
+	"Customer name is required." => "Customer name is required.",
+	"Jobcard number is required." => "Jobcard number is required.",
+	"Vehicle name is required." => "Vehicle name is required.",
+	"Customer name is required." => "Customer name is required.",
+	"Invoice date is required." => "Invoice date is required.",
+	"Total amount is required." => "Total amount is required.",
+	"Status is required." => "Status is required.",
+	"Payment type is required." => "Payment type is required.",
+	"Grand total is required." => "Grand total is required.",
+	"Paid amount is required." => "Paid amount is required.",
+
+	/********* Custom validation message translation (Product Module) **********/
+	"Product date is required." => "Product date is required.",
+	"Name is required." => "Name is required.",
+	"Name is only alphanumeric and space." => "Name is only alphanumeric and space.",
+	"Name should not more than 100 character." => "Name should not more than 100 character.",
+	"The type of the uploaded file should be an image." => "The type of the uploaded file should be an image.",
+	"Unit of measurement is required." => "Unit of measurement is required.",
+	"Price is required." => "Price is required.",
+	"Supplier is required." => "Supplier is required.",
+
+	/********* Custom validation message translation (Purchase Module) **********/
+	"Purchase number is required." => "Purchase number is required.",
+	"Purchase date is required." => "Purchase date is required.",
+	"Supplier name is required." => "Supplier name is required.",
+
+	/********* Custom validation message translation (Service Module) **********/
+	"Jobcard number is required." => "Jobcard number is required.",
+	"Customer name is required." => "Customer name is required.",
+	"Vehicle name is required." => "Vehicle name is required.",
+	"Service date is required." => "Service date is required.",
+	"Assigne to is required." => "Assigne to is required.",
+	"Repair category is required." => "Repair category is required.",
+	"Service charge is required." => "Service charge is required.",
+	"Service charge is only numeric data." => "Service charge is only numeric data.",
+	"Service charge is only number data." => "Service charge is only number data.",
+	"First character is an alphabet after alphanumeric, space, dot, comma, hyphen and underscore are allowed." => "First character is an alphabet after alphanumeric, space, dot, comma, hyphen and underscore are allowed.",
+
+
+	/********* Custom validation message translation (Tax Module) **********/
+	"Tax name is required." => "Tax name is required.",
+	"Only alphanumeric, space, dot, @, _, % and - are allowed." => "Only alphanumeric, space, dot, @, _, % and - are allowed.",
+	"Tax name should not more than 50 character." => "Tax name should not more than 50 character.",
+	"Tax rate is required." => "Tax rate is required.",
+	"The tax must be between 1 and 4 digits." => "The tax must be between 1 and 4 digits.",
+
+	/********* Custom validation message translation (Business Module) **********/
+	"Date is required." => "Date is required.",
+	"Title is required." => "Title is required.",
+	"After alphabet alphanumeric, space, dot, @, _, and - are allowed." => "After alphabet alphanumeric, space, dot, @, _, and - are allowed.",
+	"Title field should not more than 100 character." => "Title field should not more than 100 character.",
+	"After alphabet alphanumeric, space, dot, @, _, and - are allowed." => "After alphabet alphanumeric, space, dot, @, _, and - are allowed.",
+	"Description should not more than 300 character." => "Description should not more than 300 character.",
+
+	/********* Custom validation message translation (Custom Field Module) **********/
+	"Form name is required." => "Form name is required.",
+	"Label name is required." => "Label name is required.",
+	"Start should be alphabets only after supports alphanumeric, space, dot, @, _, and - are allowed." => "Start should be alphabets only after supports alphanumeric, space, dot, @, _, and - are allowed.",
+	"Label name should not more than 50 character." => "Label name should not more than 50 character.",
+	"Type is required." => "Type is required.",
+
+
+	/********* Custom validation message translation (Expenses Module) **********/
+	"Main label is required." => "Main label is required.",
+	"Only alphanumeric and space allowed." => "Only alphanumeric and space allowed.",
+	"Status field is required." => "Status field is required.",
+	"Expense entry field is required." => "Expense entry field is required.",
+	"Only numeric data allowed." => "Only numeric data allowed.",
+	"After point two digit allowed." => "After point two digit allowed.",
+	"Expense entry field is required." => "Expense entry field is required.",
+	"Only numeric data allowed." => "Only numeric data allowed.",
+	"After point two digit allowed." => "After point two digit allowed.",
+
+
+	/********* Custom validation message translation (Expenses Module) **********/
+	"Start date is required." => "Start date is required.",
+	"End date is required." => "End date is required.",
+
+	/********* Custom validation message translation (Gatepass Module) **********/
+	"Jobcard is required." => "Jobcard is required.",
+	"Gatepass number is required." => "Gatepass number is required.",
+	"First name is required." => "First name is required.",
+	"Last name is required." => "Last name is required.",
+	"Email is required." => "Email is required.",
+	"Contact number is required." => "Contact number is required.",
+	"Vehicle name is required." => "Vehicle name is required.",
+	"Vehicle type is required." => "Vehicle type is required.",
+	"Kilometre is required." => "Kilometre is required.",
+	"Enter only numeric data." => "Enter only numeric data.",
+	"Out date is required." => "Out date is required.",
+
+	/********* Custom validation message translation (GeneralSetting Module) **********/
+	"System name is required." => "System name is required.",
+	"System name must be alphabets, numbers and space." => "System name must be alphabets, numbers and space.",
+	"Phone number is required." => "Phone number is required.",
+	"Phone number minimum 6 digits." => "Phone number minimum 6 digits.",
+	"Phone number maximum 16 digits." => "Phone number maximum 16 digits.",
+	"Phone number must be number, plus, minus and space only." => "Phone number must be number, plus, minus and space only.",
+	"Image must be Jpg, Jpeg and Png only." => "Image must be Jpg, Jpeg and Png only.",
+	"Please enter valid email address." => "Please enter valid email address.",
+	"Address is required." => "Address is required.",
+	
+
+	/********* Custom validation message translation (Income Module) **********/
+	"Payment status is required." => "Payment status is required.",
+	"Income date is required." => "Income date is required.",
+	"Main label is required." => "Main label is required.",
+	"Main label should be less than 50 charachters." => "Main label should be less than 50 charachters.",
+	"First character is an alphabet after number, space, dot, comma, hyphen,  underscore, at are allowed." => "First character is an alphabet after number, space, dot, comma, hyphen,  underscore, at are allowed.",
+	"Payment method is required." => "Payment method is required.",
+	"Income entry is required." => "Income entry is required.",
+
+
+	"Invoice number is required." => "Invoice number is required.",
+	"Payment status is required." => "Payment status is required.",
+	"Income date is required." => "Income date is required.",
+	"Main label is required." => "Main label is required.",
+	"Main label should be less than 50 charachters." => "Main label should be less than 50 charachters.",
+	"First character is an alphabet after number, space, dot, comma, hyphen,  underscore, at are allowed." => "First character is an alphabet after number, space, dot, comma, hyphen,  underscore, at are allowed.",
+	"Payment method is required." => "Payment method is required.",
+	"Income entry is required." => "Income entry is required.",
+
+	/********* Custom validation message translation (Invoice Module) **********/
+	"Vehicle name is required." => "Vehicle name is required.",
+	"Invoice date is required." => "Invoice date is required.",
+	"Status is required." => "Status is required.",
+	"Payment type is required." => "Payment type is required.",
+	"Grand total is required." => "Grand total is required.",
+	"Paid amount is required." => "Paid amount is required.",
+
+	/********* Custom validation message translation (Observation Library Module) **********/
+	"Vehicle name is required." => "Vehicle name is required.",
+	"Checkpoint category is required." => "Checkpoint category is required.",
+	"Check point is required." => "Check point is required.",
+	"Start should be alphabets only after supports alphanumeric, space, dot, @, _, and - are allowed." => "Start should be alphabets only after supports alphanumeric, space, dot, @, _, and - are allowed.",
+	"Check point should not more than 30 character." => "Check point should not more than 30 character.",
+	
+	/********* Custom validation message translation (Other setting Module) **********/
+	"Timezone is required." => "Timezone is required.",
+	"Language is required." => "Language is required.",
+	"Date format is required." => "Date format is required.",
+	"Currency is required." => "Currency is required.",
+
+	/********* Custom validation message translation (Payment Method Module) **********/
+	"Payment method is required." => "Payment method is required.",
+	"Payment method allowed only alphabets and space." => "Payment method allowed only alphabets and space.",
+	"Payment method should not more than 50 character." => "Payment method should not more than 50 character.",
+
+	/*** Custom validation message translation (Pay Payment(Inside Invoice Module) Form Module) ***/
+	"Invoice date is required." => "Invoice date is required.",
+	"Payment type is required." => "Payment type is required.",
+	"Amount received is required." => "Amount received is required.",
+
+
+	/*** Custom validation message translation (Quotation Module) ***/
+	"Customer name is required." => "Customer name is required.",
+	"Vehicle name is required." => "Vehicle name is required.",
+	"Service date is required." => "Service date is required.",
+	"Repair category is required." => "Repair category is required.",
+	"Service charge is required." => "Service charge is required.",
+	"Service charge is only number data." => "Service charge is only number data.",
+	"First character is an alphabet after alphanumeric, space, dot, comma, hyphen and underscore are allowed." => "First character is an alphabet after alphanumeric, space, dot, comma, hyphen and underscore are allowed.",
+
+	/*** Custom validation message translation (Rto tax Module) ***/
+	"Vehicle name is required." => "Vehicle name is required.",
+	"RTO tax is required." => "RTO tax is required.",
+	"RTO tax must be numeric data only." => "RTO tax must be numeric data only.",
+	"After point only two digit allowed." => "After point only two digit allowed.",
+	"Number plate charge is required." => "Number plate charge is required.",
+	"Number plate charge must be numeric data only." => "Number plate charge must be numeric data only.",
+	"After point only two digit allowed." => "After point only two digit allowed.",
+	"Municiple road tax is required." => "Municiple road tax is required.",
+	"Municiple road tax must be numeric data only." => "Municiple road tax must be numeric data only.",
+	"After point only two digit allowed." => "After point only two digit allowed.",
+
+	/*** Custom validation message translation (Service second step (Service Module)) ***/
+	"Out time date is required." => "Out time date is required.",
+	"Kilometre is required." => "Kilometre is required.",
+
+	/*** Custom validation message translation (Stripe setting Module) ***/
+	"Publish key is required." => "Publish key is required.",
+	"Secret key is required." => "Secret key is required.",
+
+
+	/*** Custom validation message translation (Vehicle Sale Module) ***/
+	"Bill no is required." => "Bill no is required.",
+	"Sales date is required." => "Sales date is required.",
+	"Customer name is required." => "Customer name is required.",
+	"Salesman name is required." => "Salesman name is required.",
+	"Brand name is required." => "Brand name is required.",
+	"Model name is required." => "Model name is required.",
+	"Price is only numeric data allowed." => "Price is only numeric data allowed.",
+	"Price is only numeric data." => "Price is only numeric data.",
+	"Color is required." => "Color is required.",
+	"Total price is required." => "Total price is required.",
+	"After point only two digits allowed." => "After point only two digits allowed.",
+	"Total price is only numeric data." => "Total price is only numeric data.",
+	"Interval is required." => "Interval is required.",
+	"Number of service field is required." => "Number of service field is required.",
+	"Assigned to field is required." => "Assigned to field is required.",
+
+
+	/*** Custom validation message translation (Vehicle Module) ***/
+	//"Vehicle type is required." => "Vehicle type is required.",
+	"Vehicle brand is required." => "Vehicle brand is required.",
+	"Fuel type is required." => "Fuel type is required.",
+	"Model name is required." => "Model name is required.",
+	"Manufacturer name is required." => "Manufacturer name is required.",
+	"Product name is required." => "Product name is required.",
+	"Quantity is required." => "Quantity is required.",
+	
+	"Employees" => "Employee",
+	"Support Staffs" => "Support Staff",
+	"Accountants" => "Accountant",
+
+
+
+	"Please enter radio label name on textbox after click on Add button." => "",
+
 ];
 
 ?>

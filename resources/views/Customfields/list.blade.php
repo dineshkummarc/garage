@@ -1,8 +1,7 @@
 @extends('layouts.app')
 @section('content')
-		<!-- page content -->
-<?php $userid = Auth::user()->id; ?>
-@if (getAccessStatusUser('Custom Fields',$userid)=='yes')
+
+<!-- page content -->
         <div class="right_col" role="main">
 			<div class="">
 				<div class="page-title">
@@ -34,8 +33,12 @@
 					<div class="col-md-12 col-sm-12 col-xs-12" >
 						<div class="x_content">
 							<ul class="nav nav-tabs bar_tabs tabconatent" role="tablist">
-								<li role="presentation" class="active suppo_llng_li floattab"><a href="{!! url('setting/custom/list')!!}"><span class="visible-xs"></span><i class="fa fa-list fa-lg">&nbsp;</i><b>{{ trans('app.List Custom Field')}}</b></a></li>
-								<li role="presentation" class="suppo_llng_li_add floattab"><a href="{!! url('setting/custom/add')!!}"><span class="visible-xs"></span><i class="fa fa-plus-circle fa-lg">&nbsp;</i> {{ trans('app.Add Custom Field')}}</a></li>
+								@can('customfield_view')
+									<li role="presentation" class="active"><a href="{!! url('setting/custom/list')!!}"><span class="visible-xs"></span><i class="fa fa-list fa-lg">&nbsp;</i><b>{{ trans('app.List Custom Field')}}</b></a></li>
+								@endcan
+								@can('customfield_add')
+									<li role="presentation" class="setSizeForAddCustomFieldForSmallDevice"><a href="{!! url('setting/custom/add')!!}"><span class="visible-xs"></span><i class="fa fa-plus-circle fa-lg">&nbsp;</i> {{ trans('app.Add Custom Field')}}</a></li>
+								@endcan
 							</ul>
 						</div>
 			
@@ -48,7 +51,10 @@
 										<th>{{ trans('app.Label')}}</th>
 										<th>{{ trans('app.Type')}}</th>
 										<th>{{ trans('app.Required')}}</th>
-										<th>{{ trans('app.Action')}}</th>
+										
+										@canany(['customfield_edit','customfield_delete'])
+			                        		<th>{{ trans('app.Action')}}</th>
+			                        	@endcan
 									</tr>
 								</thead>
 								<tbody>
@@ -60,10 +66,17 @@
 										<td>{{ $tbl_custom_field->label}}</td>
 										<td>{{ ucfirst($tbl_custom_field->type)}}</td>
 										<td>{{ ucfirst($tbl_custom_field->required)}}</td>
+
+										@canany(['customfield_edit','customfield_delete'])
 										<td>
-											<a href="{!! url('/setting/custom/list/edit/'.$tbl_custom_field->id) !!}" ><button type="button" class="btn btn-round btn-success">{{ trans('app.Edit')}}</button></a>
-											<a url="{!! url('/setting/custom/list/delete/'.$tbl_custom_field->id) !!}" class="sa-warning"><button type="button" class="btn btn-round btn-danger dgr">{{ trans('app.Delete')}}</button></a>
+											@can('customfield_edit')
+												<a href="{!! url('/setting/custom/list/edit/'.$tbl_custom_field->id) !!}" ><button type="button" class="btn btn-round btn-success">{{ trans('app.Edit')}}</button></a>
+											@endcan
+											@can('customfield_delete')
+												<a url="{!! url('/setting/custom/list/delete/'.$tbl_custom_field->id) !!}" class="sa-warning"><button type="button" class="btn btn-round btn-danger dgr">{{ trans('app.Delete')}}</button></a>
+											@endcan
 										</td>
+										@endcanany
 									</tr>
 									<?php $i++; ?>
 									@endforeach	
@@ -74,15 +87,8 @@
 				</div>
 			</div>
         </div>
-	@else
-		<div class="right_col" role="main">
-			<div class="nav_menu main_title" style="margin-top:4px;margin-bottom:15px;">
-				<div class="nav toggle" style="padding-bottom:16px;">
-					<span class="titleup">&nbsp {{ trans('app.You are not authorize this page.')}}</span>
-				</div>
-			</div>
-		</div>
-	@endif  
+<!-- page content end -->	
+	 
 <script src="{{ URL::asset('vendors/jquery/dist/jquery.min.js') }}"></script>
 <script>
 $(document).ready(function() {

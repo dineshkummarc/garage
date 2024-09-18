@@ -30,7 +30,8 @@
 				<div class="col-md-6 col-sm-12 col-xs-12 ">
 					<p>
 					<?php 
-					echo $logo->address;
+					echo $logo->address." ";
+					echo "<br>".getCityName($logo->city_id);
 					echo ", ".getStateName($logo->state_id);
 					echo ", ".getCountryName($logo->country_id);
 					echo "<br>".$logo->email;
@@ -48,7 +49,7 @@
 					</tr>
 					<tr>
 					  <th>{{ trans('app.Address:')}}</th>
-					  <td class="cname"><?php echo getCustomerAddress($custo_info->id).",".getCityName($custo_info->city_id).",".getStateName($custo_info->state_id).", ".getCountryName($custo_info->country_id); ?></td>
+					  <td class="cname"><?php echo getCustomerAddress($custo_info->id).", "?> <?php echo (getCityName($custo_info->city_id) != null) ? getCityName($custo_info->city_id) .", " : '' ?> <?php echo getStateName($custo_info->state_id).", ".getCountryName($custo_info->country_id); ?></td>
 					</tr>
 					<tr>
 					  <th>{{ trans('app.Contact:')}}</th>
@@ -71,7 +72,7 @@
 							<th class="cname text-center">{{ trans('app.Jobcard Number')}}</th>
 							<th class="cname text-center">{{ trans('app.Coupon Number')}}</th>
 							<th class="cname text-center">{{ trans('app.Vehicle Name')}}</th>
-							<th class="cname text-center">{{ trans('app.Regi. No.')}}</th>
+							<th class="cname text-center">{{ trans('app.Number Plate')}}</th>
 							<th class="cname text-center">{{ trans('app.In Date')}}</th>
 							<th class="cname text-center">{{ trans('app.Out Date')}}</th>								
 						</tr>
@@ -82,7 +83,7 @@
 							<td class="cname text-center"><?php echo $used_cpn_data->jocard_no; ?></td>						
 							<td class="cname text-center"><?php if(!empty($used_cpn_data->coupan_no)){echo $used_cpn_data->coupan_no;} else{ echo "Paid Service";} ?></td>
 							<td class="cname text-center"><?php echo getVehicleName($used_cpn_data->vehicle_id) ?></td>
-							<td class="cname text-center"><?php echo $regi->registration_no;  ?></td>
+							<td class="cname text-center"><?php echo getVehicleNumberPlate($vhi_no->vehicle_id);  ?></td>
 							<td class="cname text-center"><?php echo date(getDateFormat(),strtotime($used_cpn_data->in_date)); ?></td>
 							<td class="cname text-center"><?php echo date(getDateFormat(),strtotime($used_cpn_data->out_date)); ?></td>
 							
@@ -102,8 +103,8 @@
 						<tbody>
 							<tr>
 								<td class="cname text-center"><?php echo getAssignedName($vhi_no->assign_to); ?></td>
-								<td class="cname text-center"><?php echo $vhi_no->service_category; ?></td>
-								<td class="cname text-center"><?php echo $vhi_no->service_type; ?></td>
+								<td class="cname text-center"><?php echo ucwords($vhi_no->service_category); ?></td>
+								<td class="cname text-center"><?php echo ucwords($vhi_no->service_type); ?></td>
 								<td class="cname text-center"><?php echo $vhi_no->detail; ?></td>
 							</tr>					
 					  </tbody>
@@ -193,6 +194,100 @@
 							?>
 						</tbody>
 					</table>
+
+			<!-- MOT Test Service Charge Details Start -->
+				<?php  
+					//$vhi_no->mot_status
+                  	$mot_status = $vhi_no->mot_status;
+                  	$total3=0;
+                           
+                  	if ($mot_status == 1) 
+                  	{
+                  
+               	?>
+
+					<table class="table table-bordered" width="100%" border="1" style="border-collapse:collapse;">
+							<tr class="printimg">
+								<td class="cname">{{ trans('app.MOT TEST SERVICE CHARGE') }}</td>
+							</tr>
+					</table>
+
+					<table class="table table-bordered adddatatable" width="100%" border="1" style="border-collapse:collapse;">
+						<thead>	
+							<tr>
+								<th class="text-center">#</th>
+								<th class="text-center">{{ trans('app.MOT Charge Detail') }}</th>
+								<th class="text-center">{{ trans('app.MOT Test') }}</th>
+								<th class="text-center">{{ trans('app.Price') }} (<?php echo getCurrencySymbols(); ?>)</th>
+								<th class="text-center">{{ trans('app.Total Price') }} (<?php echo getCurrencySymbols(); ?>)</th>
+							</tr>
+						</thead>
+						<tbody>
+                        	<tr>
+                           		<td class="text-center cname">1</td>
+                           		<td class="text-center cname">{{ trans('app.MOT Testing Charges') }}</td>
+                           		<td class="text-center cname">{{ trans('app.Completed') }}</td>
+                           		<td class="text-center cname"><?php echo number_format((float) 0, 2); ?></td>
+                           		<td class="text-center cname"><?php echo number_format((float) 0, 2); ?></td>
+                           		<?php $total3 += 0;  ?>
+                        	</tr>
+                     	</tbody>
+                  	</table>
+               	<?php
+                  	} 
+               	?>
+            <!-- MOT Test Service Charge Details Ebd -->
+
+
+			<!-- For Custom Field -->
+				@if(!empty($tbl_custom_fields))
+					<table class="table table-bordered" width="100%" border="1" style="border-collapse:collapse;">
+							<tr class="printimg">
+								<td class="cname" colspan="">{{ trans('app.OTHER INFORMATION') }}</td>
+							</tr>
+					</table>
+						
+					<table class="table table-bordered adddatatable" width="100%" border="1" style="border-collapse:collapse;">
+						@foreach($tbl_custom_fields as $tbl_custom_field)	
+							<?php 
+								$tbl_custom = $tbl_custom_field->id;
+								$userid = $vhi_no->id;
+																		
+								$datavalue = getCustomDataService($tbl_custom,$userid);
+							?>
+							@if($tbl_custom_field->type == "radio")
+								@if($datavalue != "")
+									<?php
+										$radio_selected_value = getRadioSelectedValue($tbl_custom_field->id, $datavalue);
+									?>
+
+									<tr>
+										<th class="text-center">{{$tbl_custom_field->label}} :</th>
+										<td class="text-center cname">{{$radio_selected_value}}</td>
+									</tr>
+								@else
+									<tr>
+										<th class="text-center">{{$tbl_custom_field->label}} :</th>
+										<td class="text-center cname">{{ trans('app.Data not available') }}</td>
+									</tr>
+								@endif
+							@else
+								@if($datavalue != null)
+									<tr>
+										<th class="text-center">{{$tbl_custom_field->label}} :</th>
+										<td class="text-center cname">{{$datavalue}}</td>
+									</tr>
+								@else
+									<tr>
+										<th class="text-center">{{$tbl_custom_field->label}} :</th>
+										<td class="text-center cname">{{ trans('app.Data not available') }}</td>
+									</tr>
+								@endif
+							@endif
+						@endforeach
+					</table>	
+				@endif
+			<!-- For Custom Field End -->
 				
 			</div>
 		</div>

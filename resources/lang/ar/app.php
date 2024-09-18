@@ -1,5 +1,6 @@
 <?php 
 return[
+		// Arabic
         //APP Menu page
       'Garrage Management System'=>'نظام إدارة غاريج',
 	  'Welcome'=>'أهلا بك',
@@ -958,5 +959,402 @@ return[
 	"Purchase Number"=>"رقم الشراء",
 	"RTO"=>"Hrito",
 	"Regional Transport Office"=>"مكتب النقل الإقليمي",
+
+	// New lables added 8/06/2020
+	"Number Plate" => "لوحة الأرقام",
+	"Enter Number Plate" => "أدخل رقم اللوحة",
+	"Maintenance History not available." => "محفوظات الصيانة غير متوفرة.",
+	"Description not available" => "الوصف غير متاح",
+	"Maintenance History" => "محفوظات الصيانة",
+	"Company Name" => "اسم الشركة",
+	"Enter Company Name" => "أدخل اسم الشركة",
+	"Not Added" => "غير مضافة",
+
+	// stripe
+	"Stripe API Key Information" => "Stripe API Key Information",
+	"Update Your Live Stripe Keys Here!" => "قم بتحديث مفاتيح شريط البث المباشر هنا!",
+	"Stripe Settings" => "إعدادات الشريط",
+	"Stripe Secret key" => "مفتاح سر الشريط",
+	"Enter Stripe Publishable Key" => "أدخل مفتاح الشريط القابل للنشر",
+	"Enter Stripe Secret Key" => "أدخل مفتاح سر الشريط",
+	"Stripe API Key Information" => "Stripe API Key Information",
+	"Stripe Publishable key" => "شريط قابل للنشر",
+	"Please update stripe API key details to take payment directly from the card!" => "يُرجى تحديث التفاصيل الأساسية لواجهة برمجة التطبيقات للشريط لأخذ الدفع مباشرة من البطاقة!",
+	"You can not pay more than 999999 using the card." => "لا يمكنك دفع أكثر من 999999 باستخدام البطاقة.",
+
+
+
+	//MOT Module
+	"MOT Test" => "اختبار MOT",
+
+	"MOT Test View" => "عرض اختبار MOT",
+	"Step 1: Fill MOT Details" => "الخطوة 1: املأ تفاصيل MOT",
+	"OK = Satisfactory" => "حسنا = مرض",
+	"X = Safety Item Defact" => "X = خلل في عنصر الأمان",
+	"R = Repair Required" => "R = الإصلاح مطلوب",
+	"NA = Not Applicable" => "NA = لا ينطبق",
+	"Inside Cab" => "داخل الكابينة",
+	"Code" => "الشفرة",
+	"Inspection Details" => "تفاصيل التفتيش",
+	"Answer" => "إجابة",
+	"Ground Level and Under Vehicle" => "مستوى الأرض وتحت السيارة",
+	"Step 2: Show Filled MOT Details" => "الخطوة 2: إظهار تفاصيل MOT المعبأة",
+
+	"MOT Test Service Charge" => "رسوم خدمة اختبار MOT",
+
+	"MOT TEST SERVICE CHARGE" => "رسوم خدمة اختبار MOT",
+	"MOT Charge Detail" => "تفاصيل رسوم MOT",
+	"MOT Testing Charges" => "رسوم اختبار MOT",
+	"Completed" => "منجز",
+
+	"MOT Test Details" => "تفاصيل اختبار MOT",
+	"Vehicle Id" => "رقم المركبة",
+	"Service Id" => "معرف الخدمة",
+	"MOT Test Status" => "حالة اختبار MOT",
+	"MOT Test Number" => "رقم اختبار MOT",
+	"MOT Test Details are not Available for This Vehicle" => "تفاصيل اختبار MOT غير متوفرة لهذه السيارة",
+	"Point" => "نقطة",
+	
+	//Custom Field for(Product, Purchase, Vehicle, VehicleType, VehicleBrand, Color, Service, Invoice, Sale, Salepart, Income, Expense, Rto)
+	"Data not available" => "البيانات غير متوفرة",
+	"OTHER INFORMATION" => "معلومات أخرى",
+
+	"OTHER INFORMATION OF INVOICE" => "معلومات أخرى عن الفاتورة",
+
+	"OTHER INFORMATION OF SERVICE" => "معلومات أخرى عن الخدمة",
+	"Enter" => "أدخل",
+
+	"CUSTOMER OTHER DETAILS" => "تفاصيل العميل الأخرى",
+	"Customer Other Details" => "تفاصيل العميل الأخرى",
+
+	"Please enter correct purchase key" => "الرجاء إدخال مفتاح الشراء الصحيح",
+	"This purchase key is already registered with the different domain. If you have any issue please contact us at sales@dasinfomedia.com" => "مفتاح الشراء هذا مسجل بالفعل مع المجال المختلف. إذا كانت لديك أي مشكلة ، فيرجى الاتصال بنا على sales@dasinfomedia.com",
+	"There seems to be some problem please try after sometime or contact us on sales@dasinfomedia.com" => "يبدو أن هناك بعض المشاكل يرجى المحاولة بعد وقت أو الاتصال بنا على sales@dasinfomedia.com",
+	"Please enter correct purchase key for this plugin." => "الرجاء إدخال مفتاح الشراء الصحيح لهذا البرنامج المساعد.",
+	"Connection Problem occurs because server is down." => "تحدث مشكلة في الاتصال بسبب تعطل الخادم.",
+
+	"Vehicle Sale" => "بيع المركبات",
+	"List Of Vehicle Sale" => "قائمة بيع المركبات",
+	"Add Vehicle Sale" => "إضافة بيع السيارة",
+	"Edit Vehicle Sale" => "تحرير بيع السيارة",
+
+	"Part Sales" => "مبيعات الجزء",
+	"List Of Part Sales" => "قائمة مبيعات الأجزاء",
+	"Add Part Sales" => "إضافة قسم المبيعات",
+	"Edit Part Sales" => "تحرير مبيعات الجزء",
+
+	"Service Stock" => "مخزون الخدمة",
+	"Product Service" => "خدمة المنتج",
+
+	/*Quotations*/
+	"Quotation" => "اقتباس",
+	"Quotation List" => "اقتباس قائمة",
+	"Add Quotation" => "أضف اقتباس",
+	"Edit Quotation" => "تعديل اقتباس",
+	"Quotation Process" => "عملية الاقتباس",
+	"Quotation Process for..." => "عملية اقتباس لـ ...",
+	"Do you want to final submit?, if yes so tick mark on checkbox." => "هل تريد التقديم النهائي؟ إذا كانت الإجابة بنعم ، ضع علامة في خانة الاختيار.",
+	"Quotation Service Details for Jobcard Number" => "تفاصيل خدمة عرض الأسعار لرقم بطاقة العمل",
+	"Any kind of Tax not included inside quotation" => "أي نوع من الضرائب غير المدرجة داخل الاقتباس",
+
+	"Step - 1 : Add Quotation Service Details..." => "الخطوة - 1: إضافة تفاصيل خدمة الأسعار ...",
+	"Step - 2 : Add Quotation Service Details..." => "الخطوة - 2 : إضافة تفاصيل خدمة الأسعار ...",
+
+	"Service Payment History" => "سجل دفع الخدمة",
+	"Due Amount Reminder" => "تذكير بالمبلغ المستحق",
+
+	"Quotation Service Details" => "تفاصيل خدمة التسعير",
+	'Add' => 'يضيف',
+	'Own Data' => 'البيانات الخاصة',
+	'Gatepass' => 'عبور البوابة',
+	'Observation Library' => 'مكتبة المراقبة',
+	'Other Setting [Timezone]' => 'إعدادات أخرى [المنطقة الزمنية]',
+	'Other Setting [Language]' => 'إعداد آخر [اللغة]',
+	'Other Setting [Date Format]' => 'إعداد آخر [تنسيق التاريخ]',
+	'Other Setting [Currency]' => 'إعداد آخر [العملة]',
+	'Quotation No' => 'سؤال رقم',
+	'Quotation Number' => 'رقم الإقتباس',
+	'Quotaion is final, then click here.' => 'الاقتباس نهائي ، ثم انقر هنا.',
+
+
+	/************ Custom field radio and checkbox ************/
+	"Radio" => "راديو",
+	"Checkbox" => "مربع الاختيار",
+	"Radio Field Label" => "تسمية حقل الراديو",
+	"Enter radio label name" => "أدخل اسم تسمية الراديو",
+	"Checkbox Field Label" => "تسمية حقل مربع الاختيار",
+	"Enter checkbox label name" => "أدخل اسم تسمية مربع الاختيار",
+
+	/********* Custom validation message translation (Customer, Employee, Supportstaff, Accountatnt, Supplyer) **********/
+	"First name is required." => "الإسم الأول مطلوب.",
+	"First name is only alphabets and space." => "الاسم الأول هو الأبجدية والمسافات فقط.",
+	"First name should not more than 50 character." => "الاسم الأول يجب ألا يزيد عن 50 حرفًا.",
+	"Last name is required." => "إسم العائلة مطلوب.",
+	"Last name is only alphabets and space." => "الاسم الأخير عبارة عن أحرف أبجدية ومسافات فقط.",
+	"Last name should not more than 50 character." => "يجب ألا يزيد الاسم الأخير عن 50 حرفًا.",
+	"Display name is required." => "اسم العرض مطلوب.",
+	"Display name is only alphabets and space." => "اسم العرض عبارة عن أحرف أبجدية ومسافات فقط.",
+	"Display name should not more than 50 character." => "يجب ألا يزيد اسم العرض عن 50 حرفًا.",
+	"Only alphanumeric, space, dot, @, _, and - are allowed." => "مسموح فقط بالأبجدية الرقمية ، والمسافة ، والنقطة ، و @ ، و _ ، و-.",
+	"Company name should not more than 100 character." => "يجب ألا يزيد اسم الشركة عن 100 حرف.",
+	"Email is required." => "البريد الالكتروني مطلوب.",
+	"Please enter a valid email address. Like : sales@dasinfomedia.com" => "الرجاء إدخال عنوان بريد إلكتروني صالح. مثل: sales@dasinfomedia.com",
+	"Email you entered is already registered." => "البريد الإلكتروني الذي أدخلته مسجل بالفعل.",
+	"Password is required." => "كلمة المرور مطلوبة.",
+	"Password must be combination of letters and numbers." => "كلمة المرور يجب أن تتكون من أحرف وأرقام.",
+	"Password length minimum 6 character." => "طول كلمة المرور لا يقل عن 6 أحرف.",
+	"Password length maximum 12 character." => "طول كلمة المرور 12 حرفًا كحد أقصى.",
+	"Confirm password is required." => "تأكيد كلمة المرور مطلوب.",
+	"Password and Confirm Password does not match." => "كلمة المرور وتأكيد كلمة المرور غير متطابقين.",
+	"Password length minimum 6 character." => "طول كلمة المرور لا يقل عن 6 أحرف.",
+	"Password length maximum 12 character." => "طول كلمة المرور 12 حرفًا كحد أقصى.",
+	"Contact number is required." => "رقم الاتصال مطلوب.",
+	"Contact number minimum 6 digits." => "رقم الاتصال الحد الأدنى 6 أرقام.",
+	"Contact number maximum 16 digits." => "رقم الاتصال بحد أقصى 16 رقمًا.",
+	"Contact number must be number, plus, minus and space only." => "يجب أن يكون رقم الاتصال رقمًا زائدًا وناقصًا ومسافة فقط.",
+	"Landline number only numbers are allowed." => "رقم الهاتف الأرضي مسموح بالأرقام فقط.",
+	"Landline number minimum 6 digits." => "رقم الهاتف الأرضي بحد أدنى 6 أرقام.",
+	"Landline number maximum 16 digits." => "رقم الهاتف الأرضي بحد أقصى 16 رقمًا.",
+	"Landline number must be number, plus, minus and space only." => "يجب أن يكون رقم الخط الأرضي رقمًا زائدًا وناقصًا ومسافة فقط.",
+	"Image must be a file of type: Jpg, Jpeg and Png." => "يجب أن تكون الصورة عبارة عن ملف من النوع: Jpg و Jpeg و Png.",
+	"Country field is required." => "حقل البلد مطلوب.",
+	"Address field is required." => "حقل العنوان مطلوب.",
+
+	"Join date is required." => "تاريخ الانضمام مطلوب.",
+	"Designation is required." => "التعيين مطلوب.",
+	"Designation is only alphabets and space." => "التعيين هو فقط الحروف الأبجدية والفضاء.",
+	"Designation should not more than 50 character." => "يجب ألا يزيد التعيين عن 50 حرفًا.",
+	
+	"Company name is required." => "اسم الشركة مطلوب.",
+	"Company name should not more than 100 character." => "يجب ألا يزيد اسم الشركة عن 100 حرف.",
+
+	/********* Custom validation message translation (Color Module) **********/
+	"Color name is required." => "اسم اللون مطلوب.",
+	"Maximum 50 characters allowed." => "يسمح بحد أقصى 50 حرفًا.",
+	"Special symbols are not allowed." => "الرموز الخاصة غير مسموح بها.",
+
+	/********* Custom validation message translation (Invoice Module) **********/
+	"Invoice type is required." => "نوع الفاتورة مطلوب.",
+	"Invoice number is required." => "رقم الفاتورة مطلوب.",
+	"Customer name is required." => "اسم العميل مطلوب.",
+	"Jobcard number is required." => "رقم بطاقة العمل مطلوب.",
+	"Vehicle name is required." => "اسم السيارة مطلوب.",
+	"Customer name is required." => "اسم العميل مطلوب.",
+	"Invoice date is required." => "تاريخ الفاتورة مطلوب.",
+	"Total amount is required." => "المبلغ الإجمالي مطلوب.",
+	"Status is required." => "الحالة مطلوبة.",
+	"Payment type is required." => "نوع الدفع مطلوب.",
+	"Grand total is required." => "المجموع الكلي مطلوب.",
+	"Paid amount is required." => "المبلغ المدفوع مطلوب.",
+
+	/********* Custom validation message translation (Product Module) **********/
+	"Product date is required." => "تاريخ المنتج مطلوب.",
+	"Name is required." => "مطلوب اسم.",
+	"Name is only alphanumeric and space." => "الاسم هو أبجدي رقمي ومسافة فقط.",
+	"Name should not more than 100 character." => "الاسم يجب ألا يزيد عن 100 حرف.",
+	"The type of the uploaded file should be an image." => "يجب أن يكون نوع الملف الذي تم تحميله صورة.",
+	"Unit of measurement is required." => "وحدة القياس مطلوبة.",
+	"Price is required." => "السعر مطلوب.",
+	"Price is only numeric data allowed." => "السعر مسموح فقط بالبيانات الرقمية.",
+	"Price is only numeric data allowed." => "السعر مسموح فقط بالبيانات الرقمية.",
+	"Supplier is required." => "المورد مطلوب.",
+
+	/********* Custom validation message translation (Purchase Module) **********/
+	"Purchase number is required." => "رقم الشراء مطلوب.",
+	"Purchase date is required." => "تاريخ الشراء مطلوب.",
+	"Supplier name is required." => "اسم المورد مطلوب.",
+
+	/********* Custom validation message translation (Service Module) **********/
+	"Jobcard number is required." => "رقم بطاقة العمل مطلوب.",
+	"Customer name is required." => "اسم العميل مطلوب.",
+	"Vehicle name is required." => "اسم السيارة مطلوب.",
+	"Service date is required." => "تاريخ الخدمة مطلوب.",
+	"Assigne to is required." => "التعيين إلى مطلوب.",
+	"Repair category is required." => "فئة الإصلاح مطلوبة.",
+	"Service charge is required." => "رسوم الخدمة مطلوبة.",
+	"Service charge is only numeric data." => "رسوم الخدمة هي بيانات رقمية فقط.",
+	"Service charge is only number data." => "رسوم الخدمة هي بيانات رقم فقط.",
+	"First character is an alphabet after alphanumeric, space, dot, comma, hyphen and underscore are allowed." => "الحرف الأول هو الأبجدية بعد السماح بالمسافة والنقطة والفاصلة والواصلة والشرطة السفلية.",
+
+
+	/********* Custom validation message translation (Tax Module) **********/
+	"Tax name is required." => "الاسم الضريبي مطلوب.",
+	"Only alphanumeric, space, dot, @, _, % and - are allowed." => "مسموح فقط بالأبجدية الرقمية والمسافة والنقطة و @ و _ و٪ و-.",
+	"Tax name should not more than 50 character." => "يجب ألا يزيد الاسم الضريبي عن 50 حرفًا.",
+	"Tax rate is required." => "معدل الضريبة مطلوب.",
+	"The tax must be between 1 and 4 digits." => "يجب أن تكون الضريبة بين 1 و 4 أرقام.",
+
+	/********* Custom validation message translation (Business Module) **********/
+	"Date is required." => "التاريخ مطلوب.",
+	"Title is required." => "العنوان مطلوب.",
+	"After alphabet alphanumeric, space, dot, @, _, and - are allowed." => "بعد الأبجدية الأبجدية الرقمية ، يُسمح بالمسافات والنقطة و @ و _ و-.",
+	"Title field should not more than 100 character." => "يجب ألا يزيد حقل العنوان عن 100 حرف.",
+	"After alphabet alphanumeric, space, dot, @, _, and - are allowed." => "بعد الأبجدية الأبجدية الرقمية ، يُسمح بالمسافات والنقطة و @ و _ و-.",
+	"Description should not more than 300 character." => "يجب ألا يزيد الوصف عن 300 حرف.",
+
+	/********* Custom validation message translation (Custom Field Module) **********/
+	"Form name is required." => "اسم النموذج مطلوب.",
+	"Label name is required." => "اسم التصنيف مطلوب.",
+	"Start should be alphabets only after supports alphanumeric, space, dot, @, _, and - are allowed." => "يجب أن تكون البداية أبجدية فقط بعد السماح بدعم الأبجدية الرقمية والمسافة والنقطة و @ و _ و -.",
+	"Label name should not more than 50 character." => "يجب ألا يزيد اسم التصنيف عن 50 حرفًا.",
+	"Type is required." => "النوع مطلوب.",
+
+
+	/********* Custom validation message translation (Expenses Module) **********/
+	"Main label is required." => "التسمية الرئيسية مطلوبة.",
+	"Only alphanumeric and space allowed." => "مسموح فقط بالأبجدية الرقمية والمسافات.",
+	"Status field is required." => "حقل الحالة مطلوب.",
+	"Expense entry field is required." => "حقل إدخال المصاريف مطلوب.",
+	"Only numeric data allowed." => "يسمح فقط بالبيانات الرقمية.",
+	"After point two digit allowed." => "بعد النقطة يسمح برقمين.",
+	"Expense entry field is required." => "حقل إدخال المصاريف مطلوب.",
+	"Only numeric data allowed." => "يسمح فقط بالبيانات الرقمية.",
+	"After point two digit allowed." => "بعد النقطة يسمح برقمين.",
+
+
+	/********* Custom validation message translation (Expenses Module) **********/
+	"Start date is required." => "تاريخ البدء مطلوب.",
+	"End date is required." => "تاريخ الانتهاء مطلوب.",
+
+	/********* Custom validation message translation (Gatepass Module) **********/
+	"Jobcard is required." => "بطاقة العمل مطلوبة.",
+	"Gatepass number is required." => "رقم Gatepass مطلوب.",
+	"First name is required." => "الإسم الأول مطلوب.",
+	"Last name is required." => "إسم العائلة مطلوب.",
+	"Email is required." => "البريد الالكتروني مطلوب.",
+	"Contact number is required." => "رقم الاتصال مطلوب.",
+	"Vehicle name is required." => "اسم السيارة مطلوب.",
+	"Vehicle type is required." => "نوع السيارة مطلوب.",
+	"Kilometre is required." => "الكيلومتر مطلوب.",
+	"Enter only numeric data." => "أدخل البيانات الرقمية فقط.",
+	"Out date is required." => "تاريخ الخروج مطلوب.",
+
+	/********* Custom validation message translation (GeneralSetting Module) **********/
+	"System name is required." => "اسم النظام مطلوب.",
+	"System name must be alphabets, numbers and space." => "يجب أن يكون اسم النظام أبجديًا وأرقامًا ومسافات.",
+	"Phone number is required." => "رقم الهاتف مطلوب.",
+	"Phone number minimum 6 digits." => "رقم الهاتف بحد أدنى 6 أرقام.",
+	"Phone number maximum 16 digits." => "رقم الهاتف بحد أقصى 16 رقمًا.",
+	"Phone number must be number, plus, minus and space only." => "يجب أن يكون رقم الهاتف رقمًا زائدًا وناقصًا ومسافة فقط.",
+	"Image must be Jpg, Jpeg and Png only." => "يجب أن تكون الصورة بتنسيق Jpg و Jpeg و Png فقط.",
+	"Please enter valid email address." => "الرجاء إدخال عنوان بريد إلكتروني صالح.",
+	"Address is required." => "العنوان مطلوب.",
+	
+
+	/********* Custom validation message translation (Income Module) **********/
+	"Payment status is required." => "حالة الدفع مطلوبة.",
+	"Income date is required." => "تاريخ الدخل مطلوب.",
+	"Main label is required." => "التسمية الرئيسية مطلوبة.",
+	"Main label should be less than 50 charachters." => "التسمية الرئيسية يجب أن تكون أقل من 50 حرفًا.",
+	"First character is an alphabet after number, space, dot, comma, hyphen,  underscore, at are allowed." => "الحرف الأول هو الأبجدية بعد الرقم ، والمسافة ، والنقطة ، والفاصلة ، والواصلة ، والشرطة السفلية ، مسموح في.",
+	"Payment method is required." => "طريقة الدفع مطلوبة.",
+	"Income entry is required." => "إدخال الدخل مطلوب.",
+
+
+	"Invoice number is required." => "رقم الفاتورة مطلوب.",
+	"Payment status is required." => "حالة الدفع مطلوبة.",
+	"Income date is required." => "تاريخ الدخل مطلوب.",
+	"Main label is required." => "التسمية الرئيسية مطلوبة.",
+	"Main label should be less than 50 charachters." => "التسمية الرئيسية يجب أن تكون أقل من 50 حرفًا.",
+	"First character is an alphabet after number, space, dot, comma, hyphen,  underscore, at are allowed." => "الحرف الأول هو الأبجدية بعد الرقم ، والمسافة ، والنقطة ، والفاصلة ، والواصلة ، والشرطة السفلية ، مسموح في.",
+	"Payment method is required." => "طريقة الدفع مطلوبة.",
+	"Income entry is required." => "إدخال الدخل مطلوب.",
+
+	/********* Custom validation message translation (Invoice Module) **********/
+	"Vehicle name is required." => "اسم السيارة مطلوب.",
+	"Invoice date is required." => "تاريخ الفاتورة مطلوب.",
+	"Status is required." => "الحالة مطلوبة.",
+	"Payment type is required." => "نوع الدفع مطلوب.",
+	"Grand total is required." => "المجموع الكلي مطلوب.",
+	"Paid amount is required." => "المبلغ المدفوع مطلوب.",
+
+	/********* Custom validation message translation (Observation Library Module) **********/
+	"Vehicle name is required." => "اسم السيارة مطلوب.",
+	"Checkpoint category is required." => "فئة نقطة التفتيش مطلوبة.",
+	"Check point is required." => "نقطة الفحص مطلوبة.",
+	"Start should be alphabets only after supports alphanumeric, space, dot, @, _, and - are allowed." => "يجب أن تكون البداية أبجدية فقط بعد السماح بدعم الأبجدية الرقمية والمسافة والنقطة و @ و _ و -.",
+	"Check point should not more than 30 character." => "يجب ألا تزيد نقطة الفحص عن 30 حرفًا.",
+	
+	/********* Custom validation message translation (Other setting Module) **********/
+	"Timezone is required." => "المنطقة الزمنية مطلوبة.",
+	"Language is required." => "اللغة مطلوبة.",
+	"Date format is required." => "تنسيق التاريخ مطلوب.",
+	"Currency is required." => "العملة مطلوبة.",
+
+	/********* Custom validation message translation (Payment Method Module) **********/
+	"Payment method is required." => "طريقة الدفع مطلوبة.",
+	"Payment method allowed only alphabets and space." => "طريقة الدفع تسمح فقط بالحروف الأبجدية والمسافات.",
+	"Payment method should not more than 50 character." => "يجب ألا تزيد طريقة الدفع عن 50 حرفًا.",
+
+	/*** Custom validation message translation (Pay Payment(Inside Invoice Module) Form Module) ***/
+	"Invoice date is required." => "تاريخ الفاتورة مطلوب.",
+	"Payment type is required." => "نوع الدفع مطلوب.",
+	"Amount received is required." => "المبلغ المستلم مطلوب.",
+
+
+	/*** Custom validation message translation (Quotation Module) ***/
+	"Customer name is required." => "اسم العميل مطلوب.",
+	"Vehicle name is required." => "اسم السيارة مطلوب.",
+	"Service date is required." => "تاريخ الخدمة مطلوب.",
+	"Repair category is required." => "فئة الإصلاح مطلوبة.",
+	"Service charge is required." => "رسوم الخدمة مطلوبة.",
+	"Service charge is only number data." => "رسوم الخدمة هي بيانات رقم فقط.",
+	"First character is an alphabet after alphanumeric, space, dot, comma, hyphen and underscore are allowed." => "الحرف الأول هو أبجدية بعد الأحرف الأبجدية الرقمية والمسافة والنقطة والفاصلة والواصلة والشرطة السفلية مسموح بها.",
+
+	/*** Custom validation message translation (Rto tax Module) ***/
+	"Vehicle name is required." => "اسم السيارة مطلوب.",
+	"RTO tax is required." => "ضريبة RTO مطلوبة.",
+	"RTO tax must be numeric data only." => "يجب أن تكون ضريبة RTO عبارة عن بيانات رقمية فقط.",
+	"After point only two digit allowed." => "بعد النقطة يُسمح برقمين فقط.",
+	"Number plate charge is required." => "رسم لوحة الأرقام مطلوب.",
+	"Number plate charge must be numeric data only." => "يجب أن تكون رسوم لوحة الأرقام عبارة عن بيانات رقمية فقط.",
+	"After point only two digit allowed." => "بعد النقطة يُسمح برقمين فقط.",
+	"Municiple road tax is required." => "ضريبة الطريق البلدية مطلوبة.",
+	"Municiple road tax must be numeric data only." => "يجب أن تكون ضريبة الطريق البلدية عبارة عن بيانات رقمية فقط.",
+	"After point only two digit allowed." => "بعد النقطة يُسمح برقمين فقط.",
+
+	/*** Custom validation message translation (Service second step (Service Module)) ***/
+	"Out time date is required." => "تاريخ انتهاء الوقت مطلوب.",
+	"Kilometre is required." => "الكيلومتر مطلوب.",
+
+	/*** Custom validation message translation (Stripe setting Module) ***/
+	"Publish key is required." => "مفتاح النشر مطلوب.",
+	"Secret key is required." => "المفتاح السري مطلوب.",
+
+
+	/*** Custom validation message translation (Vehicle Sale Module) ***/
+	"Bill no is required." => "رقم الفاتورة مطلوب.",
+	"Sales date is required." => "تاريخ البيع مطلوب.",
+	"Customer name is required." => "اسم العميل مطلوب.",
+	"Salesman name is required." => "اسم البائع مطلوب.",
+	"Brand name is required." => "اسم العلامة التجارية مطلوب.",
+	"Model name is required." => "اسم الطراز مطلوب.",
+	"Price is only numeric data allowed." => "السعر مسموح فقط بالبيانات الرقمية.",
+	"Price is only numeric data." => "السعر عبارة عن بيانات رقمية فقط.",
+	"Color is required." => "اللون مطلوب.",
+	"Total price is required." => "السعر الإجمالي مطلوب.",
+	"After point only two digits allowed." => "بعد النقطة يسمح برقمين فقط.",
+	"Total price is only numeric data." => "السعر الإجمالي عبارة عن بيانات رقمية فقط.",
+	"Interval is required." => "الفاصل الزمني مطلوب.",
+	"Number of service field is required." => "رقم حقل الخدمة مطلوب.",
+	"Assigned to field is required." => "التعيين إلى الحقل مطلوب.",
+
+
+	/*** Custom validation message translation (Vehicle Module) ***/
+	//"Vehicle type is required." => "نوع المركبة مطلوب.",
+	"Vehicle brand is required." => "العلامة التجارية للمركبة مطلوبة.",
+	"Fuel type is required." => "نوع الوقود مطلوب.",
+	"Model name is required." => "اسم الطراز مطلوب.",
+	"Price is only numeric data allowed." => "السعر مسموح فقط بالبيانات الرقمية.",
+	"Price is only numeric data allowed." => "السعر مسموح فقط بالبيانات الرقمية.",
+
+	"Manufacturer name is required." => "اسم الشركة المصنعة مطلوب.",
+	"Product name is required." => "اسم المنتج مطلوب.",
+	"Quantity is required." => "الكمية مطلوبة.",
+	
+	"Employees" => "الموظف",
+	"Support Staffs" => "فريق الدعم",
+	"Accountants" => "محاسب",
+
  ];
 	 ?>

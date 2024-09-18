@@ -1,8 +1,7 @@
 @extends('layouts.app')
 @section('content')
+
 <!-- page content -->
-<?php $userid = Auth::user()->id; ?>
-@if (getAccessStatusUser('Sales Part',$userid)=='yes')
 <div class="right_col" role="main">
 	<div id="myModal" class="modal fade" role="dialog">
 		<div class="modal-dialog modal-lg">
@@ -23,8 +22,8 @@
 			<div class="nav_menu">
 				<nav>
 					<div class="nav toggle">
-						@if(getActiveCustomer($userid)=='yes' || getActiveEmployee($userid)=='yes')
-							<a id="menu_toggle"><i class="fa fa-bars"> </i><span class="titleup">&nbsp {{ trans('app.Sales')}}</span></a>
+						@if(getActiveCustomer(Auth::user()->id)=='yes' || getActiveEmployee(Auth::user()->id)=='yes')
+							<a id="menu_toggle"><i class="fa fa-bars"> </i><span class="titleup">&nbsp {{ trans('app.Part Sales')}}</span></a>
 						@else
 							<a id="menu_toggle"><i class="fa fa-bars"> </i><span class="titleup">&nbsp {{ trans('app.Purchase')}}</span></a>
 						@endif
@@ -52,11 +51,20 @@
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_content">
 					<ul class="nav nav-tabs bar_tabs" role="tablist">
-					@if(getActiveCustomer($userid)=='yes' || getActiveEmployee($userid)=='yes')
-						<li role="presentation" class=""><a href="{!! url('/sales_part/list')!!}"><span class="visible-xs"></span><i class="fa fa-plus-circle fa-lg">&nbsp;</i>{{ trans('app.Sale Part')}}</span></a></li>
-						<li role="presentation" class=""><a href="{!! url('/sales_part/add')!!}"><span class="visible-xs"></span><i class="fa fa-plus-circle fa-lg">&nbsp;</i>{{ trans('app.Add Sale Part')}}</span></a></li>
-					@else
-						<li role="presentation" class="active"><a href="{!! url('/sales/list')!!}"><span class="visible-xs"></span> </span><i class="fa fa-list fa-lg">&nbsp;</i><b>{{ trans('app.Purchase List')}}</b></a></li>
+					@if(getActiveCustomer(Auth::user()->id)=='yes' || getActiveEmployee(Auth::user()->id)=='yes')
+						@can('salespart_view')
+							<li role="presentation" class=""><a href="{!! url('/sales_part/list')!!}"><span class="visible-xs"></span><i class="fa fa-plus-circle fa-lg">&nbsp;</i>{{ trans('app.List Of Part Sales')}}</span></a></li>
+						@endcan
+						@can('salespart_add')
+							<li role="presentation" class=""><a href="{!! url('/sales_part/add')!!}"><span class="visible-xs"></span><i class="fa fa-plus-circle fa-lg">&nbsp;</i>{{ trans('app.Add Part Sales')}}</span></a></li>
+						@endcan
+					@elseif(getCustomersactive(Auth::user()->id) == 'yes')
+						@can('salespart_view')
+							<li role="presentation" class="active"><a href="{!! url('/sales/list')!!}"><span class="visible-xs"></span> </span><i class="fa fa-list fa-lg">&nbsp;</i><b>{{ trans('app.Purchase List')}}</b></a></li>
+						@endcan
+						@can('salespart_add')
+							<li role="presentation" class=""><a href="{!! url('/sales_part/add')!!}"><span class="visible-xs"></span><i class="fa fa-plus-circle fa-lg">&nbsp;</i>{{ trans('app.Add Part Sales')}}</span></a></li>
+						@endcan
 					@endif
 					</ul>
 				</div>
@@ -84,23 +92,61 @@
 								<td>{{ getPart($sale->product_id)->name }}</td>
 								<td>{{ getAssignedName($sale->salesmanname) }}</td>
 								<td>
-									@if(getActiveCustomer($userid)=='yes')
-										<?php $sales_invoice = getInvoiceNumbers($sale->id); ?>
-										@if($sales_invoice == "No data")
+								@if(getUserRoleFromUserTable(Auth::User()->id) == 'admin' || getUserRoleFromUserTable(Auth::User()->id) == 'supportstaff' || getUserRoleFromUserTable(Auth::User()->id) == 'accountant' || getUserRoleFromUserTable(Auth::User()->id) == 'employee')
+
+									<?php $sales_invoice = getInvoiceNumbers($sale->id); ?>
+
+									@if($sales_invoice == "No data")
+										@if(Gate::allows('salespart_add'))
+											@can('salespart_add')
 											<a href="{!! url('invoice/sale_part_invoice/add/'.$sale->id) !!}" ><button type="button" class="btn btn-round btn-info">{{ trans('app.Create Invoice')}}</button></a>
+											@endcan
 										@else
-											<button type="button" data-toggle="modal" data-target="#myModal" saleid="{{ $sale->id }}" invoice_number="{{ getInvoiceNumbers($sale->id) }}" url="{!! url('/sales_part/list/modal') !!}" class="btn btn-round btn-info save">{{ trans('app.View Invoices')}}</button>
-										@endif 
-										<a href="{!! url('sales_part/edit/'.$sale->id) !!}"><button type="button" class="btn btn-round btn-success">{{ trans('app.Edit')}}</button></a>
-										{{--<a url="{!! url('sales_part/delete/'.$sale->id) !!}" class="sa-warning"><button type="button" class="btn btn-round btn-danger">{{ trans('app.Delete')}}</button></a>--}}
-									@else
-										<?php $sales_invoice = getInvoiceNumber($sale->id); ?>
-										@if($sales_invoice == "No data")
+											@can('salespart_view')
 											<a href="{!! url('invoice/add/') !!}" ><button type="button" class="btn btn-round btn-info" disabled>{{ trans('app.View Invoices')}}</button></a>
-										@else
-											<button type="button" data-toggle="modal" data-target="#myModal" saleid="{{ $sale->id }}" invoice_number="{{ getInvoiceNumber($sale->id) }}" url="{!! url('/sales/list/modal') !!}" class="btn btn-round btn-info save">{{ trans('app.View Invoices')}}</button>
+											@endcan
 										@endif
+
+									@else
+										@can('salespart_view')
+											<button type="button" data-toggle="modal" data-target="#myModal" saleid="{{ $sale->id }}" invoice_number="{{ getInvoiceNumbers($sale->id) }}" url="{!! url('/sales_part/list/modal') !!}" class="btn btn-round btn-info save">{{ trans('app.View Invoices')}}</button>
+										@endcan
 									@endif
+									
+									@can('salespart_edit')
+										<a href="{!! url('sales_part/edit/'.$sale->id) !!}"><button type="button" class="btn btn-round btn-success">{{ trans('app.Edit')}}</button></a>
+									@endcan
+									@can('salespart_delete')
+										{{--<a url="{!! url('sales_part/delete/'.$sale->id) !!}" class="sa-warning"><button type="button" class="btn btn-round btn-danger">{{ trans('app.Delete')}}</button></a>--}}
+									@endcan
+
+								@else
+
+									<?php $sales_invoice = getInvoiceNumbers($sale->id); ?>
+									@if($sales_invoice == "No data")
+										@if(Gate::allows('salespart_add'))
+											@can('salespart_add')
+												<a href="{!! url('invoice/sale_part_invoice/add/'.$sale->id) !!}" ><button type="button" class="btn btn-round btn-info">{{ trans('app.Create Invoice')}}</button></a>
+											@endcan
+										@else
+											@can('salespart_view')
+												<a href="{!! url('invoice/add/') !!}" ><button type="button" class="btn btn-round btn-info" disabled>{{ trans('app.View Invoices')}}</button></a>
+											@endcan
+										@endif
+
+									@else
+										@can('salespart_view')
+											<button type="button" data-toggle="modal" data-target="#myModal" saleid="{{ $sale->id }}" invoice_number="{{ getInvoiceNumbers($sale->id) }}" url="{!! url('/sales_part/list/modal') !!}" class="btn btn-round btn-info save">{{ trans('app.View Invoices')}}</button>
+										@endcan
+									@endif
+										
+									@can('salespart_edit')
+										<a href="{!! url('sales_part/edit/'.$sale->id) !!}"><button type="button" class="btn btn-round btn-success">{{ trans('app.Edit')}}</button></a>
+									@endcan
+									@can('salespart_delete')
+										{{--<a url="{!! url('sales_part/delete/'.$sale->id) !!}" class="sa-warning"><button type="button" class="btn btn-round btn-danger">{{ trans('app.Delete')}}</button></a>--}}
+									@endcan
+								@endif
 								</td>
 							</tr>
 							<?php $i++; ?>
@@ -112,15 +158,8 @@
 		</div>
 	</div>
 </div>
-@else
-<div class="right_col" role="main">
-	<div class="nav_menu main_title" style="margin-top:4px;margin-bottom:15px;">
-		<div class="nav toggle" style="padding-bottom:16px;">
-			<span class="titleup">&nbsp; {{ trans('app.You are not authorize this page.')}}</span>
-		</div>
-	</div>
-</div>
-@endif  
+<!-- page content end-->
+
 <script src="{{ URL::asset('vendors/jquery/dist/jquery.min.js') }}"></script>
 <!-- language change in user selected -->	
 <script>

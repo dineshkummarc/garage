@@ -12,7 +12,5 @@
    <p> {!! $email_content1 !!}.</p>
  
 </div>
-
-		
 </body>
 </html>

@@ -1,28 +1,16 @@
 @extends('layouts.app')
 @section('content')
 <Style>
-.cld{
-	 border-top: 3px solid #F25656;
-}
-.rjc{
-	border-top: 3px solid #3a87ad;
-}
-.tmm{
-	border-top: 3px solid #f39c12;
-}
-.mss{
-    border-top: 3px solid  #12AFCB;
-}
-.freebuttom{
-	    border-top: 3px solid #996600;
-}
-.paidbuttom{
-	    border-top: 3px solid #f39c12 ;
-}
-.repeatbuttom{
-	    border-top: 3px solid #00a65a ;
-}
+	
 </style>
+
+<!-- For Dashborad Page all parts to make proper border for this css  -->
+<link type="text/css" href="{{ URL::asset('public/css/dashboard_page_all_part_styles.css') }}" rel="stylesheet" >
+
+<!-- CSS For Chart -->
+<link rel="stylesheet" type="text/css" href="{{ URL::asset('public/js/49/css/tooltip.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ URL::asset('public/js/49/css/util.css') }}">
+
 <script src="{{ URL::asset('build/js/jscharts.js') }}" defer="defer"></script>
 <!-- <script src="{{ URL::asset('build/js/Chart.min.js') }}" defer="defer"></script> -->
 	<div class="right_col" role="main">
@@ -33,7 +21,8 @@
 				<div class="modal-content">
 					<div class="modal-header"> 
 						<a href=""><button type="button" class="close">&times;</button></a>
-						<h4 id="myLargeModalLabel" class="modal-title">{{ trans('app.Free Service Details')}}</h4>
+						<!-- <h4 id="myLargeModalLabel" class="modal-title">{{ trans('app.Free Service Details')}}</h4> -->
+						<h4 id="myLargeModalLabel" class="modal-title">{{ __('Free Service Details')}}</h4>
 					</div>
 					<div class="modal-body">
 					
@@ -214,13 +203,266 @@
 					</ul>
 				</nav>
 			</div>
-        </div>
-	
-	<!-- Active(login) in show admin , supportstaff,accountant -->
-	
-	<?php $userid=Auth::User()->id;?>
-	@if(!empty(getActiveCustomer($userid)=='yes'))		
-		<div class="row">	
+        </div> 
+       
+       	<!-- <div class="row">
+        	<div class="col-lg-1 col-md-1 col-xs-6 col-sm-2 ">
+				<a href="employee/list" target="blank">
+					<div class="panel info-box panel-white">
+						<div class="panel-body member">
+						
+						<img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Customer-Green.png')}}" class="dashboard_background" alt="" height="20px" width="20px">	
+							 <div class="info-box-stats info-box-statss">
+							 	<p class="info-box-title">{{ trans('app.Employees')}}</p>
+								<span class="info-box-title">{{ trans('app.Employees name')}}</span>
+							</div>
+							
+						</div>
+					</div>
+				</a>
+			</div>
+
+			<div class="col-lg-1 col-md-1 col-xs-6 col-sm-2 ">
+				<a href="employee/list" target="blank">
+					<div class="panel info-box circless">
+						<div class="panel-body">
+						
+						<img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Customer-Green.png')}}" class="dashboard_background img1" alt="" height="20px" width="20px">	
+							 <div class="info-box-stats info-box-statss">
+							 	<p class="info-box-title">{{ trans('app.Employees')}}</p>
+								<span class="info-box-title">{{ trans('app.Employees name')}}</span>
+							</div>
+							
+						</div>
+					</div>
+				</a>
+			</div>
+        </div> -->
+
+        <!-- For Garage wizard steps start -->
+        @if(getUsersRole(Auth::user()->role_id) != 'Customer')
+        <div class="row mainRowDiv" style="">
+        	@if($Customer != 0)
+	       	<div class="steps step step-one greenCircle step-oneGreen"><img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Customer-Green.png')}}" alt="Avatar" class="main-image">
+				<span class="name-text_green">{{ trans('app.Customer')}}</span>
+				<img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Check.png')}}" alt="Avatar" class="imgs">
+			</div>
+			@else
+			<div class="steps step step-one blueCircle step-oneBlue"><img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Customer-Blue.png')}}" alt="Avatar" class="main-image">
+				<span class="name-text_blue">{{ trans('app.Customer')}}</span>
+				<img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/3-dot.png')}}" alt="Avatar" class="imgs">
+			</div>
+			@endif
+
+			@if($employee != 0)
+			<div class="steps step step-two greenCircle step-twoGreen"><img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Employee-Green.png')}}" alt="Avatar" class="main-image">
+				<span class="name-text_green">{{ trans('app.Employee')}}</span>
+				<img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Check.png')}}" alt="Avatar" class="imgs">
+			</div>
+			@else
+			<div class="steps step step-two blueCircle step-twoBlue"><img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Employee-Blue.png')}}" alt="Avatar" class="main-image">
+				<span class="name-text_blue">{{ trans('app.Employee')}}</span>
+				<img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/3-dot.png')}}" alt="Avatar" class="imgs">
+			</div>
+			@endif
+
+			@if($have_supportstaff != 0)
+			<div class="steps step step-three greenCircle step-threeGreen"><img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Support-Staff-Green.png')}}" alt="Avatar" class="main-image">
+				<span class="name-text_green">{{ trans('app.Support Staff')}}</span>
+				<img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Check.png')}}" alt="Avatar" class="imgs">
+			</div>
+			@else
+			<div class="steps step step-three blueCircle step-threeBlue"><img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Support-Staff-Blue.png')}}" alt="Avatar" class="main-image">
+				<span class="name-text_blue">{{ trans('app.Support Staff')}}</span>
+				<img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/3-dot.png')}}" alt="Avatar" class="imgs">
+			</div>
+			@endif
+
+			@if($Supplier != 0)
+			<div class="steps step step-four greenCircle step-fourGreen"><img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Supplier-Green.png')}}" alt="Avatar" class="main-image">
+				<span class="name-text_green">{{ trans('app.Supplier')}}</span>
+				<img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Check.png')}}" alt="Avatar" class="imgs">
+			</div>
+			@else
+			<div class="steps step step-four blueCircle step-fourBlue"><img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Supplier-Blue.png')}}" alt="Avatar" class="main-image">
+				<span class="name-text_blue">{{ trans('app.Supplier')}}</span>
+				<img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/3-dot.png')}}" alt="Avatar" class="imgs">
+			</div>
+			@endif
+
+			@if($have_vehicle != 0)
+			<div class="steps step step-five greenCircle step-fiveGreen"><img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Vehicle-Green.png')}}" alt="Avatar" class="main-image">
+				<span class="name-text_green">{{ trans('app.Vehicles')}}</span>
+				<img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Check.png')}}" alt="Avatar" class="imgs">
+			</div>
+			@else
+			<div class="steps step step-five blueCircle step-fiveBlue"><img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Vehicle-Blue.png')}}" alt="Avatar" class="main-image">
+				<span class="name-text_blue">{{ trans('app.Vehicles')}}</span>
+				<img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/3-dot.png')}}" alt="Avatar" class="imgs">
+			</div>
+			@endif
+
+			@if($have_product != 0)
+			<div class="steps step step-six greenCircle step-sixGreen"><img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Product-Green.png')}}" alt="Avatar" class="main-image">
+				<span class="name-text_green">{{ trans('app.Products')}}</span>
+				<img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Check.png')}}" alt="Avatar" class="imgs">
+			</div>
+			@else
+			<div class="steps step step-six blueCircle step-sixBlue"><img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Product-Blue.png')}}" alt="Avatar" class="main-image">
+				<span class="name-text_blue">{{ trans('app.Products')}}</span>
+				<img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/3-dot.png')}}" alt="Avatar" class="imgs">
+			</div>
+			@endif
+
+			@if($have_purchase != 0)
+			<div class="steps step step-seven greenCircle step-sevenGreen"><img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Purchase-Green.png')}}" alt="Avatar" class="main-image">
+				<span class="name-text_green">{{ trans('app.Purchase')}}</span>
+				<img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Check.png')}}" alt="Avatar" class="imgs">
+			</div>
+			@else
+			<div class="steps step step-seven blueCircle step-sevenBlue"><img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Purchase-Blue.png')}}" alt="Avatar" class="main-image">
+				<span class="name-text_blue">{{ trans('app.Purchase')}}</span>
+				<img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/3-dot.png')}}" alt="Avatar" class="imgs">
+			</div>
+			@endif
+
+			@if($have_observationCount != 0)
+			<div class="steps step step-eight greenCircle step-eightGreen"><img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Observation-Green.png')}}" alt="Avatar" class="main-image">
+				<span class="name-text_green">{{ trans('app.Observation Library')}}</span>
+				<img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Check.png')}}" alt="Avatar" class="imgs">
+			</div>
+			@else
+			<div class="steps step step-eight blueCircle step-eightBlue"><img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Observation-Blue.png')}}" alt="Avatar" class="main-image">
+				<span class="name-text_blue">{{ trans('app.Observation Library')}}</span>
+				<img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/3-dot.png')}}" alt="Avatar" class="imgs">
+			</div>
+			@endif
+		</div>
+		@endif
+
+    <!-- For Garage wizard steps start -->
+    	<!-- @if(getUsersRole(Auth::user()->role_id) != 'Customer')
+		<div class="row wizard_image_main_class" style="display: none;">
+			@if($Customer != 0)
+				<li class="wizard_image_green">					
+					<img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Customer-Green.png')}}" class="green_img"  alt="">					
+					<span class="marker-text_green">{{ trans('app.Customer')}}</span>
+					<span class="span_img_green" style=""><img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Check.png')}}" class="green"  alt=""></span>
+				</li>
+			@else
+				<li class="wizard_image_blue">
+					<img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Customer-Blue.png')}}" class="blue_img" alt="">
+					<span class="marker-text_blue">{{ trans('app.Customer')}}</span>
+					<span class="span_img_blue" style=""><img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/3-dot.png')}}" class=""  alt=""></span>	
+				</li>
+			@endif
+
+			@if($employee != 0)
+				<li class="wizard_image_green">					
+					<img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Employee-Green.png')}}" class="green_img" alt="">
+					<span class="marker-text_green">{{ trans('app.Employee')}}</span>
+					<span class="span_img_green" style=""><img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Check.png')}}" class="green"  alt=""></span>
+				</li>
+			@else
+				<li class="wizard_image_blue">
+					<img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Employee-Blue.png')}}" class="blue_img" alt="">
+					<span class="marker-text_blue">{{ trans('app.Employee')}}</span>
+					<span class="span_img_blue" style=""><img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/3-dot.png')}}" class=""  alt=""></span>
+				</li>
+			@endif
+
+			@if($have_supportstaff != 0)
+				<li class="wizard_image_green">
+					<img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Support-Staff-Green.png')}}" class="green_img" alt="">
+					<span class="marker-text_green">{{ trans('app.Supportstaff')}}</span>
+					<span class="span_img_green" style=""><img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Check.png')}}" class="green"  alt=""></span>
+				</li>
+			@else
+				<li class="wizard_image_blue">
+					<img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Support-Staff-Blue.png')}}" class="blue_img" alt="">
+					<span class="marker-text_blue">{{ trans('app.Supportstaff')}}</span>
+					<span class="span_img_blue" style=""><img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/3-dot.png')}}" class=""  alt=""></span>
+				</li>
+			@endif
+
+			@if($Supplier != 0)
+				<li class="wizard_image_green">
+					<img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Supplier-Green.png')}}" class="green_img" alt="">
+					<span class="marker-text_green">{{ trans('app.Supplier')}}</span>
+					<span class="span_img_green" style=""><img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Check.png')}}" class="green"  alt=""></span>
+				</li>
+			@else
+				<li class="wizard_image_blue">
+					<img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Supplier-Blue.png')}}" class="blue_img" alt="">
+					<span class="marker-text_blue">{{ trans('app.Supplier')}}</span>
+					<span class="span_img_blue" style=""><img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/3-dot.png')}}" class=""  alt=""></span>
+				</li>
+			@endif
+
+			@if($have_vehicle != 0)
+				<li class="wizard_image_green">
+					<img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Vehicle-Green.png')}}" class="green_img" alt="">
+					<span class="marker-text_green">{{ trans('app.Vehicles')}}</span>
+					<span class="span_img_green" style=""><img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Check.png')}}" class="green"  alt=""></span>
+				</li>
+			@else
+				<li class="wizard_image_blue">
+					<img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Vehicle-Blue.png')}}" class="blue_img" alt="">
+					<span class="marker-text_blue">{{ trans('app.Vehicles')}}</span>
+					<span class="span_img_blue" style=""><img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/3-dot.png')}}" class=""  alt=""></span>				
+				</li>
+			@endif
+
+			@if($have_product != 0)
+				<li class="wizard_image_green">
+					<img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Product-Green.png')}}" class="green_img" alt="">
+					<span class="marker-text_green">{{ trans('app.Products')}}</span>
+					<span class="span_img_green" style=""><img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Check.png')}}" class="green"  alt=""></span>
+				</li>
+			@else
+				<li class="wizard_image_blue">
+					<img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Product-Blue.png')}}" class="blue_img" alt="">
+					<span class="marker-text_blue">{{ trans('app.Products')}}</span>
+					<span class="span_img_blue" style=""><img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/3-dot.png')}}" class=""  alt=""></span>
+				</li>
+			@endif
+
+			@if($have_purchase != 0)
+				<li class="wizard_image_green">
+					<img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Purchase-Green.png')}}" class="green_img" alt="">
+					<span class="marker-text_green">{{ trans('app.Purchase')}}</span>
+					<span class="span_img_green" style=""><img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Check.png')}}" class="green"  alt=""></span>
+				</li>
+			@else
+				<li class="wizard_image_blue">
+					<img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Purchase-Blue.png')}}" class="blue_img" alt="">
+					<span class="marker-text_blue">{{ trans('app.Purchase')}}</span>
+					<span class="span_img_blue" style=""><img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/3-dot.png')}}" class=""  alt=""></span>				
+				</li>
+			@endif
+
+			@if($have_observationCount != 0)
+				<li class="wizard_image_green">
+					<img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Observation-Green.png')}}" class="green_img" alt="">
+					<span class="marker-text_green">{{ trans('app.Observation')}}</span>
+					<span class="span_img_green" style=""><img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Check.png')}}" class="green"  alt=""></span>
+				</li>
+			@else
+				<li class="wizard_image_blue">
+					<img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/Observation-Blue.png')}}" class="blue_img" alt="">
+					<span class="marker-text_blue">{{ trans('app.Observation')}}</span>
+					<span class="span_img_blue" style=""><img src="{{ URL::asset('public/img/dashboard/wizard_setup_image/3-dot.png')}}" class=""  alt=""></span>
+				</li>
+			@endif
+		</div>
+		@endif -->
+	<!-- For Garage wizard steps end -->
+
+		<br/>
+<!-- Active(login) in show admin , supportstaff,accountant -->
+	@if(getUsersRole(Auth::user()->role_id) == 'Super Admin' || getUsersRole(Auth::user()->role_id) == 'Support Staff' || getUsersRole(Auth::user()->role_id) == 'Accountant')		
+		@can('dashboard_view')
+		<div class="row calculationBoxes">
 			<div class="col-lg-2 col-md-2 col-xs-6 col-sm-3 ">
 				<a href="employee/list" target="blank">
 					<div class="panel info-box panel-white">
@@ -233,15 +475,15 @@
 									  <?php  echo $employee; ?>
 									@else
 									<?php  echo "0"; ?>
-									@endif                                 </p>
-								
+									@endif
+								</p>
 								<span class="info-box-title">{{ trans('app.Employees')}}</span>
 							</div>
 							
 						</div>
 					</div>
 				</a>
-			</div>
+			</div>			
 			
 			<div class="col-lg-2 col-md-2 col-xs-6 col-sm-3">
 				<a href="customer/list" target="blank">
@@ -352,13 +594,17 @@
 				</a>
 			</div>
 		</div>
+		@endcan
 	@endif
-	<!-- end Active(login) in show admin , supportstaff,accountant -->
+<!-- end Active(login) in show admin , supportstaff,accountant -->
 
 	
-	<!-- Active(login) in show customer , employee -->
-	@if(!empty(getActiveCustomer($userid)=='no'))
-		<!-- free service -->
+<!-- Active(login) in show customer , employee -->
+	@if(getUsersRole(Auth::user()->role_id) == 'Customer' || getUsersRole(Auth::user()->role_id) == 'Employee')
+
+	@can('dashboard_view')
+	<!-- free service -->
+		@can('dashboard_owndata')
 		<div class="row">
 			<div class="col-md-4 col-xs-12 col-sm-12">
 				<div class="x_panel freebuttom">
@@ -417,7 +663,8 @@
 				@endif
 				</div>
 			</div>
-		 <!-- paid service --> 
+
+		<!-- paid service --> 
 			<div class="col-md-4 col-xs-12 col-sm-12">
 				<div class="x_panel paidbuttom">
 					<div class="x_title">
@@ -472,6 +719,7 @@
 					@endif
 				</div>
 			</div>
+
 		<!-- Repeat job service -->
 			<div class="col-md-4 col-xs-12 col-sm-12">
 				<div class="x_panel repeatbuttom">
@@ -528,21 +776,16 @@
 				</div>
 			</div>
 		</div>
+		@endcan
 		
+		<div class="row">	
 		<!-- Upcoming service  service -->
-		<div class="row">
+			@can('dashboard_owndata')
 			<div class="col-md-4 col-xs-12 col-sm-12">
 				<div class="x_panel freebuttom">
 					<div class="x_title">
 						<h2>{{ trans('app.Upcoming Service Details')}}</h2>
-						<!-- <ul class="nav navbar-right panel_toolbox">
-							<li>
-								<form method="get" action="jobcard/list">
-									<input type="hidden" name="free"  value="<?php  echo'free';?>"/>
-										<button type="submit"  class="btn  btn-default1 freeservice">{{ trans('app.View All')}}</button>
-								</form>
-							</li>
-						</ul> -->
+						
 						<div class="clearfix"></div>
 					</div>
 				  <?php $userid=Auth::User()->id; ?>
@@ -573,6 +816,9 @@
 				@endif
 				</div>
 			</div>
+			@endcan
+
+		<!-- Opening Hours -->
 			<div class="col-md-4 col-xs-12 col-sm-12">
 				<div class="x_panel tmm"> 
 					<div class="x_title">
@@ -581,11 +827,11 @@
 					</div>
 						@if(!empty($openinghours))
 						@foreach($openinghours as $openinghourss)
-							<div class="bessuhours">	
-								<div class="col-md-4 col-sm-12 bessuhoursday">
+							<div class="bessuhours" id="bessuhours">	
+								<div class="col-md-4 col-sm-12 bessuhoursday leftSideDay">
 									<b>{{getDayName($openinghourss->day)}}</b>
 								</div>
-								<div class="col-md-8 col-sm-12 bessuhoursday">
+								<div class="col-md-8 col-sm-12 bessuhoursday rightSideDay">
 								@if($openinghourss->from == $openinghourss->to)
 									<span class="dayhours">- - - - - - Day off - - - - - - </span>
 								@else
@@ -601,6 +847,8 @@
 						@endif
 				</div>
 			</div>
+
+		<!-- Holiday List -->
 			<div class="col-md-4 col-xs-12 col-sm-12">
 				<div class="x_panel repeatbuttom"> 
 						<div class="x_title">
@@ -623,7 +871,9 @@
 			</div>
 		</div>
 		
+
 		<div class="row">
+		<!-- Calendar Events -->
             <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
                 <div class="x_panel cld">
                   <div class="x_title">
@@ -639,13 +889,14 @@
                 </div>
 			</div>
 		</div>
+	@endcan
 	@endif
 <!-- end Active(login) in show customer , employee -->
 	
 	
 <!--- Active(login) in show admin,supportstaff,accountant -->
-	<?php $userid=Auth::User()->id;?>
-	@if(!empty(getActiveCustomer($userid)=='yes'))
+	@if(getUsersRole(Auth::user()->role_id) == 'Super Admin' || getUsersRole(Auth::user()->role_id) == 'Support Staff' || getUsersRole(Auth::user()->role_id) == 'Accountant')
+		@can('dashboard_view')
 		<div class="row">
             <div class="col-lg-8 col-md-8 col-xs-12 col-sm-12">
                 <div class="x_panel cld">
@@ -703,9 +954,8 @@
 					</div>
             </div> 
         </div>
-	@endif
-		<?php $userid=Auth::User()->id;?>
-		@if(!empty(getActiveCustomer($userid)=='yes'))
+
+    <!-- Monthly Service Summary -->
 		<div class="row">
 			<div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
 				<div class="x_panel mss">
@@ -737,9 +987,8 @@
 				</div>
 			</div>
 		</div>
-	@endif	
-	@if(!empty(getActiveCustomer($userid)=='yes'))
-	<!-- free service -->
+
+	<!-- Free service details -->
 		<div class="row">
 			<div class="col-md-4 col-xs-12 col-sm-12">
 				<div class="x_panel freebuttom">
@@ -794,6 +1043,7 @@
 				@endif
 				</div>
 			</div>
+
 		 <!-- paid service --> 
 			<div class="col-md-4 col-xs-12 col-sm-12">
 				<div class="x_panel paidbuttom">
@@ -846,6 +1096,7 @@
 					@endif
 				</div>
 			</div>
+
 		<!-- Repeat job service -->
 			<div class="col-md-4 col-xs-12 col-sm-12">
 				<div class="x_panel repeatbuttom">
@@ -898,9 +1149,10 @@
 				</div>
 			</div>
 		</div>
-		@endif
-		
-	<!---end Active(login) in show admin,supportstaff,accountant-->	
+		@endcan
+	@endif
+<!---end Active(login) in show admin,supportstaff,accountant-->
+
     </div>
 	<div id="myModal-job" class="modal fade" role="dialog">
 		<div class="modal-dialog modal-lg">
@@ -918,9 +1170,17 @@
 	
 
  <script src="{{ URL::asset('vendors/jquery/dist/jquery.min.js') }}"></script> 
- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
- <script type="text/javascript" src="https://www.google.com/jsapi"></script>
- 
+ <!-- <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js" defer="defer"></script>
+ <script type="text/javascript" src="https://www.google.com/jsapi"></script> -->
+
+<!-- All Js file for Charts -->
+<script type="text/javascript" src="{{ URL::asset('public/js/loader.min.js') }}"></script>
+<script type="text/javascript" src="{{ URL::asset('public/js/49/loader.js') }}" defer="defer"></script>
+<script type="text/javascript" src="{{ URL::asset('public/js/49/jsapi_compiled_default_module.js') }}" defer="defer"></script>
+<script type="text/javascript" src="{{ URL::asset('public/js/49/jsapi_compiled_graphics_module.js') }}" defer="defer"></script>
+<script type="text/javascript" src="{{ URL::asset('public/js/49/jsapi_compiled_ui_module.js') }}" defer="defer"></script>
+<script type="text/javascript" src="{{ URL::asset('public/js/49/jsapi_compiled_corechart_module.js') }}" defer="defer"></script>
+
  <!-- service event in calendarevent -->
  <?php if(!empty($serviceevent))
 	{
@@ -1036,7 +1296,7 @@
 		$data1=json_encode('0');
 	}
 ?>
- <!-- Calendar Event in Dashboard---->
+ <!-- Calendar Event in Dashboard-->
  <script>
 	$(document).ready(function() {
 		$('#calendarevent').fullCalendar({
@@ -1161,7 +1421,7 @@
 	
 	</script>
 	
- <!-- Monthly service in barchart---->
+ <!-- Monthly service in barchart-->
  <script type="text/javascript">
  google.load("visualization", "1", {packages:["corechart"]});
  google.setOnLoadCallback(drawChart);
@@ -1266,7 +1526,7 @@
     </script>
 
 <!-- Performance  donutchart-->
-    <script type="text/javascript">
+<script type="text/javascript">
       google.charts.load("current", {packages:["corechart"]});
       google.charts.setOnLoadCallback(drawChart);
       function drawChart() {
@@ -1294,146 +1554,145 @@
         var chart = new google.visualization.PieChart(document.getElementById('donutchartperformance'));
         chart.draw(data, options);
       }
-    </script>
+</script>
+
 <!--  Free service -->
-
-  <script type="text/javascript">
-  
-$(document).ready(function(){
+<!-- <script src="{{ URL::asset('public/js/Dashboard/Free_service.js') }}" ></script> -->
+<script type="text/javascript">
+	$(document).ready(function(){
    
-    $(".openmodel").click(function(){ 
+    	$(".openmodel").click(function(){ 
 	  
-	  $('.modal-body').html("");
-	    var open_id= $(this).attr("open_id");
+	  		$('.modal-body').html("");
+	    	var open_id= $(this).attr("open_id");
 		
-		var url = $(this).attr('url');
-       $.ajax({
-       type: 'GET',
-       url: url,
-	   data : {open_id:open_id},
-       success: function (data)
-       {      
-			  $('.modal-body').html(data.html);
-				
-		},
-   beforeSend:function(){
-						$(".modal-body").html("<center><h2 class=text-muted><b>Loading...</b></h2></center>");
-					},
-error: function(e) {
-			alert("An error occurred: " + e.responseText);
-			console.log(e);	
-		}
-       });
-       });
-   });
+			var url = $(this).attr('url');
+       		$.ajax({
+		       	type: 'GET',
+		       	url: url,
+			   	data : {open_id:open_id},
+		       	success: function (data)
+		       	{      
+			  		$('.modal-body').html(data.html);
+				},
+   				
+   				beforeSend:function(){
+					$(".modal-body").html("<center><h2 class=text-muted><b>Loading...</b></h2></center>");
+				},
 
+				error: function(e) {
+					alert("An error occurred: " + e.responseText);
+					console.log(e);	
+				}
+       		});
+       	});
+   	});
 </script>
 
 <!-- Paid service -->
-  <script type="text/javascript">
-  
-$(document).ready(function(){
+<!-- <script src="{{ URL::asset('public/js/Dashboard/Paid_service.js') }}" ></script> -->
+<script type="text/javascript">
+	$(document).ready(function(){
    
-    $(".completedservice").click(function(){ 
+    	$(".completedservice").click(function(){ 
 	  
-	  $('.modal-body').html("");
+	  		$('.modal-body').html("");
 	   
-       var c_service = $(this).attr("c_service");
+       		var c_service = $(this).attr("c_service");
 	    
-		var url = $(this).attr('url');
+			var url = $(this).attr('url');
 	     
-       $.ajax({
-       type: 'GET',
-       url: url,
-	
-       data : {open_id:c_service},
-       success: function (data)
-       {   
-			  $('.modal-body').html(data.html);
-		},
-   beforeSend:function(){
-						$(".modal-body").html("<center><h2 class=text-muted><b>Loading...</b></h2></center>");
-					},
-error: function(e) {
-       alert("An error occurred: " + e.responseText);
-       console.log(e);	
-}
-       });
-       });
-   });
+       		$.ajax({
+       			type: 'GET',
+       			url: url,
+       			data : {open_id:c_service},
+       
+       			success: function (data)
+       			{   
+			  		$('.modal-body').html(data.html);
+				},
+   				
+   				beforeSend:function(){
+					$(".modal-body").html("<center><h2 class=text-muted><b>Loading...</b></h2></center>");
+				},
 
+				error: function(e) {
+       				alert("An error occurred: " + e.responseText);
+       				console.log(e);	
+				}
+       		});
+       	});
+   	});
 </script> 
 
 <!-- Repeat Job service  -->
-  <script type="text/javascript">
-  
-$(document).ready(function(){
+<!-- <script src="{{ URL::asset('public/js/Dashboard/Repeat_Job_service.js') }}" ></script> -->
+<script type="text/javascript">
+	$(document).ready(function(){
    
-    $(".service-up").click(function(){ 
+    	$(".service-up").click(function(){ 
 	  
-	  $('.modal-body').html("");
+	  		$('.modal-body').html("");
 	   
-       var u_service = $(this).attr("u_service");
+       		var u_service = $(this).attr("u_service");
 	   
-		var url = $(this).attr('url');
+			var url = $(this).attr('url');
 	     
-       $.ajax({
-       type: 'GET',
-       url: url,
-	
-       data : {open_id:u_service},
-       success: function (data)
-       {            
-
-			  $('.modal-body').html(data.html);
-				
-   },
-   beforeSend:function(){
-						$(".modal-body").html("<center><h2 class=text-muted><b>Loading...</b></h2></center>");
-					},
-error: function(e) {
-       alert("An error occurred: " + e.responseText);
-       console.log(e);	
-}
-  });
-
-       });
-   });
-
-</script>
-
-<!--  Free cusomer model service -->
-
-  <script type="text/javascript">
-  
-$(document).ready(function(){
+       		$.ajax({
+       			type: 'GET',
+       			url: url,
+       			data : {open_id:u_service},
+       
+       			success: function (data)
+       			{            
+			  		$('.modal-body').html(data.html);
+   				},
    
-    $(".customeropenmodel").click(function(){ 
-	  
-	  $('.modal-body').html("");
-	    var open_customer_id= $(this).attr("open_customer_id");
-		var url = $(this).attr('url');
-		
-       $.ajax({
-       type: 'GET',
-       url: url,
-	   data : {servicesid:open_customer_id},
-       success: function (data)
-       {      
-			  $('.modal-body').html(data.html);
-				
-		},
-   beforeSend:function(){
-						$(".modal-body").html("<center><h2 class=text-muted><b>Loading...</b></h2></center>");
-					},
-error: function(e) {
-			alert("An error occurred: " + e.responseText);
-			console.log(e);	
-		}
-       });
-       });
-   });
+   				beforeSend:function(){
+					$(".modal-body").html("<center><h2 class=text-muted><b>Loading...</b></h2></center>");
+				},
 
+				error: function(e) {
+       				alert("An error occurred: " + e.responseText);
+       				console.log(e);	
+				}
+  			});
+       	});
+   	});
 </script>
 
+<!--  Free customer model service -->
+<!-- <script src="{{ URL::asset('public/js/Dashboard/Free_customer_model_service.js') }}" ></script> -->
+<script type="text/javascript">
+	$(document).ready(function(){
+   
+    	$(".customeropenmodel").click(function(){ 
+	  
+	  		$('.modal-body').html("");
+	    	
+	    	var open_customer_id= $(this).attr("open_customer_id");
+			var url = $(this).attr('url');
+		
+       		$.ajax({
+       			type: 'GET',
+       			url: url,
+	   			data : {servicesid:open_customer_id},
+       			
+       			success: function (data)
+       			{      
+			  		$('.modal-body').html(data.html);
+				},
+   
+   				beforeSend:function(){
+					$(".modal-body").html("<center><h2 class=text-muted><b>Loading...</b></h2></center>");
+				},
+				
+				error: function(e) {
+					alert("An error occurred: " + e.responseText);
+					console.log(e);	
+				}
+       		});
+    	});
+	});
+</script>
 @endsection

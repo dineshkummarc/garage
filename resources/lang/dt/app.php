@@ -1,6 +1,8 @@
 <?php
 
 return[
+
+	//Dutch
         //APP Menu page
       'Garrage Management System'=>'Garrage Management Systeem',
 	  'Welcome'=>'Welkom',
@@ -964,6 +966,396 @@ return[
 	"Purchase Number"=>"Aankoopnummer",
 	"RTO"=>"RTO",
 	"Regional Transport Office"=>"Regionaal vervoerskantoor",
+
+	// New lables added 8/06/2020
+	"Number Plate" => "Nummerplaat",
+	"Enter Number Plate" => "Nummerplaat invoeren",
+	"Maintenance History not available." => "Onderhoudshistorie niet beschikbaar.",
+	"Description not available" => "Beschrijving niet beschikbaar",
+	"Maintenance History" => "Onderhoudsgeschiedenis",
+	"Company Name" => "Bedrijfsnaam",
+	"Enter Company Name" => "Voer bedrijfsnaam in",
+	"Not Added" => "Niet toegevoegd",
+
+	// stripe
+	"Stripe API Key Information" => "Stripe API-sleutelinformatie",
+	"Update Your Live Stripe Keys Here!" => "Update hier uw Live Stripe Keys!",
+	"Stripe Settings" => "Stripe-instellingen",
+	"Stripe Secret key" => "Stripe Secret-sleutel",
+	"Enter Stripe Publishable Key" => "Voer Stripe Publishable Key in",
+	"Enter Stripe Secret Key" => "Voer Stripe Secret Key in",
+	"Stripe Publishable key" => "Stripe publiceerbare sleutel",
+	"Please update stripe API key details to take payment directly from the card!" => "Werk de stripe API-sleutelgegevens bij om de betaling rechtstreeks van de kaart te ontvangen!",
+	"You can not pay more than 999999 using the card." => "U kunt met de kaart niet meer dan 999999 betalen.",
+
+
+	//MOT Module
+	"MOT Test" => "APK keuring",
+
+	"MOT Test View" => "APK-testweergave",
+	"Step 1: Fill MOT Details" => "Stap 1: Vul APK-gegevens in",
+	"OK = Satisfactory" => "OK = Bevredigend",
+	"X = Safety Item Defact" => "X = Defect veiligheidsitem",
+	"R = Repair Required" => "R = Reparatie vereist",
+	"NA = Not Applicable" => "NA = niet van toepassing",
+	"Inside Cab" => "Binnen cabine",
+	"Code" => "Code",
+	"Inspection Details" => "Inspectiegegevens",
+	"Answer" => "Antwoord",
+	"Ground Level and Under Vehicle" => "Maaiveld en onder voertuig",
+	"Step 2: Show Filled MOT Details" => "Stap 2: Toon ingevulde APK-gegevens",
+
+	"MOT Test Service Charge" => "APK-servicekosten",
+
+	"MOT TEST SERVICE CHARGE" => "APK TEST SERVICE KOSTEN",
+	"MOT Charge Detail" => "APK Charge Detail",
+	"MOT Testing Charges" => "APK-testkosten",
+	"Completed" => "Voltooid",
+
+	"MOT Test Details" => "APK-testgegevens",
+	"Vehicle Id" => "Voertuig-ID",
+	"Service Id" => "Service-ID",
+	"MOT Test Status" => "APK-teststatus",
+	"MOT Test Number" => "APK-testnummer",
+	"MOT Test Details are not Available for This Vehicle" => "APK-testgegevens zijn niet beschikbaar voor dit voertuig",
+	"Point" => "Punt",
+	
+	//Custom Field for(Product, Purchase, Vehicle, VehicleType, VehicleBrand, Color, Service, Invoice, Sale, Salepart, Income, Expense, Rto)
+	"Data not available" => "Gegevens niet beschikbaar",
+	"OTHER INFORMATION" => "ANDERE INFORMATIE",
+
+	"OTHER INFORMATION OF INVOICE" => "ANDERE FACTUURINFORMATIE",
+
+	"OTHER INFORMATION OF SERVICE" => "ANDERE INFORMATIE OVER SERVICE",
+	"Enter" => "Enter",
+
+	"CUSTOMER OTHER DETAILS" => "KLANT ANDERE GEGEVENS",
+	"Customer Other Details" => "Klant andere details",
+
+	"Please enter correct purchase key" => "Voer de juiste aankoopcode in",
+	"This purchase key is already registered with the different domain. If you have any issue please contact us at sales@dasinfomedia.com" => "Deze aankoopsleutel is al geregistreerd bij het andere domein. Als u een probleem heeft, neem dan contact met ons op via sales@dasinfomedia.com",
+	"There seems to be some problem please try after sometime or contact us on sales@dasinfomedia.com" => "Er lijkt een probleem te zijn, probeer het na enige tijd of neem contact met ons op via sales@dasinfomedia.com",
+	"Please enter correct purchase key for this plugin." => "Voer de juiste aankoopcode in voor deze plug-in.",
+	"Connection Problem occurs because server is down." => "Verbindingsprobleem treedt op omdat de server niet beschikbaar is.",
+	"Vehicle Sale" => "Verkoop van voertuigen",
+	"List Of Vehicle Sale" => "Lijst met voertuigverkoop",
+	"Add Vehicle Sale" => "Voertuigverkoop toevoegen",
+	"Edit Vehicle Sale" => "Voertuigverkoop bewerken",
+	"Part Sales" => "Gedeeltelijke verkoop",
+	"List Of Part Sales" => "Lijst met verkoop van onderdelen",
+	"Add Part Sales" => "Onderdeelverkoop toevoegen",
+	"Edit Part Sales" => "Verkoop van onderdelen bewerken",
+	"Service Stock" => "Servicevoorraad",
+	"Product Service" => "Product service",
+
+	/*Quotation*/
+	"Quotation" => "Citaat",
+	"Quotation List" => "Citaat Lijst",
+	"Add Quotation" => "Toevoegen Citaat",
+	"Edit Quotation" => "Bewerk Citaat",
+	"Quotation Process" => "Offerte proces",
+	"Quotation Process for..." => "Offerte proces voor ...",
+	"Do you want to final submit?, if yes so tick mark on checkbox." => "Wilt u definitief indienen ?, zo ja, vink het selectievakje aan.",
+	"Quotation Service Details for Jobcard Number" => "Offerte Service Details voor Jobcard Nummer",
+	"Any kind of Tax not included inside quotation" => "Elke vorm van belasting die niet in de offerte is opgenomen",
+	"Step - 1 : Add Quotation Service Details..." => "Stap - 1: Servicegegevens voor offertes toevoegen ...",
+	"Step - 2 : Add Quotation Service Details..." => "Stap - 2: Servicegegevens voor offertes toevoegen ...",
+	"Service Payment History" => "Betalingsgeschiedenis van service",
+	"Due Amount Reminder" => "Herinnering verschuldigd bedrag",
+
+	"Quotation Service Details" => "Offerte Service Details",
+	"Add" => "Toevoegen",
+	"Own Data" => "Eigen gegevens",
+	"Gatepass" => "Poortpas",
+	"Observation Library" => "Observatiebibliotheek",
+	"Other Setting [Timezone]" => "Andere instelling [tijdzone]",
+	"Other Setting [Language]" => "Andere instelling [taal]",
+	"Other Setting [Date Format]" => "Andere instelling [Datumnotatie]",
+	"Other Setting [Currency]" => "Andere instelling [valuta]",
+	"Quotation No" => "Citaat nr",
+	"Quotation Number" => "Offerte nummer",
+	"Quotaion is final, then click here." => "Offerte is definitief, klik dan hier.",
+
+
+	/************ Custom field radio and checkbox ************/
+	"Radio" => "Radio",
+	"Checkbox" => "Checkbox",
+	"Radio Field Label" => "Radio Field Label",
+	"Enter radio label name" => "Voer radio label naam in",
+	"Checkbox Field Label" => "Checkbox Field Label",
+	"Enter checkbox label name" => "Voer checkbox labelnaam in",
+
+	/********* Custom validation message translation (Customer, Employee, Supportstaff, Accountatnt, Supplyer) **********/
+	"First name is required." => "Voornaam is vereist.",
+	"First name is only alphabets and space." => "Voornaam is alleen letters en spatie.",
+	"First name should not more than 50 character." => "Voornaam mag niet meer dan 50 tekens bevatten.",
+	"Last name is required." => "Achternaam is vereist.",
+	"Last name is only alphabets and space." => "Achternaam is alleen letters en spatie.",
+	"Last name should not more than 50 character." => "Achternaam mag niet meer dan 50 tekens bevatten.",
+	"Display name is required." => "Weergavenaam is vereist.",
+	"Display name is only alphabets and space." => "Weergavenaam is alleen letters en spatie.",
+	"Display name should not more than 50 character." => "Weergavenaam mag niet meer dan 50 tekens bevatten.",
+	"Only alphanumeric, space, dot, @, _, and - are allowed." => "Alleen alfanumeriek, spatie, punt, @, _, en - zijn toegestaan.",
+	"Company name should not more than 100 character." => "Bedrijfsnaam mag niet meer dan 100 tekens bevatten.",
+	"Email is required." => "E-mail is vereist.",
+	"Please enter a valid email address. Like : sales@dasinfomedia.com" => "Voer een geldig e-mailadres in. Zoals: sales@dasinfomedia.com",
+	"Email you entered is already registered." => "E-mailadres dat u heeft ingevoerd, is al geregistreerd.",
+	"Password is required." => "Wachtwoord is vereist.",
+	"Password must be combination of letters and numbers." => "Wachtwoord moet een combinatie van letters en cijfers zijn.",
+	"Password length minimum 6 character." => "Wachtwoordlengte minimaal 6 tekens.",
+	"Password length maximum 12 character." => "Wachtwoordlengte maximaal 12 tekens.",
+	"Confirm password is required." => "Bevestig wachtwoord is vereist.",
+	"Password and Confirm Password does not match." => "Wachtwoord en bevestig wachtwoord komen niet overeen.",
+	"Password length minimum 6 character." => "Wachtwoordlengte minimaal 6 tekens.",
+	"Password length maximum 12 character." => "Wachtwoordlengte maximaal 12 tekens.",
+	"Contact number is required." => "Contactnummer is vereist.",
+	"Contact number minimum 6 digits." => "Contactnummer minimaal 6 cijfers.",
+	"Contact number maximum 16 digits." => "Contactnummer maximaal 16 cijfers.",
+	"Contact number must be number, plus, minus and space only." => "Contactnummer moet een nummer, plus, min en spatie zijn.",
+	"Landline number only numbers are allowed." => "Alleen vaste nummers zijn toegestaan.",
+	"Landline number minimum 6 digits." => "Vaste lijn minimaal 6 cijfers.",
+	"Landline number maximum 16 digits." => "Vaste lijn maximaal 16 cijfers.",
+	"Landline number must be number, plus, minus and space only." => "Het vaste nummer moet een nummer, plus, min en spatie zijn.",
+	"Image must be a file of type: Jpg, Jpeg and Png." => "Afbeelding moet een bestand zijn van het type: Jpg, Jpeg en Png.",
+	"Country field is required." => "Land veld is verplicht.",
+	"Address field is required." => "Adresveld is verplicht.",
+
+	"Join date is required." => "Inschrijfdatum is vereist",
+	"Designation is required." => "Benaming is vereist",
+	"Designation is only alphabets and space." => "De aanduiding is alleen alfabetten en spatie.",
+	"Designation should not more than 50 character." => "Aanwijzing mag niet meer dan 50 tekens bevatten.",
+	
+	"Company name is required." => "Bedrijfsnaam is vereist.",
+	"Company name should not more than 100 character." => "Bedrijfsnaam mag niet meer dan 100 tekens bevatten.",
+
+	/********* Custom validation message translation (Color Module) **********/
+	"Color name is required." => "Kleurnaam is vereist.",
+	"Maximum 50 characters allowed." => "Maximaal 50 tekens toegestaan.",
+	"Special symbols are not allowed." => "Speciale symbolen zijn niet toegestaan.",
+
+	/********* Custom validation message translation (Invoice Module) **********/
+	"Invoice type is required." => "Factuurtype is vereist.",
+	"Invoice number is required." => "Factuurnummer is vereist.",
+	"Customer name is required." => "Klantnaam is vereist.",
+	"Jobcard number is required." => "Jobcardnummer is vereist.",
+	"Vehicle name is required." => "Voertuignaam is vereist.",
+	"Customer name is required." => "Klantnaam is vereist.",
+	"Invoice date is required." => "Factuurdatum is vereist.",
+	"Total amount is required." => "Totaalbedrag is vereist.",
+	"Status is required." => "Status is vereist.",
+	"Payment type is required." => "Betalingstype is vereist.",
+	"Grand total is required." => "Eindtotaal is vereist.",
+	"Paid amount is required." => "Betaald bedrag is vereist.",
+
+	/********* Custom validation message translation (Product Module) **********/
+	"Product date is required." => "Productdatum is vereist.",
+	"Name is required." => "Naam is vereist.",
+	"Name is only alphanumeric and space." => "Naam is alleen alfanumeriek en spatie.",
+	"Name should not more than 100 character." => "Naam mag niet meer dan 100 tekens bevatten.",
+	"The type of the uploaded file should be an image." => "Het type van het geüploade bestand moet een afbeelding zijn.",
+	"Unit of measurement is required." => "Maateenheid is vereist.",
+	"Price is required." => "Prijs is vereist.",
+	"Price is only numeric data allowed." => "Prijs is alleen numerieke gegevens toegestaan.",
+	"Price is only numeric data allowed." => "Prijs is alleen numerieke gegevens toegestaan.",
+	"Supplier is required." => "Leverancier is vereist.",
+
+	/********* Custom validation message translation (Purchase Module) **********/
+	"Purchase number is required." => "Aankoopnummer is vereist.",
+	"Purchase date is required." => "Aankoopdatum is vereist.",
+	"Supplier name is required." => "Naam leverancier is vereist.",
+
+	/********* Custom validation message translation (Service Module) **********/
+	"Jobcard number is required." => "Jobcardnummer is vereist.",
+	"Customer name is required." => "Klantnaam is vereist.",
+	"Vehicle name is required." => "Voertuignaam is vereist.",
+	"Service date is required." => "Servicedatum is vereist.",
+	"Assigne to is required." => "Toewijzen aan is vereist.",
+	"Repair category is required." => "Reparatiecategorie is vereist.",
+	"Service charge is required." => "Servicekosten zijn vereist.",
+	"Service charge is only numeric data." => "Servicekosten zijn alleen numerieke gegevens.",
+	"Service charge is only number data." => "Servicekosten zijn alleen cijfergegevens.",
+	"First character is an alphabet after alphanumeric, space, dot, comma, hyphen and underscore are allowed." => "Eerste teken is een alfabet na alfanumeriek, spatie, punt, komma, koppelteken en onderstrepingsteken zijn toegestaan.",
+
+
+	/********* Custom validation message translation (Tax Module) **********/
+	"Tax name is required." => "Belastingnaam is vereist.",
+	"Only alphanumeric, space, dot, @, _, % and - are allowed." => "Alleen alfanumeriek, spatie, punt, @, _,% en - zijn toegestaan.",
+	"Tax name should not more than 50 character." => "Belastingnaam mag niet meer dan 50 tekens bevatten.",
+	"Tax rate is required." => "Belastingtarief is vereist.",
+	"The tax must be between 1 and 4 digits." => "De belasting moet tussen 1 en 4 cijfers lang zijn.",
+
+	/********* Custom validation message translation (Business Module) **********/
+	"Date is required." => "Datum is vereist.",
+	"Title is required." => "Titel is vereist.",
+	"After alphabet alphanumeric, space, dot, @, _, and - are allowed." => "Na alfanumeriek alfabet zijn spatie, punt, @, _ en - toegestaan.",
+	"Title field should not more than 100 character." => "Titelveld mag niet meer dan 100 tekens bevatten.",
+	"After alphabet alphanumeric, space, dot, @, _, and - are allowed." => "Na alfanumeriek alfabet zijn spatie, punt, @, _ en - toegestaan.",
+	"Description should not more than 300 character." => "Beschrijving mag niet meer dan 300 tekens bevatten.",
+
+	/********* Custom validation message translation (Custom Field Module) **********/
+	"Form name is required." => "Formuliernaam is vereist.",
+	"Label name is required." => "Labelnaam is vereist.",
+	"Start should be alphabets only after supports alphanumeric, space, dot, @, _, and - are allowed." => "Start mag alleen alfabetten zijn nadat alfanumerieke ondersteuning, spatie, punt, @, _ en - zijn toegestaan.",
+	"Label name should not more than 50 character." => "Labelnaam mag niet meer dan 50 tekens bevatten.",
+"Type is vereist." => "Type is vereist.",
+
+
+	/********* Custom validation message translation (Expenses Module) **********/
+	"Main label is required." => "Hoofdlabel is vereist.",
+	"Only alphanumeric and space allowed." => "Alleen alfanumeriek en spatie toegestaan.",
+	"Status field is required." => "Statusveld is verplicht.",
+	"Expense entry field is required." => "Onkosteninvoerveld is verplicht.",
+	"Only numeric data allowed." => "Alleen numerieke gegevens toegestaan.",
+	"After point two digit allowed." => "Na punt twee toegestane cijfers.",
+	"Expense entry field is required." => "Onkosteninvoerveld is verplicht.",
+	"Only numeric data allowed." => "Alleen numerieke gegevens toegestaan.",
+	"After point two digit allowed." => "Na punt twee toegestane cijfers.",
+
+
+	/********* Custom validation message translation (Expenses Module) **********/
+	"Start date is required." => "Startdatum is vereist.",
+	"End date is required." => "Einddatum is vereist.",
+
+	/********* Custom validation message translation (Gatepass Module) **********/
+	"Jobcard is required." => "Jobcard is vereist.",
+	"Gatepass number is required." => "Gatepass-nummer is vereist.",
+	"First name is required." => "Voornaam is vereist.",
+	"Last name is required." => "Achternaam is vereist.",
+	"Email is required." => "E-mail is vereist.",
+	"Contact number is required." => "Contactnummer is vereist.",
+	"Vehicle name is required." => "Voertuignaam is vereist.",
+	"Vehicle type is required." => "Voertuigtype is vereist.",
+	"Kilometre is required." => "Kilometer is vereist.",
+	"Enter only numeric data." => "Voer alleen numerieke gegevens in.",
+	"Out date is required." => "Out datum is vereist.",
+
+	/********* Custom validation message translation (GeneralSetting Module) **********/
+	"System name is required." => "Systeemnaam is vereist.",
+	"System name must be alphabets, numbers and space." => "Systeemnaam moet letters, cijfers en spatie bevatten.",
+	"Phone number is required." => "Telefoonnummer is vereist.",
+	"Phone number minimum 6 digits." => "Telefoonnummer minimaal 6 cijfers.",
+	"Phone number maximum 16 digits." => "Telefoonnummer maximaal 16 cijfers.",
+	"Phone number must be number, plus, minus and space only." => "Telefoonnummer moet een cijfer, plus, min en spatie zijn.",
+	"Image must be Jpg, Jpeg and Png only." => "Afbeelding moet alleen Jpg, Jpeg en Png zijn.",
+	"Please enter valid email address." => "Voer een geldig e-mailadres in.",
+	"Address is required." => "Adres is vereist.",
+	
+
+	/********* Custom validation message translation (Income Module) **********/
+	"Payment status is required." => "Betalingsstatus is vereist.",
+	"Income date is required." => "Inkomstendatum is vereist.",
+	"Main label is required." => "Hoofdlabel is vereist.",
+	"Main label should be less than 50 charachters." => "Hoofdlabel mag niet meer dan 50 tekens bevatten.",
+	"First character is an alphabet after number, space, dot, comma, hyphen,  underscore, at are allowed." => "Eerste teken is een alfabet na nummer, spatie, punt, komma, koppelteken, onderstrepingsteken, at zijn toegestaan.",
+	"Payment method is required." => "Betaalmethode is vereist.",
+	"Income entry is required." => "Inkomsten invoeren is vereist.",
+
+
+	"Invoice number is required." => "Factuurnummer is vereist.",
+	"Payment status is required." => "Betalingsstatus is vereist.",
+	"Income date is required." => "Inkomstendatum is vereist.",
+	"Main label is required." => "Hoofdlabel is vereist.",
+	"Main label should be less than 50 charachters." => "Hoofdlabel mag niet meer dan 50 tekens bevatten.",
+	"First character is an alphabet after number, space, dot, comma, hyphen,  underscore, at are allowed." => "Eerste teken is een alfabet na nummer, spatie, punt, komma, koppelteken, onderstrepingsteken, at zijn toegestaan.",
+	"Payment method is required." => "Betaalmethode is vereist.",
+	"Income entry is required." => "Inkomsten invoeren is vereist.",
+
+	/********* Custom validation message translation (Invoice Module) **********/
+	"Vehicle name is required." => "Voertuignaam is vereist.",
+	"Invoice date is required." => "Factuurdatum is vereist.",
+	"Status is required." => "Status is vereist.",
+	"Payment type is required." => "Betalingstype is vereist.",
+	"Grand total is required." => "Eindtotaal is vereist.",
+	"Paid amount is required." => "Betaald bedrag is vereist.",
+
+	/********* Custom validation message translation (Observation Library Module) **********/
+	"Vehicle name is required." => "Voertuignaam is vereist.",
+	"Checkpoint category is required." => "IJkpuntcategorie is vereist.",
+	"Check point is required." => "Controlepunt is vereist.",
+	"Start should be alphabets only after supports alphanumeric, space, dot, @, _, and - are allowed." => "Start mag alleen alfabetten zijn nadat alfanumerieke ondersteuning, spatie, punt, @, _ en - zijn toegestaan.",
+	"Check point should not more than 30 character." => "Checkpoint mag niet meer dan 30 karakters bevatten.",
+	
+	/********* Custom validation message translation (Other setting Module) **********/
+	"Timezone is required." => "Tijdzone is vereist.",
+	"Language is required." => "Taal is vereist.",
+	"Date format is required." => "Datumnotatie is vereist.",
+	"Currency is required." => "Valuta is vereist.",
+
+	/********* Custom validation message translation (Payment Method Module) **********/
+	"Payment method is required." => "Betaalmethode is vereist.",
+	"Payment method allowed only alphabets and space." => "Betaalmethode toegestaan ​​alleen letters en spatie.",
+	"Payment method should not more than 50 character." => "Betaalmethode mag niet meer dan 50 tekens bevatten.",
+
+	/*** Custom validation message translation (Pay Payment(Inside Invoice Module) Form Module) ***/
+	"Invoice date is required." => "Factuurdatum is vereist.",
+	"Payment type is required." => "Payment type is required.",
+	"Amount received is required." => "Ontvangen bedrag is vereist.",
+
+
+	/*** Custom validation message translation (Quotation Module) ***/
+	"Customer name is required." => "Klantnaam is vereist.",
+	"Vehicle name is required." => "Voertuignaam is vereist.",
+	"Service date is required." => "Servicedatum is vereist.",
+	"Repair category is required." => "Reparatiecategorie is vereist.",
+	"Service charge is required." => "Servicekosten zijn vereist.",
+	"Service charge is only number data." => "Servicekosten zijn alleen cijfergegevens.",
+	"First character is an alphabet after alphanumeric, space, dot, comma, hyphen and underscore are allowed." => "Eerste teken is een alfabet na alfanumeriek, spatie, punt, komma, koppelteken en onderstrepingsteken zijn toegestaan.",
+
+	/*** Custom validation message translation (Rto tax Module) ***/
+	"Vehicle name is required." => "Voertuignaam is vereist.",
+	"RTO tax is required." => "RTO-belasting is vereist.",
+	"RTO tax must be numeric data only." => "RTO-belasting mag alleen numerieke gegevens zijn.",
+	"After point only two digit allowed." => "Na punt slechts twee cijfers toegestaan.",
+	"Number plate charge is required." => "Nummerplaatlading is vereist.",
+	"Number plate charge must be numeric data only." => "Nummerplaatlading mag alleen numerieke gegevens zijn.",
+	"After point only two digit allowed." => "Na punt slechts twee cijfers toegestaan.",
+	"Municiple road tax is required." => "Gemeentelijke wegenbelasting is verplicht.",
+	"Municiple road tax must be numeric data only." => "Gemeentelijke wegenbelasting mag alleen numerieke gegevens zijn.",
+	"After point only two digit allowed." => "Na punt slechts twee cijfers toegestaan.",
+
+	/*** Custom validation message translation (Service second step (Service Module)) ***/
+	"Out time date is required." => "Datum uit tijd is vereist.",
+	"Kilometre is required." => "Kilometer is vereist.",
+
+	/*** Custom validation message translation (Stripe setting Module) ***/
+	"Publish key is required." => "Publicatiesleutel is vereist.",
+	"Secret key is required." => "Geheime sleutel is vereist.",
+
+
+	/*** Custom validation message translation (Vehicle Sale Module) ***/
+	"Bill no is required." => "Rekeningnummer is vereist.",
+	"Sales date is required." => "Verkoopdatum is vereist.",
+	"Customer name is required." => "Klantnaam is vereist.",
+	"Salesman name is required." => "Naam verkoper is vereist.",
+	"Brand name is required." => "Merknaam is vereist.",
+	"Model name is required." => "Modelnaam is vereist.",
+	"Price is only numeric data allowed." => "Prijs is alleen numerieke gegevens toegestaan.",
+	"Price is only numeric data." => "Prijs is alleen numerieke gegevens.",
+	"Color is required." => "Kleur is vereist.",
+	"Total price is required." => "Totale prijs is vereist.",
+	"After point only two digits allowed." => "Na punt zijn slechts twee cijfers toegestaan.",
+	"Total price is only numeric data." => "Totale prijs is alleen numerieke gegevens.",
+	"Interval is required." => "Interval is vereist.",
+	"Number of service field is required." => "Nummer van serviceveld is vereist.",
+	"Assigned to field is required." => "Toegekend aan veld is verplicht.",
+
+
+	/*** Custom validation message translation (Vehicle Module) ***/
+	//"Vehicle type is required." => "Voertuigtype is vereist.",
+	"Vehicle brand is required." => "Voertuigmerk is vereist.",
+	"Fuel type is required." => "Brandstoftype is vereist.",
+	"Model name is required." => "Modelnaam is vereist.",
+	"Price is only numeric data allowed." => "Prijs is alleen numerieke gegevens toegestaan.",
+	"Price is only numeric data allowed." => "Prijs is alleen numerieke gegevens toegestaan.",
+
+	"Manufacturer name is required." => "Fabrikantnaam is vereist.",
+	"Product name is required." => "Productnaam is vereist.",
+	"Quantity is required." => "Aantal is vereist.",
+	
+	"Employees" => "Werknemer",
+	"Support Staffs" => "Ondersteunend personeel",
+	"Accountants" => "Accountant",
+	
 ];
  
  

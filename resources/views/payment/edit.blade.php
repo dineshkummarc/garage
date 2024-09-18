@@ -1,13 +1,14 @@
 @extends('layouts.app')
 @section('content')
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <style>
 .checkbox-success{
 	background-color: #cad0cc!important;
 	 color:red;
 }
 </style>
-<?php $userid = Auth::user()->id; ?>
-@if (getAccessStatusUser('Accounts & Tax Rates',$userid)=='yes')
+<!-- Page content code start -->
 	<div class="right_col" role="main">
         <div class="">
             <div class="page-title">
@@ -31,8 +32,12 @@
             </div>
 			<div class="x_content">
 				<ul class="nav nav-tabs bar_tabs tabconatent" role="tablist">
-					<li role="presentation" class="suppo_llng_li floattab"><a href="{!! url('/payment/list')!!}"><span class="visible-xs"></span><i class="fa fa-list fa-lg">&nbsp;</i>{{ trans('app.Payment Method List')}}</a></li>
-					<li role="presentation" class="active suppo_llng_li_add floattab"><a href="{!! url('/payment/list/edit/'.$editid )!!}"><span class="visible-xs"></span><i class="fa fa-pencil-square-o " aria-hidden="true">&nbsp;</i><b>{{ trans('app.Edit Payment Method')}}</b></a></li>
+					@can('paymentmethod_view')
+						<li role="presentation" class=""><a href="{!! url('/payment/list')!!}"><span class="visible-xs"></span><i class="fa fa-list fa-lg">&nbsp;</i>{{ trans('app.Payment Method List')}}</a></li>
+					@endcan
+					@can('paymentmethod_edit')
+						<li role="presentation" class="active setMarginForAddPaymentMethodForSmallDevices"><a href="{!! url('/payment/list/edit/'.$editid )!!}"><span class="visible-xs"></span><i class="fa fa-pencil-square-o " aria-hidden="true">&nbsp;</i><b>{{ trans('app.Edit Payment Method')}}</b></a></li>
+					@endcan
 				</ul>
 			</div>
 			<div class="clearfix"></div>
@@ -40,11 +45,11 @@
 					<div class="col-md-12 col-sm-12 col-xs-12">
 						<div class="x_panel">
 							<div class="x_content">
-								<form action="update/{{ $vehicals->id }}" method="post"  enctype="multipart/form-data" data-parsley-validate class="form-horizontal form-label-left upperform">
-									<div class="form-group col-md-12 col-sm-12 col-xs-12">
-										<label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">{{ trans('app.Payment Type')}} <label class="text-danger">*</label></label>
+								<form action="update/{{ $payment_methods->id }}" method="post"  enctype="multipart/form-data" data-parsley-validate class="form-horizontal form-label-left upperform" id="paymet-method-add-form">
+									<div class="form-group col-md-12 col-sm-12 col-xs-12 my-form-group">
+										<label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">{{ trans('app.Payment Type')}} <label class="color-danger">*</label></label>
 										<div class="col-md-5 col-sm-5 col-xs-12">
-											<input type="text"  required="required" name="payment" value="{{$vehicals->payment }}" class="form-control col-md-7 col-xs-12" maxlength="20">
+											<input type="text"  required="required" name="payment" value="{{$payment_methods->payment }}" class="form-control col-md-7 col-xs-12" maxlength="20">
 										</div>
 									</div>
 									<input type="hidden" name="_token" value="{{csrf_token()}}">
@@ -61,13 +66,10 @@
 				</div>
 		</div>
     </div> 
-@else
-	<div class="right_col" role="main">
-		<div class="nav_menu main_title" style="margin-top:4px;margin-bottom:15px;">
-              <div class="nav toggle" style="padding-bottom:16px;">
-               <span class="titleup">&nbsp {{ trans('app.You are not authorize this page.')}}</span>
-              </div>
-          </div>
-	</div>
-@endif   
+<!-- Page content code end -->
+
+<!-- For form field validate -->
+{!! JsValidator::formRequest('App\Http\Requests\StorePaymentMethodRequest', '#paymet-method-add-form'); !!}
+<script type="text/javascript" src="{{ asset('public/vendor/jsvalidation/js/jsvalidation.js') }}"></script>
+
 @endsection

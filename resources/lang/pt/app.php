@@ -1,6 +1,7 @@
 <?php
 
 return[
+	    // Portuguese
         //APP Menu page
       'Garrage Management System'=>'Sistema de Gerenciamento de Garrage',
 	  'Welcome'=>'Bem vinda',
@@ -958,6 +959,391 @@ return[
 	"Purchase Number"=>"Número de Compra",
 	"RTO"=>"RTO",
 	"Regional Transport Office"=>"Escritório Regional de Transporte",
+
+	// New lables added 8/06/2020
+	"Number Plate" => "Número da placa",
+	"Enter Number Plate" => "Inserir placa de número",
+	"Maintenance History not available." => "Histórico de manutenção não disponível.",
+	"Description not available" => "Descrição não disponível",
+	"Maintenance History" => "Histórico de Manutenção",
+	"Company Name" => "Nome da empresa",
+	"Enter Company Name" => "Digite o nome da empresa",
+	"Not Added" => "Não adicionado",
+
+	// stripe
+	"Stripe API Key Information" => "Informações-chave da API de distribuição",
+	"Update Your Live Stripe Keys Here!" => "Atualize suas chaves Live Stripe aqui!",
+	"Stripe Settings" => "Configurações de distribuição",
+	"Stripe Secret key" => "Chave secreta de distribuição",
+	"Enter Stripe Publishable Key" => "Inserir chave publicável de distribuição",
+	"Enter Stripe Secret Key" => "Inserir chave secreta de distribuição",
+	"Stripe Publishable key" => "Chave publicável de distribuição",
+	"Please update stripe API key details to take payment directly from the card!" => "Atualize os detalhes principais da API da faixa para receber o pagamento diretamente do cartão!",
+	"You can not pay more than 999999 using the card." => "Você não pode pagar mais de 999999 usando o cartão.",
+
+
+
+	//MOT Module
+	"MOT Test" => "Teste MOT",
+
+	"MOT Test View" => "Visualização de teste MOT",
+	"Step 1: Fill MOT Details" => "Etapa 1: Preencher detalhes de MOT",
+	"OK = Satisfactory" => "OK = Satisfatório",
+	"X = Safety Item Defact" => "X = item de segurança desativado",
+	"R = Repair Required" => "R = Reparo Necessário",
+	"NA = Not Applicable" => "NA = não aplicável",
+	"Inside Cab" => "Cabine Interna",
+	"Code" => "Código",
+	"Inspection Details" => "Detalhes de inspeção",
+	"Answer" => "Responda",
+	"Ground Level and Under Vehicle" => "Nível do solo e sob o veículo",
+	"Step 2: Show Filled MOT Details" => "Etapa 2: Mostrar detalhes MOT preenchidos",
+
+	"MOT Test Service Charge" => "Taxa de serviço de teste MOT",
+
+	"MOT TEST SERVICE CHARGE" => "TAXA DE SERVIÇO DE TESTE MOT",
+	"MOT Charge Detail" => "Detalhe de carga MOT",
+	"MOT Testing Charges" => "Taxas de teste MOT",
+	"Completed" => "Concluída",
+
+	"MOT Test Details" => "Detalhes do teste MOT",
+	"Vehicle Id" => "Id do veículo",
+	"Service Id" => "Id de serviço",
+	"MOT Test Status" => "Status de teste MOT",
+	"MOT Test Number" => "Número de teste MOT",
+	"MOT Test Details are not Available for This Vehicle" => "Detalhes de teste MOT não estão disponíveis para este veículo",
+	"Point" => "Point",
+	
+	//Custom Field for(Product, Purchase, Vehicle, VehicleType, VehicleBrand, Color, Service, Invoice, Sale, Salepart, Income, Expense, Rto)
+	"Data not available" => "Dados não disponíveis",
+	"OTHER INFORMATION" => "OUTRA INFORMAÇÃO",
+
+	"OTHER INFORMATION OF INVOICE" => "OUTRAS INFORMAÇÕES DA FATURA",
+
+	"OTHER INFORMATION OF SERVICE" => "OUTRAS INFORMAÇÕES DE SERVIÇO",
+	"Enter" => "Entrar",
+
+	"CUSTOMER OTHER DETAILS" => "OUTROS DETALHES DO CLIENTE",
+	"Customer Other Details" => "Outros detalhes do cliente",
+
+	"Please enter correct purchase key" => "Insira a chave de compra correta",
+	"This purchase key is already registered with the different domain. If you have any issue please contact us at sales@dasinfomedia.com" => "Esta chave de compra já está registrada com o domínio diferente. Se você tiver qualquer problema, entre em contato conosco em sales@dasinfomedia.com",
+	"There seems to be some problem please try after sometime or contact us on sales@dasinfomedia.com" => "Parece haver algum problema, tente depois de algum tempo ou entre em contato conosco em sales@dasinfomedia.com",
+	"Please enter correct purchase key for this plugin." => "Por favor, insira a chave de compra correta para este plugin.",
+	"Connection Problem occurs because server is down." => "O problema de conexão ocorre porque o servidor está inativo.",
+	"Vehicle Sale" => "Venda de veículos",
+	"List Of Vehicle Sale" => "Lista de venda de veículos",
+	"Add Vehicle Sale" => "Adicionar venda de veículos",
+	"Edit Vehicle Sale" => "Editar venda de veículos",
+	"Part Sales" => "Vendas de Peças",
+	"List Of Part Sales" => "Lista de vendas de peças",
+	"Add Part Sales" => "Adicionar vendas de peças",
+	"Edit Part Sales" => "Editar vendas de peças",
+	"Service Stock" => "Estoque de serviço",
+	"Product Service" => "Serviço de Produto",
+
+	"Quotation" => "cotação",
+	"Quotation List" => "cotação Lista",
+	"Add Quotation" => "Adicionar cotação",
+	"Edit Quotation" => "Editar cotação",
+	"Quotation Process" => "Processo de cotação",
+	"Quotation Process for..." => "Processo de cotação para ...",
+	"Do you want to final submit?, if yes so tick mark on checkbox." => "Deseja submeter o envio final ?, se sim, marque a caixa de seleção.",
+	"Quotation Service Details for Jobcard Number" => "Detalhes do serviço de cotação para o número do cartão de trabalho",
+	"Any kind of Tax not included inside quotation" => "Qualquer tipo de imposto não incluso na cotação",
+	"Step - 1 : Add Quotation Service Details..." => "Etapa - 1: Adicionar detalhes do serviço de cotação ...",
+	"Step - 2 : Add Quotation Service Details..." => "Etapa - 2: Adicionar detalhes do serviço de cotação ...",
+	"Service Payment History" => "Histórico de pagamento de serviço",
+	"Due Amount Reminder" => "Lembrete de valor devido",
+
+	"Quotation Service Details" => "Detalhes do serviço de cotação",
+	"Add" => "Adicionar",
+	"Own Data" => "Dados Próprios",
+	"Gatepass" => "Ingresso",
+	"Observation Library" => "Biblioteca de Observação",
+	"Other Setting [Timezone]" => "Outra configuração [fuso horário]",
+	"Other Setting [Language]" => "Outra configuração [idioma]",
+	"Other Setting [Date Format]" => "Outra configuração [formato de data]",
+	"Other Setting [Currency]" => "Outra configuração [moeda]",
+	"Quotation No" => "Citação não",
+	"Quotation Number" => "Número da cotação",
+	"Quotaion is final, then click here." => "A cotação é final, clique aqui.",
+
+
+
+	/************ Custom field radio and checkbox ************/
+	"Radio" => "Rádio",
+	"Checkbox" => "Checkbox",
+	"Radio Field Label" => "Rótulo de campo de rádio",
+	"Enter radio label name" => "Insira o nome do rótulo do rádio",
+	"Checkbox Field Label" => "Rótulo do campo da caixa de seleção",
+	"Enter checkbox label name" => "Insira o nome do rótulo da caixa de seleção",
+
+	/********* Custom validation message translation (Customer, Employee, Supportstaff, Accountatnt, Supplyer) **********/
+	"First name is required." => "O primeiro nome é obrigatório.",
+	"First name is only alphabets and space." => "O primeiro nome contém apenas letras e espaço.",
+	"First name should not more than 50 character." => "O primeiro nome não deve ter mais de 50 caracteres.",
+	"Last name is required." => "O sobrenome é obrigatório.",
+	"Last name is only alphabets and space." => "O sobrenome contém apenas letras e espaço.",
+	"Last name should not more than 50 character." => "O sobrenome não deve ter mais de 50 caracteres.",
+	"Display name is required." => "O nome de exibição é obrigatório.",
+	"Display name is only alphabets and space." => "O nome de exibição contém apenas letras e espaço.",
+	"Display name should not more than 50 character." => "O nome de exibição não deve ter mais de 50 caracteres.",
+	"Only alphanumeric, space, dot, @, _, and - are allowed." => "Apenas alfanuméricos, espaços, pontos, @, _ e - são permitidos.",
+	"Company name should not more than 100 character." => "O nome da empresa não deve ter mais de 100 caracteres.",
+	"Email is required." => "O e-mail é obrigatório.",
+	"Please enter a valid email address. Like : sales@dasinfomedia.com" => "Por favor, insira um endereço de e-mail válido. Como: vendas@dasinfomedia.com",
+	"Email you entered is already registered." => "O e-mail que você digitou já está registrado.",
+	"Password is required." => "A senha é necessária.",
+	"Password must be combination of letters and numbers." => "A senha deve ser uma combinação de letras e números.",
+	"Password length minimum 6 character." => "Senha com comprimento mínimo de 6 caracteres.",
+	"Password length maximum 12 character." => "Senha com comprimento máximo de 12 caracteres.",
+	"Confirm password is required." => "É necessário confirmar a senha.",
+	"Password and Confirm Password does not match." => "A senha e a confirmação da senha não correspondem.",
+	"Password length minimum 6 character." => "Senha com comprimento mínimo de 6 caracteres.",
+	"Password length maximum 12 character." => "Senha com comprimento máximo de 12 caracteres.",
+	"Contact number is required." => "O número de contato é obrigatório.",
+	"Contact number minimum 6 digits." => "Número de contato mínimo de 6 dígitos.",
+	"Contact number maximum 16 digits." => "Número de contato máximo 16 dígitos.",
+	"Contact number must be number, plus, minus and space only." => "O número do contato deve ser um número, mais, menos e espaço apenas.",
+	"Landline number only numbers are allowed." => "Número fixo apenas números são permitidos.",
+	"Landline number minimum 6 digits." => "Número fixo mínimo 6 dígitos.",
+	"Landline number maximum 16 digits." => "Número fixo com máximo de 16 dígitos.",
+	"Landline number must be number, plus, minus and space only." => "O número do telefone fixo deve ser um número, mais, menos e espaço apenas.",
+	"Image must be a file of type: Jpg, Jpeg and Png." => "A imagem deve ser um arquivo do tipo: Jpg, Jpeg e Png.",
+	"Country field is required." => "O campo do país é obrigatório.",
+	"Address field is required." => "O campo de endereço é obrigatório.",
+
+	"Join date is required." => "A data de adesão é obrigatória",
+	"Designation is required." => "A designação é necessária",
+	"Designation is only alphabets and space." => "A designação é apenas alfabetos e espaço.",
+	"Designation should not more than 50 character." => "A designação não deve ter mais de 50 caracteres.",
+	
+	"Company name is required." => "O nome da empresa é obrigatório.",
+	"Company name should not more than 100 character." => "O nome da empresa não deve ter mais de 100 caracteres.",
+
+	/********* Custom validation message translation (Color Module) **********/
+	"Color name is required." => "O nome da cor é obrigatório.",
+	"Maximum 50 characters allowed." => "Máximo de 50 caracteres permitidos.",
+	"Special symbols are not allowed." => "Símbolos especiais não são permitidos.",
+
+	/********* Custom validation message translation (Invoice Module) **********/
+	"Invoice type is required." => "O tipo de fatura é obrigatório.",
+	"Invoice number is required." => "O número da fatura é obrigatório.",
+	"Customer name is required." => "O nome do cliente é obrigatório.",
+	"Jobcard number is required." => "O número do cartão de trabalho é obrigatório.",
+	"Vehicle name is required." => "O nome do veículo é obrigatório.",
+	"Customer name is required." => "O nome do cliente é obrigatório.",
+	"Invoice date is required." => "A data da fatura é obrigatória.",
+	"Total amount is required." => "O valor total é necessário.",
+	"Status is required." => "O status é obrigatório.",
+	"Payment type is required." => "O tipo de pagamento é obrigatório.",
+	"Grand total is required." => "O total geral é necessário.",
+	"Paid amount is required." => "O valor pago é obrigatório.",
+
+	/********* Custom validation message translation (Product Module) **********/
+	"Product date is required." => "A data do produto é obrigatória.",
+	"Name is required." => "O nome é obrigatório.",
+	"Name is only alphanumeric and space." => "O nome é apenas alfanumérico e espaço.",
+	"Name should not more than 100 character." => "O nome não deve ter mais de 100 caracteres.",
+	"The type of the uploaded file should be an image." => "O tipo de arquivo enviado deve ser uma imagem.",
+	"Unit of measurement is required." => "Unidade de medida necessária.",
+	"Price is required." => "O preço é obrigatório.",
+	"Supplier is required." => "O fornecedor é obrigatório.",
+
+	/********* Custom validation message translation (Purchase Module) **********/
+	"Purchase number is required." => "O número da compra é obrigatório.",
+	"Purchase date is required." => "A data de compra é obrigatória.",
+	"Supplier name is required." => "O nome do fornecedor é obrigatório.",
+
+	/********* Custom validation message translation (Service Module) **********/
+	"Jobcard number is required." => "O número do cartão de trabalho é obrigatório.",
+	"Customer name is required." => "O nome do cliente é obrigatório.",
+	"Vehicle name is required." => "O nome do veículo é obrigatório.",
+	"Service date is required." => "A data do serviço é obrigatória.",
+	"Assigne to is required." => "Atribuir a é obrigatório.",
+	"Repair category is required." => "A categoria de reparo é necessária.",
+	"Service charge is required." => "Taxa de serviço é necessária.",
+	"Service charge is only numeric data." => "A taxa de serviço consiste apenas em dados numéricos.",
+	"Service charge is only number data." => "A taxa de serviço é apenas dados numéricos.",
+	"First character is an alphabet after alphanumeric, space, dot, comma, hyphen and underscore are allowed." => "O primeiro caractere é um alfabeto após o alfanumérico, espaço, ponto, vírgula, hífen e sublinhado são permitidos.",
+
+
+	/********* Custom validation message translation (Tax Module) **********/
+	"Tax name is required." => "O nome do imposto é obrigatório.",
+	"Only alphanumeric, space, dot, @, _, % and - are allowed." => "Apenas alfanuméricos, espaços, pontos, @, _,% e - são permitidos.",
+	"Tax name should not more than 50 character." => "O nome do imposto não deve ter mais de 50 caracteres.",
+	"Tax rate is required." => "A taxa de imposto é obrigatória.",
+	"The tax must be between 1 and 4 digits." => "O imposto deve ter entre 1 e 4 dígitos.",
+
+	/********* Custom validation message translation (Business Module) **********/
+	"Date is required." => "A data é obrigatória.",
+	"Title is required." => "O título é obrigatório.",
+	"After alphabet alphanumeric, space, dot, @, _, and - are allowed." => "Após o alfabeto alfanumérico, espaço, ponto, @, _ e - são permitidos.",
+	"Title field should not more than 100 character." => "O campo do título não deve ter mais de 100 caracteres.",
+	"After alphabet alphanumeric, space, dot, @, _, and - are allowed." => "Após o alfabeto alfanumérico, espaço, ponto, @, _ e - são permitidos.",
+	"Description should not more than 300 character." => "A descrição não deve ter mais de 300 caracteres.",
+
+	/********* Custom validation message translation (Custom Field Module) **********/
+	"Form name is required." => "O nome do formulário é obrigatório.",
+	"Label name is required." => "O nome do rótulo é obrigatório.",
+	"Start should be alphabets only after supports alphanumeric, space, dot, @, _, and - are allowed." => "O início deve ser alfabético somente depois de suportar alfanumérico, espaço, ponto, @, _ e - são permitidos.",
+	"Label name should not more than 50 character." => "O nome do rótulo não deve ter mais de 50 caracteres.",
+	"Type is required." => "O tipo é obrigatório.",
+
+
+	/********* Custom validation message translation (Expenses Module) **********/
+	"Main label is required." => "O rótulo principal é obrigatório.",
+	"Only alphanumeric and space allowed." => "Apenas alfanuméricos e espaços permitidos.",
+	"Status field is required." => "O campo de status é obrigatório.",
+	"Expense entry field is required." => "O campo de entrada de despesas é obrigatório.",
+	"Only numeric data allowed." => "Somente dados numéricos permitidos.",
+	"After point two digit allowed." => "Após o ponto dois dígitos permitidos.",
+	"Expense entry field is required." => "O campo de entrada de despesas é obrigatório.",
+	"Only numeric data allowed." => "Somente dados numéricos permitidos.",
+	"After point two digit allowed." => "Após o ponto dois dígitos permitidos.",
+
+
+	/********* Custom validation message translation (Expenses Module) **********/
+	"Start date is required." => "A data de início é obrigatória.",
+	"End date is required." => "A data de término é obrigatória.",
+
+	/********* Custom validation message translation (Gatepass Module) **********/
+	"Jobcard is required." => "Jobcard é obrigatório.",
+	"Gatepass number is required." => "O número do Gatepass é obrigatório.",
+	"First name is required." => "O primeiro nome é obrigatório.",
+	"Last name is required." => "O sobrenome é obrigatório.",
+	"Email is required." => "O e-mail é obrigatório.",
+	"Contact number is required." => "O número de contato é obrigatório.",
+	"Vehicle name is required." => "O nome do veículo é obrigatório.",
+	"Vehicle type is required." => "O tipo de veículo é obrigatório.",
+	"Kilometre is required." => "Quilômetro é necessário.",
+	"Enter only numeric data." => "Insira apenas dados numéricos.",
+	"Out date is required." => "A data de saída é obrigatória.",
+
+	/********* Custom validation message translation (GeneralSetting Module) **********/
+	"System name is required." => "O nome do sistema é obrigatório.",
+	"System name must be alphabets, numbers and space." => "O nome do sistema deve ser alfabetos, números e espaço.",
+	"Phone number is required." => "Número de telefone obrigatório.",
+	"Phone number minimum 6 digits." => "Número de telefone mínimo 6 dígitos.",
+	"Phone number maximum 16 digits." => "Número de telefone no máximo 16 dígitos.",
+	"Phone number must be number, plus, minus and space only." => "O número de telefone deve ser um número, mais, menos e espaço apenas.",
+	"Image must be Jpg, Jpeg and Png only." => "A imagem deve ser apenas Jpg, Jpeg e Png.",
+	"Please enter valid email address." => "Por favor, insira um endereço de e-mail válido.",
+	"Address is required." => "O endereço é obrigatório.",
+	
+
+	/********* Custom validation message translation (Income Module) **********/
+	"Payment status is required." => "O status do pagamento é obrigatório.",
+	"Income date is required." => "A data de renda é obrigatória.",
+	"Main label is required." => "O rótulo principal é obrigatório.",
+	"Main label should be less than 50 charachters." => "O rótulo principal deve ter menos de 50 caracteres.",
+	"First character is an alphabet after number, space, dot, comma, hyphen,  underscore, at are allowed." => "O primeiro caractere é um alfabeto após número, espaço, ponto, vírgula, hífen, sublinhado e são permitidos.",
+	"Payment method is required." => "Método de pagamento obrigatório.",
+	"Income entry is required." => "A entrada de receita é obrigatória.",
+
+
+	"Invoice number is required." => "O número da fatura é obrigatório.",
+	"Payment status is required." => "O status do pagamento é obrigatório.",
+	"Income date is required." => "A data de renda é obrigatória.",
+	"Main label is required." => "O rótulo principal é obrigatório.",
+	"Main label should be less than 50 charachters." => "O rótulo principal deve ter menos de 50 caracteres.",
+	"First character is an alphabet after number, space, dot, comma, hyphen,  underscore, at are allowed." => "O primeiro caractere é um alfabeto após número, espaço, ponto, vírgula, hífen, sublinhado e são permitidos.",
+	"Payment method is required." => "Método de pagamento obrigatório.",
+	"Income entry is required." => "A entrada de receita é obrigatória.",
+
+	/********* Custom validation message translation (Invoice Module) **********/
+	"Vehicle name is required." => "O nome do veículo é obrigatório.",
+	"Invoice date is required." => "A data da fatura é obrigatória.",
+	"Status is required." => "O status é obrigatório.",
+	"Payment type is required." => "O tipo de pagamento é obrigatório.",
+	"Grand total is required." => "O total geral é necessário.",
+	"Paid amount is required." => "O valor pago é obrigatório.",
+
+	/********* Custom validation message translation (Observation Library Module) **********/
+	"Vehicle name is required." => "O nome do veículo é obrigatório.",
+	"Checkpoint category is required." => "A categoria de ponto de verificação é obrigatória.",
+	"Check point is required." => "O ponto de verificação é necessário.",
+	"Start should be alphabets only after supports alphanumeric, space, dot, @, _, and - are allowed." => "O início deve ser alfabético apenas depois de suportar alfanumérico, espaço, ponto, @, _ e - são permitidos.",
+	"Check point should not more than 30 character." => "O ponto de verificação não deve ter mais de 30 caracteres.",
+	
+	/********* Custom validation message translation (Other setting Module) **********/
+	"Timezone is required." => "O fuso horário é obrigatório.",
+	"Language is required." => "O idioma é obrigatório.",
+	"Date format is required." => "O formato de data é obrigatório.",
+	"Currency is required." => "A moeda é obrigatória.",
+
+	/********* Custom validation message translation (Payment Method Module) **********/
+	"Payment method is required." => "Método de pagamento obrigatório.",
+	"Payment method allowed only alphabets and space." => "Método de pagamento permitido apenas letras e espaço.",
+	"Payment method should not more than 50 character." => "Método de pagamento não deve ter mais de 50 caracteres.",
+
+	/*** Custom validation message translation (Pay Payment(Inside Invoice Module) Form Module) ***/
+	"Invoice date is required." => "A data da fatura é obrigatória.",
+	"Payment type is required." => "O tipo de pagamento é obrigatório.",
+	"Amount received is required." => "O valor recebido é obrigatório.",
+
+
+	/*** Custom validation message translation (Quotation Module) ***/
+	"Customer name is required." => "O nome do cliente é obrigatório.",
+	"Vehicle name is required." => "O nome do veículo é obrigatório.",
+	"Service date is required." => "A data do serviço é obrigatória.",
+	"Repair category is required." => "A categoria de reparo é necessária.",
+	"Service charge is required." => "Taxa de serviço é necessária.",
+	"Service charge is only number data." => "A taxa de serviço é apenas dados numéricos.",
+	"First character is an alphabet after alphanumeric, space, dot, comma, hyphen and underscore are allowed." => "O primeiro caractere é um alfabeto após o alfanumérico, espaço, ponto, vírgula, hífen e sublinhado são permitidos.",
+
+	/*** Custom validation message translation (Rto tax Module) ***/
+	"Vehicle name is required." => "O nome do veículo é obrigatório.",
+	"RTO tax is required." => "O imposto RTO é obrigatório.",
+	"RTO tax must be numeric data only." => "O imposto RTO deve ser apenas de dados numéricos.",
+	"After point only two digit allowed." => "Após o ponto, apenas dois dígitos são permitidos.",
+	"Number plate charge is required." => "A carga da placa do número é necessária.",
+	"Number plate charge must be numeric data only." => "A carga da placa do número deve conter apenas dados numéricos.",
+	"After point only two digit allowed." => "Após o ponto, apenas dois dígitos são permitidos.",
+	"Municiple road tax is required." => "Imposto rodoviário municipal é obrigatório.",
+	"Municiple road tax must be numeric data only." => "O imposto rodoviário municipal deve ser apenas de dados numéricos.",
+	"After point only two digit allowed." => "Após o ponto, apenas dois dígitos são permitidos.",
+
+	/*** Custom validation message translation (Service second step (Service Module)) ***/
+	"Out time date is required." => "A data de saída é obrigatória.",
+	"Kilometre is required." => "Quilômetro é necessário.",
+
+	/*** Custom validation message translation (Stripe setting Module) ***/
+	"Publish key is required." => "A chave de publicação é necessária.",
+	"Secret key is required." => "A chave secreta é necessária.",
+
+
+	/*** Custom validation message translation (Vehicle Sale Module) ***/
+	"Bill no is required." => "Não é necessário faturar.",
+	"Sales date is required." => "A data de venda é obrigatória.",
+	"Customer name is required." => "O nome do cliente é obrigatório.",
+	"Salesman name is required." => "O nome do vendedor é obrigatório.",
+	"Brand name is required." => "O nome da marca é obrigatório.",
+	"Model name is required." => "O nome do modelo é obrigatório.",
+	"Price is only numeric data allowed." => "Preço é permitido apenas dados numéricos.",
+	"Price is only numeric data." => "Preço é apenas dados numéricos.",
+	"Color is required." => "A cor é necessária.",
+	"Total price is required." => "O preço total é obrigatório.",
+	"After point only two digits allowed." => "Depois do ponto, apenas dois dígitos são permitidos.",
+	"Total price is only numeric data." => "O preço total consiste apenas em dados numéricos.",
+	"Interval is required." => "O intervalo é obrigatório.",
+	"Number of service field is required." => "O campo de número de serviço é obrigatório.",
+	"Assigned to field is required." => "O campo atribuído a é obrigatório.",
+
+
+	/*** Custom validation message translation (Vehicle Module) ***/
+	//"Vehicle type is required." => "O tipo de veículo é obrigatório.",
+	"Vehicle brand is required." => "A marca do veículo é obrigatória.",
+	"Fuel type is required." => "O tipo de combustível é obrigatório.",
+	"Model name is required." => "O nome do modelo é obrigatório.",
+	"Manufacturer name is required." => "O nome do fabricante é obrigatório.",
+	"Product name is required." => "O nome do produto é obrigatório.",
+	"Quantity is required." => "Quantidade é necessária.",
+	
+	"Employees" => "Funcionário",
+	"Support Staffs" => "Equipe de apoio",
+	"Accountants" => "Contador",
 ];
  
  

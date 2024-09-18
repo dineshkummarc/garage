@@ -31,7 +31,10 @@
 			<tr>
 				
 				<td class="text-center"> {{ date(getDateFormat(),strtotime($totalstocks->date)) }}</td>
-				<td class="text-center"><?php if(!empty($totalstocks->purchase_no)){echo"Purchase";}else{echo"Sales";} ?> </td>
+				<td class="text-center">
+					<?php if(!empty($totalstocks->purchase_no))
+						{echo"Purchase";}
+						else{echo"Sales";} ?> </td>
 			<?php if(!empty($totalstocks->purchase_no)){ ?>
 				<td class="text-center">
 					<a  href="{!! url('/purchase/list/pview/'.$totalstocks->id)!!}"> {{ $totalstocks->purchase_no}}

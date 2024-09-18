@@ -1,9 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+
 <!-- page content -->
-<?php $userid = Auth::user()->id; ?>
-@if (getAccessStatusUser('Services',$userid)=='yes')
 	<div class="right_col" role="main">
         <div id="myModal" class="modal fade" role="dialog">
 			<div class="modal-dialog modal-lg">
@@ -52,11 +51,12 @@
 				<div class="col-md-12 col-sm-12 col-xs-12" >
 					<div class="x_content">
 						<ul class="nav nav-tabs bar_tabs" role="tablist">
-							<li role="presentation" class="active"><a href="{!! url('/service/list')!!}"><span class="visible-xs"></span> <i class="fa fa-list fa-lg">&nbsp;</i><b>{{ trans('app.Services List')}}</b></a></li>
-							@if(!empty(getActiveCustomer($userid)=='yes'))
-						
-							<li role="presentation" class=""><a href="{!! url('/service/add')!!}"><span class="visible-xs"></span><i class="fa fa-plus-circle fa-lg">&nbsp;</i> {{ trans('app.Add Services')}} </a></li>
-						   @endif
+							@can('service_view')
+								<li role="presentation" class="active"><a href="{!! url('/service/list')!!}"><span class="visible-xs"></span> <i class="fa fa-list fa-lg">&nbsp;</i><b>{{ trans('app.Services List')}}</b></a></li>
+							@endcan
+							@can('service_add')
+								<li role="presentation" class=""><a href="{!! url('/service/add')!!}"><span class="visible-xs"></span><i class="fa fa-plus-circle fa-lg">&nbsp;</i> {{ trans('app.Add Services')}} </a></li>
+							@endcan
 						</ul>
 					</div>
 					<div class="x_panel table_up_div">
@@ -70,6 +70,7 @@
 									<th>{{ trans('app.Service Category')}}</th>
 									<th>{{ trans('app.Assign To')}}</th>
 									<th>{{ trans('app.Free Service Coupon')}}</th>
+									<th>{{ trans('app.Number Plate')}}</th>
 									<th>{{ trans('app.Action')}}</th>
 								</tr>
 							</thead>
@@ -110,18 +111,17 @@
 										@else
 											<td>{{ trans('app.Paid Service') }}</td>
 										@endif
+										<td>{{ getVehicleNumberPlate($services->vehicle_id)??"Not Added" }}</td>
 										<td> 
-											<?php $userid=Auth::User()->id; ?>
-											@if(getActiveCustomer($userid)=='yes')
-											
+											@can('service_view')
 												<button type="button" data-toggle="modal" data-target="#myModal" serviceid="{{ $services->id }}" url="{!! url('/service/list/view') !!}" class="btn btn-round btn-info save">{{ trans('app.View')}}</button>
-												
+											@endcan
+											@can('service_edit')	
 												<a href="{!! url('/service/list/edit/'.$services->id) !!}" ><button type="button" class="btn btn-round btn-success">{{ trans('app.Edit')}}</button></a>
-												
+											@endcan
+											@can('service_delete')
 												<a url="{!! url('/service/list/delete/'.$services->id) !!}" class="sa-warning"><button type="button" class="btn btn-round btn-danger">{{ trans('app.Delete')}}</button></a>
-											@else
-												<button type="button" data-toggle="modal" data-target="#myModal" serviceid="{{ $services->id }}" url="{!! url('/service/list/view') !!}" class="btn btn-round btn-info save">{{ trans('app.View')}}</button>
-											@endif
+											@endcan
 										</td>
 									</tr>
 									<?php $i++; ?>
@@ -134,16 +134,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
-@else
-	<div class="right_col" role="main">
-		<div class="nav_menu main_title" style="margin-top:4px;margin-bottom:15px;">
-              <div class="nav toggle" style="padding-bottom:16px;">
-               <span class="titleup">&nbsp {{ trans('app.You are not authorize this page.')}}</span>
-              </div>
-		</div>
-	</div>
-@endif  
+	</div>  
 
 <script src="{{ URL::asset('vendors/jquery/dist/jquery.min.js') }}"></script>
 <!-- language change in user selected -->	

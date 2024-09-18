@@ -1,40 +1,30 @@
-<html>
-<head>
-<style>
 
-</style>
-
-		<script language="javascript">
-			function printdiv(el) {
-			var restorepage = $('body').html();
-			var printcontent = $('#' + el).clone();
-			$('body').empty().html(printcontent);
-			window.print();
-			$('body').html(restorepage);
-
-			}
-		</script>
-		
-</head>
-<body>	
+<script language="javascript">
+	function printdiv(el) {
+		var restorepage = $('body').html();
+		var printcontent = $('#' + el).clone();
+		$('body').empty().html(printcontent);
+		window.print();
+		$('body').html(restorepage);
+	}
+</script>
 		
 <script>
-		 $(document).ready(function() {
-		$('.adddatatable').DataTable({
-			responsive: true,
-			paging: false,
-			lengthChange: false,
-			ordering: false,
-			searching: false,
-			info: false,
-			autoWidth: true,
-			sDom: 'lfrtip'
-		
+		$(document).ready(function() {
+			$('.adddatatable').DataTable({
+				responsive: true,
+				paging: false,
+				lengthChange: false,
+				ordering: false,
+				searching: false,
+				info: false,
+				autoWidth: true,
+				sDom: 'lfrtip'	
+			});
 		});
-	});
 </script>
 	
-		<div id="div_print" style="width:100%;" >
+		<div id="div_print" style="margin-left:10px;" >
 			
 			<table width="100%" border="0">
 				<tbody>
@@ -46,21 +36,15 @@
 				</tbody>
 			</table> <br/><br/>
 			<table width="100%" border="0" class="adddatatable">
-				<thead>
-					<tr>
-						<td></td>
-						<td></td>
-					</tr>
-				</thead>
 				<tbody>
 					<tr>
 						<td width="70%">
 						
 							<span style="float:left;">
 								<h4>{{$logo->system_name}}</h4>
-								<img src="{{ URL('public/vehicle/service.png')}}" style="width: 235px; height: 90px;">
-								
-								<img src="{{ URL('public/general_setting/'.$logo->logo_image)}}" width="230px" height="70px" class="purchaseimg" >
+								<img src="../public/vehicle/service.png" style="width: 235px; height: 90px;">
+
+								<img src="../public/general_setting/<?php echo $logo->logo_image ?>" width="230px" height="70px" style="position: absolute; top: 125px; left: 25px;">
 								
 							</span>
 						</td>
@@ -97,7 +81,7 @@
 				</tbody>
 			</table>
 			</hr>
-			<table width="100%" border="0">
+			<table class="adddatatable" width="100%" border="0">
 				<tbody>
 					<tr>
 						<td align="left">
@@ -107,15 +91,20 @@
 				</tbody>
 			</table>
 			<br/>
-			<table class="table table-bordered" width="100%" border="1" style="border-collapse:collapse;">			
+			<table class="table table-bordered adddatatable" width="100%" border="1" style="border-collapse:collapse;">			
 				<thead>
 					<tr>
-						<th class="text-center">{{ trans('app.Category')}}</th><th class="text-center">{{ trans('app.Product Number')}}</th>
+						<th class="text-center">{{ trans('app.Category')}}</th>
+						<th class="text-center">{{ trans('app.Product Number')}}</th>
 						<th class="text-center">{{ trans('app.Manufacturer Name')}}</th>
 						<th class="text-center">{{ trans('app.Product Name')}}</th>
 						<th class="text-center">{{ trans('app.Qty')}}</th>
-						<th class="text-center">{{ trans('app.Price')}} ( <?php echo getCurrencySymbols(); ?> )</ </th>
-						<th class="text-center">{{ trans('app.Total Amount')}} ( <?php echo getCurrencySymbols(); ?> )</ </th>
+						<th class="text-center">
+							{{ trans('app.Price')}} ( <?php echo getCurrencySymbols(); ?> )
+						</th>
+						<th class="text-center">
+							{{ trans('app.Total Amount')}} ( <?php echo getCurrencySymbols(); ?> )
+						</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -127,22 +116,78 @@
 					foreach($purchasdetails as $purchasdetail)
 					{ ?>
 						<tr>
-							<td class="text-center"><?php echo getCategory($purchasdetail->category); ?></td>
-							<td class="text-center"><?php echo getProductcode($purchasdetail->product_id); ?></td>
-							
-							<td class="text-center"><?php echo getProductName(getproducttyid($purchasdetail->product_id)); ?></td>
-							<td class="text-center"><?php echo getProduct($purchasdetail->product_id); ?></td>
+							<td class="text-center">
+								<?php echo getCategory($purchasdetail->category); ?>
+							</td>
+							<td class="text-center">
+								<?php echo getProductcode($purchasdetail->product_id); ?>
+							</td>
+							<td class="text-center">
+								<?php echo getProductName(getproducttyid($purchasdetail->product_id)); ?>
+							</td>
+							<td class="text-center">
+								<?php echo getProduct($purchasdetail->product_id); ?>
+							</td>
 							<td class="text-center"><?php echo $purchasdetail->qty; ?></td>
 							<td class="text-center"><?php echo $purchasdetail->price; ?></td>
 							<td class="text-center"><?php echo $purchasdetail->total_amount; ?></td>
-							<?php $total += $purchasdetail->total_amount; ?>
-											
+															
 						</tr>
+						<?php $total += $purchasdetail->total_amount; ?>
 					<?php } } ?>
-				</tbody>
-			
+				</tbody>			
 			</table>
-		
+
+
+			<!-- For Custom Field -->
+				@if(!empty($tbl_custom_fields))
+					<table class="table table-bordered" width="100%" border="1" style="border-collapse:collapse;">
+							<tr class="printimg">
+								<td class="cname" colspan="2">{{ trans('app.OTHER INFORMATION') }}</td>
+							</tr>
+				
+						@foreach($tbl_custom_fields as $tbl_custom_field)	
+							<?php 
+								$tbl_custom = $tbl_custom_field->id;
+								$userid = $purchas->id;
+																		
+								$datavalue = getCustomDataPurchase($tbl_custom,$userid);
+							?>
+
+							@if($tbl_custom_field->type == "radio")
+								@if($datavalue != "")
+									<?php
+										$radio_selected_value = getRadioSelectedValue($tbl_custom_field->id, $datavalue);
+									?>
+								
+									<tr>
+										<th class="text-center">{{$tbl_custom_field->label}} :</th>
+										<td class="text-center cname">{{$radio_selected_value}}</td>
+									</tr>
+								@else
+									<tr>
+										<th class="text-center">{{$tbl_custom_field->label}} :</th>
+										<td class="text-center cname">{{ trans('app.Data not available') }}</td>
+									</tr>
+								@endif
+							@else
+								@if($datavalue != null)
+									<tr>
+										<th class="text-center">{{$tbl_custom_field->label}} :</th>
+										<td class="text-center cname">{{$datavalue}}</td>
+									</tr>
+								@else
+									<tr>
+										<th class="text-center">{{$tbl_custom_field->label}} :</th>
+										<td class="text-center cname">{{ trans('app.Data not available') }}</td>
+									</tr>
+								@endif
+							@endif																
+						@endforeach
+					</table>
+				@endif
+			<!-- For Custom Field End -->
+
 			<table class="table" style="border:1px solid #ddd" width="100%">
 				<tbody>
 					<tr>
@@ -158,7 +203,3 @@
 			<button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('app.Close')}}</button>
 	
 		</div>
-		
-</body>
-</html>
-		

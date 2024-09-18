@@ -7,9 +7,8 @@
 .x_panel{padding:0px}
 }
 </style>
+
 <!-- page content -->
-<?php $userid = Auth::user()->id; ?>
-@if (getAccessStatusUser('Email Templates',$userid)=='yes')
 	<div class="right_col" role="main">
 		<div class="">
 			<div class="page-title">
@@ -36,7 +35,9 @@
 				<div class="col-md-12 col-sm-12 col-xs-12">
 					<div class="x_content">
 						<ul class="nav nav-tabs bar_tabs" role="tablist">
-							<li role="presentation" class="active"><a href="{!! url('/mail/mail')!!}"><span class="visible-xs"></span><i class="fa fa-list fa-lg">&nbsp;</i><b>{{ trans('app.Mail Templates')}}</b></a></li>
+							@can('emailtemplate_view')
+								<li role="presentation" class="active"><a href="{!! url('/mail/mail')!!}"><span class="visible-xs"></span><i class="fa fa-list fa-lg">&nbsp;</i><b>{{ trans('app.Mail Templates')}}</b></a></li>
+							@endcan
 						</ul>
 					</div>
 					<div class="x_panel">
@@ -59,13 +60,13 @@
 												<input type="hidden" name="_token" value="{{csrf_token()}}">
 												
 													<div class="form-group">
-														<label for="first_name" class="col-md-4 col-sm-4 col-xs-12 control-label">{{ trans('app.Email Subject')}} <span class="text-danger">*</span> </label>
+														<label for="first_name" class="col-md-4 col-sm-4 col-xs-12 control-label">{{ trans('app.Email Subject')}} <span class="color-danger">*</span> </label>
 														<div class="col-md-8 col-sm-8 col-xs-12">
 															<input class="form-control validate[required]" name="subject" id="Member_Registration" placeholder="Enter email subject" value="{{ $mailformats->subject }}" required>
 														</div>
 													</div>
 													<div class="form-group">
-														<label for="first_name" class="col-md-4 col-sm-4 col-xs-12 control-label">{{ trans('app.Sender email')}} <span class="text-danger">*</span> </label>
+														<label for="first_name" class="col-md-4 col-sm-4 col-xs-12 control-label">{{ trans('app.Sender email')}} <span class="color-danger">*</span> </label>
 														<div class="col-md-8 col-sm-8 col-xs-12">
 															<input class="form-control validate[required]" name="send_from" id="Member_Registration" placeholder="Enter Sender Email" value="{{ $mailformats->send_from }}" required>
 														</div>
@@ -73,7 +74,7 @@
 													<input class="form-control validate[required]" type="hidden" name="mail_id" id="mail_id"  value="">
 														
 													<div class="form-group">
-														<label for="first_name" class="col-md-4 col-sm-4 col-xs-12 control-label">{{ trans('app.Registration Email Template')}} <span class="text-danger">*</span> </label>
+														<label for="first_name" class="col-md-4 col-sm-4 col-xs-12 control-label">{{ trans('app.Registration Email Template')}} <span class="color-danger">*</span> </label>
 														<div class="col-md-8 col-sm-8 col-xs-12">
 															<textarea style="min-height:200px;" name="notification_text" class="form-control validate[required] txt_area" required><?php echo $mailformats->notification_text ?></textarea>
 														</div>
@@ -97,9 +98,11 @@
 														</label>
 													</div>	
 													</div>
-													<div class="col-md-12 col-sm-12 col-xs-12 text-center">        	
-														<input type="submit" value="Save"  class="btn btn-success" >
-													</div>
+													@can('emailtemplate_edit')
+														<div class="col-md-12 col-sm-12 col-xs-12 text-center">        	
+															<input type="submit" value="Save"  class="btn btn-success" >
+														</div>
+													@endcan
 												</form>
 											</div>
 										</div>
@@ -112,15 +115,9 @@
 			</div>
 		</div>
 	</div>
-@else
-	<div class="right_col" role="main">
-		<div class="nav_menu main_title" style="margin-top:4px;margin-bottom:15px;">
-            <div class="nav toggle" style="padding-bottom:16px;">
-               <span class="titleup">&nbsp {{ trans('app.You are not authorize this page.')}}</span>
-            </div>
-        </div>
-	</div>
-@endif 
+<!-- page content end -->
+
+
 <script src="{{ URL::asset('vendors/jquery/dist/jquery.min.js') }}"></script>
 <script>
 

@@ -16,11 +16,8 @@ visibility:hidden;
 visibility:visible;
 }
 </style>
+
 <!-- page content -->
-<?php $userid = Auth::user()->id; ?>
-@if (getAccessStatusUser('Vehicles',$userid)=='yes')
-	 @if(getActiveCustomer($userid)=='yes' || getActiveEmployee($userid)=='yes')
-	
 	<div class="right_col" role="main">
 		<div class="page-title">
 			 <div class="nav_menu">
@@ -34,19 +31,23 @@ visibility:visible;
 		</div>
 		<div class="x_content">
 			<ul class="nav nav-tabs bar_tabs" role="tablist">
-				<li role="presentation" class=""><a href="{!! url('/vehicle/list')!!}"><span class="visible-xs"></span> <i class="fa fa-list fa-lg">&nbsp;</i>{{ trans('app.Vehicle List')}}</span></a></li>
-				
-				<li role="presentation" class="active"><a href="{!! url('/vehicle/list/edit/'.$editid)!!}"><span class="visible-xs"></span> <i class="fa fa-pencil-square-o" aria-hidden="true">&nbsp;</i><b>{{ trans('app.Edit Vehicle')}}</b></a></li>
+				@can('vehicle_view')
+					<li role="presentation" class=""><a href="{!! url('/vehicle/list')!!}"><span class="visible-xs"></span> <i class="fa fa-list fa-lg">&nbsp;</i>{{ trans('app.Vehicle List')}}</span></a></li>
+				@endcan
+				@can('vehicle_edit')
+					<li role="presentation" class="active"><a href="{!! url('/vehicle/list/edit/'.$editid)!!}"><span class="visible-xs"></span> <i class="fa fa-pencil-square-o" aria-hidden="true">&nbsp;</i><b>{{ trans('app.Edit Vehicle')}}</b></a></li>
+				@endcan
 			</ul>
 		</div>
 		<div class="row">
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_panel">
 					<div class="x_content">
-						<form  action="update/{{$vehicaledit->id }}" method="post" enctype="multipart/form-data"  class="form-horizontal upperform">
+						<form id="vehicleEdit-Form"  action="update/{{$vehicaledit->id }}" method="post" enctype="multipart/form-data"  class="form-horizontal upperform">
+							
 							<div class="form-group">
-								<div class="">
-									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Vehicle Type')}} <label class="text-danger">*</label></label>
+								<div class="my-form-group">
+									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Vehicle Type')}} <label class="color-danger">*</label></label>
 									<div class="col-md-2 col-sm-2 col-xs-12">
 										<select class="form-control select_vehicaltype" name="vehical_id"
 										 vehicalurl="{!! url('/vehicle/vehicaltypefrombrand') !!}">
@@ -62,16 +63,18 @@ visibility:visible;
 										<button type="button" class="btn btn-default" data-target="#responsive-modal" data-toggle="modal">{{ trans('app.Add Or Remove')}}</button>
 									</div>
 								</div>
+
 								<div class="">
-									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Chasic No')}} <label class="text-danger">*</label> </label>
+									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Chasic No')}} <label class="text-danger"></label> </label>
 									<div class="col-md-4 col-sm-4 col-xs-12">
-										<input type="text"  name="chasicno"  value="{{ $vehicaledit->chassisno }}" placeholder="{{ trans('app.Enter ChasicNo')}}" maxlength="30"  class="form-control" required>
+										<input type="text"  name="chasicno"  value="{{ $vehicaledit->chassisno }}" placeholder="{{ trans('app.Enter ChasicNo')}}" maxlength="30"  class="form-control">
 									</div>
 								</div>
 							</div>
+
 							<div class="form-group">
-								<div class="">
-									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Vehicle Brand')}} <label class="text-danger">*</label></label>
+								<div class="my-form-group">
+									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Vehicle Brand')}} <label class="color-danger">*</label></label>
 									<div class="col-md-2 col-sm-2 col-xs-12">
 										<select class="form-control   select_vehicalbrand" name="vehicabrand" >
 
@@ -87,17 +90,19 @@ visibility:visible;
 										<button type="button" class="btn btn-default" data-target="#responsive-modal-brand" data-toggle="modal">{{ trans('app.Add Or Remove')}}</button>
 									</div>
 								</div>
+
 								<div class="">
-									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Model Years')}} <label class="text-danger">*</label></label>
+									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Model Years')}} <label class="text-danger"></label></label>
 									<div class="col-md-4 col-sm-4 col-xs-12 input-group date" id="myDatepicker2" >
 										<span class="input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-										<input type="text"  name="modelyear" value="{{ $vehicaledit->modelyear }}"  class="form-control" readonly  required />
+										<input type="text"  name="modelyear" autocomplete="off" value="{{ $vehicaledit->modelyear }}"  class="form-control" readonly  />
 									</div>
 								</div>
 							</div>
+
 							<div class="form-group">
-								<div class="">
-									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Fuel Type')}} <label class="text-danger">*</label></label>
+								<div class="my-form-group">
+									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Fuel Type')}} <label class="color-danger">*</label></label>
 									<div class="col-md-2 col-sm-2 col-xs-12">
 										<select class="form-control select_fueltype " name="fueltype" >
 											<option value="">{{ trans('app.Select fuel type')}}</option>
@@ -112,16 +117,18 @@ visibility:visible;
 										<button type="button" class="btn btn-default" data-target="#responsive-modal-fuel" data-toggle="modal">{{ trans('app.Add Or Remove')}}</button>
 									</div>
 								</div>
+
 								<div class="">
-									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.No of Grear')}} <label class="text-danger">*</label></label>
+									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.No of Grear')}} <label class="text-danger"></label></label>
 									<div class="col-md-4 col-sm-4 col-xs-12">
-										<input type="text"  name="gearno"  value="{{ $vehicaledit->nogears }}" placeholder="{{ trans('app.Enter No of Gear')}}" maxlength="30" class="form-control" required>
+										<input type="text"  name="gearno"  value="{{ $vehicaledit->nogears }}" placeholder="{{ trans('app.Enter No of Gear')}}" maxlength="30" class="form-control" >
 									</div>
 								</div>
 							</div>
+
 							<div class="form-group">
-								<div class="">
-									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="last-name">{{ trans('app.Model Name')}} <label class="text-danger">*</label></label>
+								<div class="my-form-group">
+									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="last-name">{{ trans('app.Model Name')}} <label class="color-danger">*</label></label>
 									<div class="col-md-2 col-sm-2 col-xs-12">
 									
 										<select class="form-control model_addname" name="modelname" required>
@@ -138,24 +145,26 @@ visibility:visible;
 										<button type="button" class="btn btn-default" data-target="#responsive-modal-vehi-model" data-toggle="modal">{{ trans('app.Add Or Remove')}}</button>
 									</div>
 								</div>
-								<div class="{{ $errors->has('price') ? ' has-error' : '' }}">
-									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="last-name">{{ trans('app.Price')}} (<?php echo getCurrencySymbols(); ?>) <label class="text-danger">*</label></label>
+
+								<div class="{{ $errors->has('price') ? ' has-error' : '' }} my-form-group">
+									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="last-name">{{ trans('app.Price')}} (<?php echo getCurrencySymbols(); ?>) <label class="color-danger">*</label></label>
 									<div class="col-md-4 col-sm-4 col-xs-12">
 										<input type="text"  name="price"  value="{{ $vehicaledit->price }}" placeholder="{{ trans('app.Enter Price')}}" maxlength="10"  class="form-control" required>
-										@if ($errors->has('price'))
+										<!-- @if ($errors->has('price'))
 										   <span class="help-block">
 											   <strong>{{ $errors->first('price') }}</strong>
 										   </span>
-										@endif
+										@endif -->
 									</div>
 								</div>
 							</div>
+
 							<div class="form-group">
 								<div class="{{ $errors->has('odometerreading') ? ' has-error' : '' }}">
-									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Odometer Reading')}} <label class="text-danger">*</label></label>
+									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Odometer Reading')}} <label class="text-danger"></label></label>
 									<div class="col-md-4 col-sm-4 col-xs-12">
 										<input type="text"  name="odometerreading"  
-										value="{{ $vehicaledit->odometerreading }}" placeholder="{{ trans('app.Enter OdometerReading')}}"  class="form-control" maxlength="30" required>
+										value="{{ $vehicaledit->odometerreading }}" placeholder="{{ trans('app.Enter Odometer Reading')}}"  class="form-control" maxlength="30">
 										@if ($errors->has('odometerreading'))
 										   <span class="help-block">
 											   <strong>{{ $errors->first('odometerreading') }}</strong>
@@ -164,18 +173,23 @@ visibility:visible;
 									</div>
 								</div>
 								<div class="">
-									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="last-name">{{ trans('app.Date Of Manufacturing')}} <label class="text-danger">*</label></label>
+									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="last-name">{{ trans('app.Date Of Manufacturing')}} <label class="text-danger"></label></label>
 									<div class="col-md-4 col-sm-4 col-xs-12 input-group date datepicker">
 										<span class="input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-										<input type="text"  name="dom" placeholder="<?php echo getDateFormat();?>" value="{{ date(getDateFormat(),strtotime($vehicaledit->dom)) }}" class="form-control" onkeypress="return false;" required />
+										
+										@if($vehicaledit->dom)
+											<input type="text"  name="dom" autocomplete="off" placeholder="<?php echo getDateFormat();?>" value="{{ date(getDateFormat(),strtotime($vehicaledit->dom)) }}" class="form-control" onkeypress="return false;" />
+										@else
+											<input type="text" id="datepicker" autocomplete="off" class="form-control" placeholder="<?php echo getDateFormat();?>" value="" name="dom" onkeypress="return false;" />
+										@endif											
 									</div>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="">
-									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Gear Box')}} <label class="text-danger">*</label></label>
+									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Gear Box')}} <label class="text-danger"></label></label>
 									<div class="col-md-4 col-sm-4 col-xs-12">
-										<input type="text"  name="gearbox"  value="{{ $vehicaledit->gearbox }}" placeholder="{{ trans('app.Enter Grear Box')}}" maxlength="20" class="form-control" required>
+										<input type="text"  name="gearbox"  value="{{ $vehicaledit->gearbox }}" placeholder="{{ trans('app.Enter Grear Box')}}" maxlength="20" class="form-control">
 									</div>
 								</div>
 								<div class="">
@@ -188,29 +202,37 @@ visibility:visible;
 							
 							<div class="form-group">
 								<div class="">
-									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Engine No')}} <label class="text-danger">*</label></label>
+									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Engine No')}} <label class="text-danger"></label></label>
 									<div class="col-md-4 col-sm-4 col-xs-12">
-										<input type="text"  name="engineno"  value="{{ $vehicaledit->engineno }}" placeholder="{{ trans('app.Enter Engine No')}}" maxlength="30"  class="form-control" required>
+										<input type="text"  name="engineno"  value="{{ $vehicaledit->engineno }}" placeholder="{{ trans('app.Enter Engine No')}}" maxlength="30"  class="form-control">
 									</div>
 								</div>
 								<div class="">
-									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="last-name">{{ trans('app.Engine Size')}} <label class="text-danger">*</label></label>
+									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="last-name">{{ trans('app.Engine Size')}} <label class="text-danger"></label></label>
 									<div class="col-md-4 col-sm-4 col-xs-12">
-										<input type="text"  name="enginesize"  value="{{ $vehicaledit->enginesize }}" placeholder="{{ trans('app.Enter Engine Size')}}" maxlength="30" class="form-control" required>
+										<input type="text"  name="enginesize"  value="{{ $vehicaledit->enginesize }}" placeholder="{{ trans('app.Enter Engine Size')}}" maxlength="30" class="form-control">
 									</div>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="">
-									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Key No')}} <label class="text-danger">*</label></label>
+									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Key No')}} <label class="text-danger"></label></label>
 									<div class="col-md-4 col-sm-4 col-xs-12">
-										<input type="text"  name="keyno"  value="{{ $vehicaledit->keyno }}" placeholder="{{ trans('app.Enter Key No')}}" maxlength="30" class="form-control" required>
+										<input type="text"  name="keyno"  value="{{ $vehicaledit->keyno }}" placeholder="{{ trans('app.Enter Key No')}}" maxlength="30" class="form-control">
 									</div>
 								</div>
 								<div class="">
-									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Engine')}} <label class="text-danger">*</label></label>
+									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Engine')}} <label class="text-danger"></label></label>
 									<div class="col-md-4 col-sm-4 col-xs-12">
-										<input type="text"  name="engine"  value="{{ $vehicaledit->engine }}" placeholder="{{ trans('app.Enter Engine')}}" maxlength="30" class="form-control" required>
+										<input type="text"  name="engine"  value="{{ $vehicaledit->engine }}" placeholder="{{ trans('app.Enter Engine')}}" maxlength="30" class="form-control">
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="">
+									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Number Plate')}} <label class="text-danger"></label></label>
+									<div class="col-md-4 col-sm-4 col-xs-12">
+										<input type="text"  name="number_plate"  value="{{ $vehicaledit->number_plate }}" placeholder="{{ trans('app.Enter Number Plate')}}" maxlength="30" class="form-control">
 									</div>
 								</div>
 							</div>
@@ -218,7 +240,7 @@ visibility:visible;
 							</div>
 						<div class="form-group">
 			<!-- Vehical images  -->
-							<div class="col-md-6 col-sm-12 col-xs-12 form-group">
+							<div class="col-md-6 col-sm-12 col-xs-12 form-group my-form-group">
 								<div class="col-md-12 col-sm-12 col-xs-12">
 									<h2>{{ trans('app.Vehicle Images')}}</h2>
 									<span> <h5 style="margin-left: 10px;"> {{ trans('app.Select Multiple Images')}} </h5> </span>
@@ -317,6 +339,93 @@ visibility:visible;
 								</div>					
 							</div>
 						</div>
+
+					<!-- Custom Filed data value -->
+						@if(!empty($tbl_custom_fields))  
+							<div class="col-md-12 col-xs-12 col-sm-12 space">
+								<h4><b>{{ trans('app.Custom Fields')}}</b></h4>
+								<p class="col-md-12 col-xs-12 col-sm-12 ln_solid"></p>
+							</div>
+							<?php
+								$subDivCount = 0;
+							?>
+							@foreach($tbl_custom_fields as $myCounts => $tbl_custom_field)
+						       <?php 
+									if($tbl_custom_field->required == 'yes')
+									{
+										$required = "required";
+										$red = "*";
+									}else{
+										$required = "";
+										$red = "";
+									}
+
+									$tbl_custom = $tbl_custom_field->id;
+									$userid = $vehicaledit->id;
+									$datavalue = getCustomDataVehicle($tbl_custom,$userid);
+
+									$subDivCount++;
+								?>
+								@if($myCounts%2 == 0)
+									<div class="col-md-12 col-sm-6 col-xs-12">
+								@endif
+								<div class="form-group col-md-6  col-sm-6 col-xs-12">
+									<label class="control-label col-md-4 col-sm-4 col-xs-12" for="account-no">{{$tbl_custom_field->label}} <label class="text-danger">{{$red}}</label></label>
+									<div class="col-md-8 col-sm-8 col-xs-12">
+										@if($tbl_custom_field->type == 'textarea')
+											<textarea  name="custom[{{$tbl_custom_field->id}}]" class="form-control" placeholder="{{ trans('app.Enter')}} {{$tbl_custom_field->label}}" maxlength="100" {{$required}}>{{$datavalue}}</textarea>
+										@elseif($tbl_custom_field->type == 'radio')
+											<?php
+												$radioLabelArrayList = getRadiolabelsList($tbl_custom_field->id)
+											?>
+											@if(!empty($radioLabelArrayList))
+												<div style="margin-top: 5px;">
+												@foreach($radioLabelArrayList as $k => $val)
+													<input type="{{$tbl_custom_field->type}}"  name="custom[{{$tbl_custom_field->id}}]" value="{{$k}}"    <?php
+														$getRadioValue = getRadioLabelValueForUpdateForAllModules($tbl_custom_field->form_name ,$vehicaledit->id, $tbl_custom_field->id);
+
+													 	if($k == $getRadioValue) { echo "checked"; }
+													?> 
+													> {{ $val }} &nbsp;
+												@endforeach
+												</div>								
+											@endif
+										@elseif($tbl_custom_field->type == 'checkbox')
+											<?php
+												$checkboxLabelArrayList = getCheckboxLabelsList($tbl_custom_field->id)
+											?>
+												@if(!empty($checkboxLabelArrayList))
+													<?php
+														$getCheckboxValue = getCheckboxLabelValueForUpdateForAllModules($tbl_custom_field->form_name, $vehicaledit->id, $tbl_custom_field->id);
+													?>
+													<div style="margin-top: 5px;">
+												@foreach($checkboxLabelArrayList as $k => $val)
+														<input type="{{$tbl_custom_field->type}}" name="custom[{{$tbl_custom_field->id}}][]" value="{{$val}}"
+														<?php
+														 	if($val == getCheckboxValForAllModule($tbl_custom_field->form_name, $vehicaledit->id, $tbl_custom_field->id,$val)) 
+														 			{ echo "checked"; }
+														 	?>
+														> {{ $val }} &nbsp;
+												@endforeach
+												</div>				
+											@endif								
+										@elseif($tbl_custom_field->type == 'textbox' || $tbl_custom_field->type == 'date')
+											<input type="{{$tbl_custom_field->type}}" name="custom[{{$tbl_custom_field->id}}]"  class="form-control" placeholder="{{ trans('app.Enter')}} {{$tbl_custom_field->label}}" value="{{$datavalue}}" maxlength="30" {{$required}}>
+										@endif
+									</div>
+								</div>
+								@if($myCounts%2 != 0)
+									</div>
+								@endif
+							@endforeach
+							<?php 
+								if ($subDivCount%2 != 0) {
+									echo "</div>";
+								}
+							?>
+						@endif
+				<!-- Custom Filed data value End-->
+
 							<input type="hidden" name="_token" value="{{csrf_token()}}">
 							<div class="form-group col-md-12 col-sm-12 col-xs-12">
 								<div class="col-md-12 col-sm-12 col-xs-12 text-center">
@@ -361,7 +470,7 @@ visibility:visible;
 												</tbody>
 											</table>
 											<div class="col-md-8 form-group data_popup">
-												<label>{{ trans('app.Vehicle Type:')}} <span class="text-danger">*</span></label>
+												<label>{{ trans('app.Vehicle Type:')}} <span class="color-danger">*</span></label>
 												<input type="text" class="form-control vehical_type" name="vehical_type" id="vehical_type" placeholder="Enter Vehical Type" maxlength="20" required />
 											</div>
 											<div class="col-md-4 form-group data_popup" style="margin-top:24px;">
@@ -411,8 +520,8 @@ visibility:visible;
 												</tbody>
 											</table>
 												<div class="col-md-8 form-group data_popup">
-													<label>{{ trans('app.Vehicle Type:')}} <span class="text-danger">*</span></label>
-														<select class="form-control  vehical_id" name="vehical_id" vehicalurl="{!! url('/vehicle/vehicalformtype') !!}">
+													<label>{{ trans('app.Vehicle Type:')}} <span class="color-danger">*</span></label>
+														<select class="form-control  vehical_id" id="vehicleTypeSelect" name="vehical_id" vehicalurl="{!! url('/vehicle/vehicalformtype') !!}">
 															<option value="">{{ trans('app.Select Vehicle Type')}}</option>
 															@if(!empty($vehical_type))
 																@foreach($vehical_type as $vehical_types)
@@ -422,7 +531,7 @@ visibility:visible;
 														</select> 
 												</div>
 												<div class="col-md-8 form-group data_popup">
-													<label>{{ trans('app.Vehicle Brand:')}} <span class="text-danger">*</span></label>
+													<label>{{ trans('app.Vehicle Brand:')}} <span class="color-danger">*</span></label>
 													<input type="text" class="form-control vehical_brand" name="vehical_brand" id="vehical_brand" placeholder="Enter Vehical brand" maxlength="30" required />
 												</div>
 												<div class="col-md-4 form-group data_popup" style="margin-top:24px;">
@@ -436,7 +545,7 @@ visibility:visible;
 							</div>
 						</div>
 					</div>
-				<!-- End Vehical Brand --->	
+				<!-- End Vehical Brand -->	
 		
 				<!-- Fuel Type -->	
 					<div class="col-md-6">
@@ -472,7 +581,7 @@ visibility:visible;
 												</tbody>
 											</table>
 											<div class="col-md-8 form-group data_popup">
-												<label>{{ trans('app.Fuel Type:')}} <span class="text-danger">*</span></label>
+												<label>{{ trans('app.Fuel Type:')}} <span class="color-danger">*</span></label>
 												<input type="text" class="form-control fuel_type" name="fuel_type" id="fuel_type" placeholder="{{ trans('app.Enter Fuel Type')}}" maxlength="30" required />
 											</div>
 											<div class="col-md-4 form-group data_popup" style="margin-top:24px;">
@@ -521,7 +630,7 @@ visibility:visible;
 												</tbody>
 											</table>
 											<div class="col-md-8 form-group data_popup">
-												<label>{{ trans('app.Model Name :')}} <span class="text-danger">*</span> </label>
+												<label>{{ trans('app.Model Name :')}} <span class="color-danger">*</span> </label>
 												<input type="text" class="form-control vehi_modal_name" name="model_name" id="model_name" placeholder="{{ trans('app.Enter Model Name')}}" maxlength="30" required />
 											</div>
 											<div class="col-md-4 form-group data_popup" style="margin-top:24px;">
@@ -539,28 +648,7 @@ visibility:visible;
 			</div>
 		</div>
 	</div>
-	@else
-		<div class="right_col" role="main" style="background-color: #e6e6e6;">
-		<div class="page-title">
-			<div class="nav_menu">
-				<nav>
-					<div class="nav toggle titleup">
-						<span>&nbsp {{ trans('app.You are not authorize this page.')}}</span>
-					</div>
-				</nav>
-			</div>
-		</div>
-	</div>
-	@endif
-@else
-	<div class="right_col" role="main">
-		<div class="nav_menu main_title" style="margin-top:4px;margin-bottom:15px;">
-              <div class="nav toggle" style="padding-bottom:16px;">
-               <span class="titleup">&nbsp {{ trans('app.You Are Not Authorize This page.')}}</span>
-              </div>
-          </div>
-	</div>
-@endif   
+
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="{{ URL::asset('vendors/moment/min/moment.min.js') }}"></script>
@@ -587,39 +675,59 @@ visibility:visible;
 <script>
     $(document).ready(function(){
 		
-		 $('.vehicaltypeadd').click(function(){
+		$('.vehicaltypeadd').click(function(){
 			
-		 var vehical_type= $('.vehical_type').val();
+			var vehical_type= $('.vehical_type').val();
+			var url = $(this).attr('url');
+	         
+	        function define_variable()
+			{
+				return {
+					vehicle_type_value: $('.vehical_type').val(),
+					vehicle_type_pattern: /^[(a-zA-Z0-9\s)]+$/,
+				};
+			}
+		
+			var call_var_vehicletypeadd = define_variable();		 
 
-		 var url = $(this).attr('url');
-         if(vehical_type == ""){
-            swal('Please Enter Vehicle Type!');
-			}else{  
-					$.ajax({
-						type:'GET',
-						url:url,
-							data :{vehical_type:vehical_type},
+	        if(vehical_type == ""){
+	            swal('Please enter vehicle type');
+	        }
+	        else if (!call_var_vehicletypeadd.vehicle_type_pattern.test(call_var_vehicletypeadd.vehicle_type_value))
+			{
+				$('.vehical_type').val("");
+				swal('Please enter only alphanumeric data');
+			}
+	        else if(!vehical_type.replace(/\s/g, '').length){
+				$('.vehical_type').val("");
+	        	swal('Only blank space not allowed');
+	        }
+	        else{  
+				$.ajax({
+					type:'GET',
+					url:url,
+						data :{vehical_type:vehical_type},
 
-							success:function(data)
-						{
-						   var newd = $.trim(data);
-						   var classname = 'del-'+newd;
-						  
-						   if (data == '01')
-						   {
-							   
-							   swal('Duplicate Data !!! Please try Another...');
-						   }
-						   else
-						   {
-						   $('.vehical_type_class').append('<tr class="'+classname+' data_of_type"><td class="text-center">'+vehical_type+'</td><td class="text-center"><button type="button" vehicletypeid='+data+' deletevehical="{!! url('/vehicle/vehicaltypedelete') !!}" class="btn btn-danger btn-xs deletevehicletype">X</button></a></td><tr>');
-							$('.select_vehicaltype').append('<option value='+data+'>'+vehical_type+'</option>');
-							$('.vehical_type').val('');
-						   }
-					   },
-			   
-			});
-		}
+						success:function(data)
+					{
+					   var newd = $.trim(data);
+					   var classname = 'del-'+newd;
+					  
+					   if (data == '01')
+					   {
+						   
+						   swal('Duplicate Data !!! Please try Another...');
+					   }
+					   else
+					   {
+					   $('.vehical_type_class').append('<tr class="'+classname+' data_of_type"><td class="text-center">'+vehical_type+'</td><td class="text-center"><button type="button" vehicletypeid='+data+' deletevehical="{!! url('/vehicle/vehicaltypedelete') !!}" class="btn btn-danger btn-xs deletevehicletype">X</button></a></td><tr>');
+						$('.select_vehicaltype').append('<option value='+data+'>'+vehical_type+'</option>');
+						$('.vehical_type').val('');
+					   }
+				   },
+				   
+				});
+			}
 		});
 	});
 </script>
@@ -669,44 +777,70 @@ $(document).ready(function(){
     $(document).ready(function(){
 		
 		$('.vehicalbrandadd').click(function(){
-        var vehical_id = $('.vehical_id').val();
-		var vehical_brand= $('.vehical_brand').val();
-		var url = $(this).attr('vehiclebrandurl');
-		if(vehical_id == ''){
-            swal('Please Enter Vehicle Type!');
-        }
-		else if(vehical_brand =='')
-		{
-			swal('Please Enter Vehicle Brand!');
-		}
-		else{
-			$.ajax({
-			   type:'GET',
-			   url:url,
-             
-			   data :{vehical_id:vehical_id,
-			         vehical_brand:vehical_brand
-			   },
 
-			   success:function(data)
-               
-               {
-				   var newd = $.trim(data);
-				   var classname = 'del-'+newd;
-               
-			    if (data == '01')
-			       {
-			 	      swal('Duplicate Data !!! Please try Another...');
-				   }
-				   else
-				   {
-					   $('.vehical_brand_class').append('<tr class="'+classname+' data_of_type"><td class="text-center">'+vehical_brand+'</td><td class="text-center"><button type="button" brandid='+data+' deletevehicalbrand="{!! url('/vehicle/vehicalbranddelete') !!}" class="btn btn-danger btn-xs deletevehiclebrands">X</button></a></td><tr>');
-						$('.select_vehicalbrand').append('<option value='+data+'>'+vehical_brand+'</option>');
-						$('.vehical_brand').val('');
-					}
-			   },
-		 });
-		}
+        	var vehical_id = $('.vehical_id').val();
+			var vehical_brand= $('.vehical_brand').val();
+			var url = $(this).attr('vehiclebrandurl');
+
+			function define_variable()
+			{
+				return {
+					vehicle_brand_value: $('.vehical_brand').val(),
+					vehicle_brand_pattern: /^[(a-zA-Z0-9\s)]+$/,
+				};
+			}
+			
+			var call_var_vehiclebrandadd = define_variable();		
+
+			if ($("#vehicleTypeSelect")[0].selectedIndex <= 0) {
+
+				swal('Please first select vehicle type');
+			}
+			else
+			{
+				if(vehical_brand == ""){
+		            swal('Please enter vehicle brand');
+		        }
+		        else if (!call_var_vehiclebrandadd.vehicle_brand_pattern.test(call_var_vehiclebrandadd.vehicle_brand_value))
+				{
+					$('.vehical_brand').val("");
+					swal('Please enter only alphanumeric data');
+
+				}
+		        else if(!vehical_brand.replace(/\s/g, '').length){
+		       		// var str = "    ";
+					$('.vehical_brand').val("");
+		        	swal('Only blank space not allowed');
+		        }
+		        else{
+					$.ajax({
+					   type:'GET',
+					   url:url,
+		             
+					   data :{vehical_id:vehical_id,
+					         vehical_brand:vehical_brand
+					   },
+
+					   success:function(data)
+		               
+		               {
+						   var newd = $.trim(data);
+						   var classname = 'del-'+newd;
+		               
+					    if (data == '01')
+					       {
+					 	      swal('Duplicate Data !!! Please try Another...');
+						   }
+						   else
+						   {
+							   $('.vehical_brand_class').append('<tr class="'+classname+' data_of_type"><td class="text-center">'+vehical_brand+'</td><td class="text-center"><button type="button" brandid='+data+' deletevehicalbrand="{!! url('/vehicle/vehicalbranddelete') !!}" class="btn btn-danger btn-xs deletevehiclebrands">X</button></a></td><tr>');
+								$('.select_vehicalbrand').append('<option value='+data+'>'+vehical_brand+'</option>');
+								$('.vehical_brand').val('');
+							}
+					   },
+				 	});
+				}
+			}
 		});
 	});
 </script>
@@ -754,14 +888,36 @@ $(document).ready(function(){
 <script>
     $(document).ready(function(){
 		
-		 $('.fueltypeadd').click(function(){
+		$('.fueltypeadd').click(function(){
 			 
-		var fuel_type= $('.fuel_type').val();
+			var fuel_type= $('.fuel_type').val();
+			var url = $(this).attr('fuelurl');
 
-		 var url = $(this).attr('fuelurl');
-		 if(fuel_type == ""){
-				swal('Please Enter Fuel Type!');
-			}else{ 
+		 	function define_variable()
+			{
+				return {
+					vehicle_fuel_value: $('.fuel_type').val(),
+					vehicle_fuel_pattern: /^[(a-zA-Z0-9\s)]+$/,
+				};
+			}
+			
+			var call_var_vehiclefueladd = define_variable();
+			
+	        if(fuel_type == ""){
+	            swal('Please enter fuel type');
+	        }
+	        else if (!call_var_vehiclefueladd.vehicle_fuel_pattern.test(call_var_vehiclefueladd.vehicle_fuel_value))
+			{
+				$('.fuel_type').val("");
+				swal('Please enter only alphanumeric data');
+
+			}
+	        else if(!fuel_type.replace(/\s/g, '').length){
+	       		// var str = "    ";
+				$('.fuel_type').val("");
+	        	swal('Only blank space not allowed');
+	        }
+	        else{ 
 				$.ajax({
 				   type:'GET',
 				   url:url,
@@ -786,7 +942,7 @@ $(document).ready(function(){
 			   
 				});
 			}
-			});
+		});
 	});
 </script>
 <!-- Fuel  Type delete-->
@@ -841,11 +997,29 @@ $(document).ready(function(){
 			var model_name = $('.vehi_modal_name').val();
 			var model_url = $(this).attr('modelurl');
 			
-			if(model_name == ""){
-            swal('Please Enter Model Name!');
+			function define_variable()
+			{
+				return {
+					vehicle_model_value: $('.vehi_modal_name').val(),
+					vehicle_model_pattern: /^[(a-zA-Z0-9\s)]+$/,
+				};
 			}
-			else
-			{	
+		
+			var call_var_vehiclemodeladd = define_variable();		 
+
+	        if(model_name == ""){
+            	swal('Please enter model name');
+        	}
+	        else if (!call_var_vehiclemodeladd.vehicle_model_pattern.test(call_var_vehiclemodeladd.vehicle_model_value))
+			{
+				$('.vehi_modal_name').val("");
+				swal('Please enter only alphanumeric data');
+			}
+	        else if(!model_name.replace(/\s/g, '').length){
+				$('.vehi_modal_name').val("");
+	        	swal('Only blank space not allowed');
+	        }
+			else{	
 				$.ajax({
 						type:'GET',
 						url:model_url,
@@ -868,7 +1042,7 @@ $(document).ready(function(){
 					},
 				});
 			}
-			});
+		});
 		
 	$('body').on('click','.modeldeletes',function(){
 			
@@ -937,7 +1111,6 @@ $(document).ready(function(){
 <!-- Vehical Description-->
 <script>
 $("#add_new_description").click(function(){
-		//jQuery(this).attr("disabled", "disabled");
 		var row_id = $("#tab_decription_detail > tbody > tr").length;
 		
 		var url = $(this).attr('url');
@@ -967,10 +1140,14 @@ $('body').on('click','.delete_description',function(){
                        type: 'GET',
                       url: url,
                      data : {description:description},
+                     beforeSend: function() { 
+				      $("#add_new_description").prop('disabled', true); // disable button
+				    },
                      success: function (response)
                         {	
 						
                            $('table#tab_decription_detail tr#row_id_'+description).remove();
+                           $("#add_new_description").prop('disabled', false); // enable button
 						},
                     error: function(e) {
                  alert("An error occurred: " + e.responseText);
@@ -993,10 +1170,14 @@ $("#add_new_color").click(function(){
                        type: 'GET',
                       url: url,
                      data : {color_id:color_id},
+                     beforeSend: function() { 
+				      $("#add_new_color").prop('disabled', true); // disable button
+				    },
                      success: function (response)
                         {	
 						   
                             $("#tab_color > tbody").append(response.html);
+                            $("#add_new_color").prop('disabled', false); // disable button
 							return false;
 						},
                     error: function(e) {
@@ -1132,7 +1313,6 @@ $('body').on('click','.delete_image',function(){
                      data : {delete_image:delete_image},
                      success: function (response)
                         {	
-						   //$('table#tab_color tr#color_id_'+color_id).remove();	
                             $('div#image_preview div#image_remove_'+delete_image).remove();
 						},
                     error: function(e) {
@@ -1143,4 +1323,8 @@ $('body').on('click','.delete_image',function(){
 		return false;
 	});
 </script>
+
+<!-- Form field validation -->
+{!! JsValidator::formRequest('App\Http\Requests\VehicleAddEditFormRequest', '#vehicleEdit-Form'); !!}
+<script type="text/javascript" src="{{ asset('public/vendor/jsvalidation/js/jsvalidation.js') }}"></script>
 @endsection

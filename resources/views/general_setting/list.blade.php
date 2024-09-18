@@ -1,24 +1,11 @@
 @extends('layouts.app')
 @section('content')
-<!-- page content -->
+
 <style>
 .error_color{color:red; font-weight:bold;}
 </style>
-<?php $userid = Auth::user()->id; ?>
-@if (getAccessStatusUser('Settings',$userid)=='yes')
-	@if(!empty(getActiveAdmin($userid)=='no'))
-	<div class="right_col" role="main" style="background-color: #e6e6e6;">
-		<div class="page-title">
-			<div class="nav_menu">
-				<nav>
-					<div class="nav toggle titleup">
-						<span>&nbsp {{ trans('app.You are not authorize this page.')}}</span>
-					</div>
-				</nav>
-			</div>
-		</div>
-	</div>
-	@else
+
+<!-- page content -->
     <div class="right_col" role="main">
         <div class="">
             <div class="page-title">
@@ -43,30 +30,42 @@
 			<div class="x_content">
 				<ul class="nav nav-tabs bar_tabs tabconatent" role="tablist">
 					
+					@can('generalsetting_view')
+						<li role="presentation" class="active suppo_llng_li floattab"><a href="{!! url('setting/general_setting/list')!!}" class="anchor_tag anchr"><span class="visible-xs"></span><i class="fa fa-cogs">&nbsp;</i><b>{{ trans('app.General Settings')}}</b></a></li>
+					@endcan
+					@can('timezone_view')
+						<li role="presentation" class="suppo_llng_li_add floattab"><a href="{!! url('setting/timezone/list')!!}" class="anchor_tag anchr"><span class="visible-xs"></span><i class="fa fa-cog">&nbsp;</i>{{ trans('app.Other Settings')}}</a></li>
+					@endcan
 					
-					<li role="presentation" class="active suppo_llng_li floattab"><a href="{!! url('setting/general_setting/list')!!}" class="anchor_tag anchr"><span class="visible-xs"></span><i class="fa fa-cogs">&nbsp;</i><b>{{ trans('app.General Settings')}}</b></a></li>
+					<!-- <li role="presentation" class="suppo_llng_li_add floattab"><a href="{!! url('setting/accessrights/list')!!}" class="anchor_tag anchr"><span class="visible-xs"></span><i class="fa fa-universal-access">&nbsp;</i> {{ trans('app.Access Rights')}}</a></li> -->
 					
-					<li role="presentation" class="suppo_llng_li_add floattab"><a href="{!! url('setting/timezone/list')!!}" class="anchor_tag anchr"><span class="visible-xs"></span><i class="fa fa-cog">&nbsp;</i>{{ trans('app.Other Settings')}}</a></li>
-					
-					<li role="presentation" class="suppo_llng_li_add floattab"><a href="{!! url('setting/accessrights/list')!!}" class="anchor_tag anchr"><span class="visible-xs"></span><i class="fa fa-universal-access">&nbsp;</i> {{ trans('app.Access Rights')}}</a></li>
-					
-					<li role="presentation" class="suppo_llng_li_add floattab"><a href="{!! url('setting/hours/list')!!}" class="anchor_tag anchr"><span class="visible-xs"></span><i class="fa fa-hourglass-end">&nbsp;</i>{{ trans('app.Business Hours')}}</a></li>
-					
-					
+				<!-- New Access Rights Starting -->	
+					@can('accessrights_view')				
+						<li role="presentation" class="suppo_llng_li_add floattab"><a href="{!! url('setting/accessrights/show')!!}" class="anchor_tag anchr"><span class="visible-xs"></span><i class="fa fa-universal-access">&nbsp;</i>{{ trans('app.Access Rights')}}</a></li>
+					@endcan
+				<!-- New Access Rights Ending -->
+					@can('businesshours_view')
+						<li role="presentation" class="suppo_llng_li_add floattab"><a href="{!! url('setting/hours/list')!!}" class="anchor_tag anchr"><span class="visible-xs"></span><i class="fa fa-hourglass-end">&nbsp;</i>{{ trans('app.Business Hours')}}</a></li>
+					@endcan
+
+					@can('stripesetting_view')
+						<li role="presentation" class="suppo_llng_li_add floattab"><a href="{!! url('setting/stripe/list')!!}" class="anchor_tag anchr"><span class="visible-xs"></span><i class="fa fa-cc-stripe">&nbsp;</i>{{ trans('app.Stripe Settings')}}</a></li>
+					@endcan
 				</ul>
 			</div>
             <div class="row">
 				<div class="col-md-12 col-sm-12 col-xs-12">
 					<div class="x_panel">
 						<div class="x_content">
-							<form method="post" action="{{ url('setting/general_setting/store') }}" enctype="multipart/form-data" class="form-horizontal upperform">
+							<form id="general_setting_edit_form" method="post" action="{{ url('setting/general_setting/store') }}" enctype="multipart/form-data" class="form-horizontal upperform">
 					
 								<div class="col-md-12 col-sm-12 col-xs-12">
 								  <h4><b>{{ trans('app.Business Information')}} </b></h4>
 								  <p class="col-md-12 col-sm-12 col-xs-12 ln_solid"></p>
 								</div>
-								<div class="form-group col-md-12 col-sm-12 col-xs-12  has-feedback">
-									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="Country">{{ trans('app.System Name')}} <label class="text-danger">*</label>
+
+								<div class="form-group col-md-12 col-sm-12 col-xs-12  has-feedback my-form-group">
+									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="System_Name">{{ trans('app.System Name')}} <label class="color-danger">*</label>
 									</label>
 									<div class="col-md-6 col-sm-6 col-xs-12">
 										<input type="text" name="System_Name" class="form-control" placeholder="{{ trans('app.Enter System Name/Title') }}" required maxlength="50" value="{{ $settings_data->system_name }}">
@@ -79,18 +78,18 @@
 								</div>
 					
 								<div class="form-group col-md-12 col-sm-12 col-xs-12">
-									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="Country">{{ trans('app.Starting Year')}} </label>
+									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="start_year">{{ trans('app.Starting Year')}} </label>
 								   <div class="col-md-6 col-sm-6 col-xs-12 input-group date" id="datepicker1">
 												<span class="input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-										<input type="text" name="start_year" class="form-control" id="Country" value="{{ $settings_data->starting_year }}">
+										<input type="text" name="start_year" class="form-control" id="" value="{{ $settings_data->starting_year }}">
 									</div>
 								</div>
 													
-								<div class="form-group col-md-12 col-sm-12 col-xs-12  has-feedback">
-									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="Phone_Number">{{ trans('app.Phone Number')}} <label class="text-danger">*</label>
+								<div class="form-group col-md-12 col-sm-12 col-xs-12  has-feedback my-form-group">
+									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="Phone_Number">{{ trans('app.Phone Number')}} <label class="color-danger">*</label>
 									</label>
 									<div class="col-md-6 col-sm-6 col-xs-12">
-										<input type="text" name="Phone_Number" class="form-control" placeholder="{{ trans('app.Enter Phone Number') }}" required maxlength="15" value="{{ $settings_data->phone_number }}">
+										<input type="text" name="Phone_Number" class="form-control" placeholder="{{ trans('app.Enter Phone Number') }}" required maxlength="16" minlength="6" value="{{ $settings_data->phone_number }}">
 										@if ($errors->has('Phone_Number'))
 										   <span class="help-block">
 											   <span class="error_color">{{ $errors->first('Phone_Number') }}</span>
@@ -99,8 +98,8 @@
 									</div>
 								</div>
 					
-								<div class="form-group col-md-12 col-sm-12 col-xs-12  has-feedback">
-									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="Country">{{ trans('app.Email')}} <label class="text-danger">*</label> 
+								<div class="form-group col-md-12 col-sm-12 col-xs-12  has-feedback my-form-group">
+									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="Email">{{ trans('app.Email')}} <label class="color-danger">*</label> 
 									</label>
 									<div class="col-md-6 col-sm-6 col-xs-12">
 										<input type="text" name="Email" class="form-control" placeholder="{{ trans('app.Enter Email Address') }}" required value="{{ $settings_data->email }}" maxlength="50">
@@ -112,16 +111,16 @@
 									</div>
 								</div>
 					
-								<div class="form-group col-md-12 col-sm-12 col-xs-12  has-feedback">
-									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="Country">{{ trans('app.Address')}} <label class="text-danger">*</label>
+								<div class="form-group col-md-12 col-sm-12 col-xs-12  has-feedback my-form-group">
+									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="address">{{ trans('app.Address')}} <label class="color-danger">*</label>
 									</label>
 									<div class="col-md-6 col-sm-6 col-xs-12">
-										<textarea name="address" class="form-control" rows="4" placeholder="{{ trans('app.Enter Address') }}" maxlength="100" required >{{ $settings_data->address }}</textarea>
+										<textarea name="address" class="form-control addressTextarea" rows="4" placeholder="{{ trans('app.Enter Address') }}" maxlength="100" required >{{ $settings_data->address }}</textarea>
 									</div>
 								</div>
 				
-								<div class="form-group col-md-12 col-sm-12 col-xs-12  has-feedback">
-									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="Country">{{ trans('app.Country')}} <label class="text-danger">*</label>
+								<div class="form-group col-md-12 col-sm-12 col-xs-12  has-feedback my-form-group">
+									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="Country">{{ trans('app.Country')}} <label class="color-danger">*</label>
 									</label>
 									<div class="col-md-6 col-sm-6 col-xs-12">
 										<select class="form-control  select_country" name="country_id" countryurl="{!! url('/getstatefromcountry') !!}" required>
@@ -137,26 +136,31 @@
 									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="state">{{ trans('app.State')}}</label>
 									<div class="col-md-6 col-sm-6 col-xs-12">
 										<select class="form-control  state_of_country" name="state_id" stateurl="{!! url('/getcityfromstate') !!}">
-										   @foreach ($state as $states)
-												<option value="{!! $states->id !!}" <?php if($settings_data->state_id==$states->id){ echo "selected"; }?>>{!! $states->name !!}</option>
-											@endforeach
+											<!-- <option value="">Select State</option> -->
+											@if(count($state)>0)
+											    @foreach ($state as $states)
+													<option value="{!! $states->id !!}" <?php if($settings_data->state_id==$states->id){ echo "selected"; }?>>{!! $states->name !!}</option>
+												@endforeach
+											@endif
 									    </select>
 									</div>
 								</div>
-					
+
 								<div class="form-group col-md-12 col-sm-12 col-xs-12  has-feedback">
 									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="city">{{ trans('app.City')}} 			</label>
 									<div class="col-md-6 col-sm-6 col-xs-12">
 										<select class="form-control  city_of_state" name="city">
-										<option value=""></option>
-										@foreach ($city as $citys)
-												<option value="{!! $citys->id !!}" <?php if($settings_data->city_id==$citys->id){ echo "selected"; }?>>{!! $citys->name !!}</option>
-										@endforeach
+											<!-- <option value="">Select City</option> -->
+											@if(count($city) >0)
+												@foreach ($city as $citys)
+													<option value="{!! $citys->id !!}" <?php if($settings_data->city_id==$citys->id){ echo "selected"; }?>>{!! $citys->name !!}</option>
+												@endforeach
+											@endif
 									  </select>
 									</div>
 								</div>
 					
-								<div class="form-group col-md-12 col-sm-12 col-xs-12">
+								<div class="form-group col-md-12 col-sm-12 col-xs-12 my-form-group">
 									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="image">{{ trans('app.Logo Image')}}</label>
 										<div class="col-md-4 col-sm-4 col-xs-12">
 											<input type="file" id="input-file-max-fs" name="Logo_Image" class="form-control dropify" data-max-file-size="5M">
@@ -182,7 +186,7 @@
 										</div>
 								</div> 
 					  
-								<div class="form-group col-md-12 col-sm-12 col-xs-12 ">
+								<div class="form-group col-md-12 col-sm-12 col-xs-12 my-form-group">
 									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="image">{{ trans('app.Cover Image')}}</label>
 										<div class="col-md-4 col-sm-4 col-xs-12">
 											<input type="file" id="input-file-max-fs"  name="Cover_Image"  class="form-control dropify" data-max-file-size="5M">
@@ -208,8 +212,8 @@
 										</div>
 								</div>
 					
-								<div class="form-group col-md-12 col-sm-12 col-xs-12  has-feedback">
-									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="Country">{{ trans('app.Paypal Email Id')}}
+								<div class="form-group col-md-12 col-sm-12 col-xs-12  has-feedback my-form-group">
+									<label class="control-label col-md-2 col-sm-2 col-xs-12" for="Paypal_Id">{{ trans('app.Paypal Email Id')}}
 									</label>
 									<div class="col-md-6 col-sm-6 col-xs-12">
 										<input type="text" name="Paypal_Id" class="form-control" placeholder="{{ trans('app.Enter Paypal Email Address') }}" maxlength="50" value="{{ $settings_data->paypal_id }}">
@@ -221,12 +225,15 @@
 									</div>
 								</div>
 								<input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+								@can('generalsetting_edit')
 								<div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">  
 									<div class="col-md-9 col-sm-9 col-xs-12 text-center" >
 										<a class="btn btn-primary" href="{{ URL::previous() }}">{{ trans('app.Cancel')}}</a>
 										<input type="submit" class="btn btn-success"  value="{{ trans('app.Update')}}"/>
 									</div>
 								</div>
+								@endcan
 							</form>
 						</div>
 					</div>
@@ -234,23 +241,15 @@
             </div>
         </div>
 	</div>
-	@endif
-@else
-	<div class="right_col" role="main">
-		<div class="nav_menu main_title" style="margin-top:4px;margin-bottom:15px;">
-              <div class="nav toggle" style="padding-bottom:16px;">
-               <span class="titleup">&nbsp {{ trans('app.You are not authorize this page.')}}</span>
-              </div>
-          </div>
-	</div>
-@endif
+<!-- page content end -->
+
+
 <script src="{{ URL::asset('vendors/jquery/dist/jquery.min.js') }}"></script> 
 <script>
 $(document).ready(function(){
 	
 	$('.select_country').change(function(){
 		countryid = $(this).val();
-		
 		var url = $(this).attr('countryurl');
 		$.ajax({
 			type:'GET',
@@ -334,4 +333,21 @@ $(document).ready(function(){
             });
         
 </script>
+
+<script>
+	/*If address have any white space then make empty address value*/
+   	$('body').on('keyup', '.addressTextarea', function(){
+
+      	var addressValue = $(this).val();
+
+      	if (!addressValue.replace(/\s/g, '').length) {
+         	$(this).val("");
+      	}
+   	});
+</script>
+
+<!-- Form field validation -->
+{!! JsValidator::formRequest('App\Http\Requests\StoreGeneralSettingEditFormRequest', '#general_setting_edit_form'); !!}
+<script type="text/javascript" src="{{ asset('public/vendor/jsvalidation/js/jsvalidation.js') }}"></script>
+
 @endsection

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
-<?php $userid = Auth::user()->id; ?>
-@if (getAccessStatusUser('Vehicles',$userid)=='yes')
+
+<!-- page content -->
 	<div class="right_col" role="main">
         <div class="">
 			<div class="page-title">
@@ -33,11 +33,14 @@
 				<div class="col-md-12 col-sm-12 col-xs-12">
 					<div class="x_content">
 						<ul class="nav nav-tabs bar_tabs" role="tablist">
-							<li role="presentation" class="active"><a href="{!! url('/vehicle/list')!!}"><span class="visible-xs"></span> <i class="fa fa-list fa-lg">&nbsp;</i><b>{{ trans('app.Vehicle List') }}</b></a></li>
-						@if(getActiveCustomer($userid)=='yes' || getActiveEmployee($userid)=='yes')
-							<li role="presentation" class=""><a href="{!! url('/vehicle/add')!!}"><span class="visible-xs"></span><i class="fa fa-plus-circle fa-lg">&nbsp;</i>
-							{{ trans('app.Add Vehicle') }}</a></li>
-						@endif
+							@can('vehicle_view')
+								<li role="presentation" class="active"><a href="{!! url('/vehicle/list')!!}"><span class="visible-xs"></span> <i class="fa fa-list fa-lg">&nbsp;</i><b>{{ trans('app.Vehicle List') }}</b></a></li>
+							@endcan
+
+							@can('vehicle_add')
+								<li role="presentation" class=""><a href="{!! url('/vehicle/add')!!}"><span class="visible-xs"></span><i class="fa fa-plus-circle fa-lg">&nbsp;</i>
+								{{ trans('app.Add Vehicle') }}</a></li>
+							@endcan						
 						</ul>
 					</div>
 					<div class="x_panel">
@@ -51,6 +54,7 @@
 									<th>{{  trans('app.Price')}}  (<?php echo getCurrencySymbols(); ?>)</th>
 									<th>{{  trans('app.Date Of Manufacturing')}}</th>
 									<th>{{ trans('app.Engine No')}}</th>
+									<th>{{ trans('app.Number Plate')}}</th>
 									<th>{{ trans('app.Action')}}</th>
 								</tr>
 							</thead>
@@ -65,17 +69,28 @@
 									<td>{{ $vehicals->modelname }}</td>
 									<td>{{ getVehicleType($vehicals->vehicletype_id) }}</td>
 									<td>{{ $vehicals->price }}</td>
-									<td>{{ date(getDateFormat(),strtotime($vehicals->dom)) }}</td>
-									<td>{{ $vehicals->engineno }}</td>
+									<td>
+										@if(!empty($vehicals->dom))
+											{{ date(getDateFormat(),strtotime($vehicals->dom)) }}
+										@else
+											{{ trans('app.Not Added') }}
+										@endif										
+									</td>
+									<td>{{ $vehicals->engineno??trans('app.Not Added') }}</td>
+									<td>{{ $vehicals->number_plate??trans('app.Not Added') }}</td>
 									<td> 
-										<?php $userid=Auth::User()->id; ?>
-									@if(getActiveCustomer($userid)=='yes' || getActiveEmployee($userid)=='yes')
+									
+										@can('vehicle_view')
 											<a href="{!! url('/vehicle/list/view/'.$vehicals->id) !!}"><button type="button" class="btn btn-round btn-info">{{ trans('app.View')}}</button></a>
+										@endcan
+
+										@can('vehicle_edit')
 											<a href="{!! url ('/vehicle/list/edit/'.$vehicals->id) !!}"> <button type="button" class="btn btn-round btn-success">{{ trans('app.Edit')}}</button></a>
-											<a url="{!! url('/vehicle/list/delete/'.$vehicals->id)!!}" class="sa-warning"> <button type="button" class="btn btn-round btn-danger">{{ trans('app.Delete')}}</button></a>
-									@else
-										<a href="{!! url('/vehicle/list/view/'.$vehicals->id) !!}"><button type="button" class="btn btn-round btn-info">{{ trans('app.View')}}</button></a>
-									@endif
+										@endcan
+										
+										@can('vehicle_delete')
+											<a url="{!! url('/vehicle/list/delete/'.$vehicals->id)!!}" class="sa-warning buttonOfAtag"> <button type="button" class="btn btn-round btn-danger">{{ trans('app.Delete')}}</button></a>
+										@endcan
 									</td>
 								</tr>
 								<?php $i++; ?>
@@ -89,21 +104,14 @@
             </div>
         </div>
     </div>
-@else
-	<div class="right_col" role="main">
-		<div class="nav_menu main_title" style="margin-top:4px;margin-bottom:15px;">
-            <div class="nav toggle" style="padding-bottom:16px;">
-				<span class="titleup">&nbsp {{ trans('app.You Are Not Authorize This page.')}}</span>
-            </div>
-        </div>
-	</div>
-@endif   
+
 <script src="{{ URL::asset('vendors/jquery/dist/jquery.min.js') }}"></script>
  <!-- language change in user selected -->	
 <script>
 $(document).ready(function() {
     $('#datatable').DataTable( {
 		responsive: true,
+		sDom: "<'row'<'col-md-6'l><'col-md-6'f>r>t<'row'<'col-md-6'i><'col-md-6'p>>",
         "language": {
 			
 				"url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/<?php echo getLanguageChange(); 
@@ -131,7 +139,7 @@ $(document).ready(function() {
              
         });
     }); 
- 
+ 	
 </script>
 
 @endsection

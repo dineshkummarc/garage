@@ -1,8 +1,6 @@
 @extends('layouts.app')
 @section('content')
-		<!-- page content -->
-<?php $userid = Auth::user()->id; ?>
-@if (getAccessStatusUser('Inventory',$userid)=='yes')
+<!-- page content -->
     <div class="right_col" role="main">
         <div class="">
 			<div class="page-title">
@@ -34,8 +32,13 @@
 				<div class="col-md-12 col-sm-12 col-xs-12" >
 					<div class="x_content">
 						<ul class="nav nav-tabs bar_tabs" role="tablist">
-							<li role="presentation" class="active"><a href="{!! url('/product/list')!!}"><span class="visible-xs"></span> <i class="fa fa-list fa-lg">&nbsp;</i><b>{{ trans('app.Product List')}}</b></a></li>
-							<li role="presentation" class=""><a href="{!! url('/product/add')!!}"><span class="visible-xs"></span> <i class="fa fa-plus-circle fa-lg">&nbsp;</i>{{ trans('app.Add Product')}} </a></li>
+							@can('product_view')
+								<li role="presentation" class="active"><a href="{!! url('/product/list')!!}"><span class="visible-xs"></span> <i class="fa fa-list fa-lg">&nbsp;</i><b>{{ trans('app.Product List')}}</b></a></li>
+							@endcan
+
+							@can('product_add')
+								<li role="presentation" class=""><a href="{!! url('/product/add')!!}"><span class="visible-xs"></span> <i class="fa fa-plus-circle fa-lg">&nbsp;</i>{{ trans('app.Add Product')}} </a></li>
+							@endcan
 						</ul>
 					</div>
 					<div class="x_panel table_up_div">
@@ -49,6 +52,15 @@
 									<th>{{ trans('app.Price')}} (<?php echo getCurrencySymbols(); ?>)</th>
 									<th>{{ trans('app.Supplier Name')}}</th>
 									<th>{{ trans('app.Company Name')}}</th>
+
+								<!-- Custom Field Data Label Name-->
+									@if(!empty($tbl_custom_fields))
+										@foreach($tbl_custom_fields as $tbl_custom_field)	
+											<th>{{$tbl_custom_field->label}}</th>
+										@endforeach
+									@endif
+								<!-- Custom Field Data End -->
+
 									<th>{{ trans('app.Action')}}</th>
 								</tr>
 							</thead>
@@ -61,11 +73,48 @@
 									<td>{{	getProductName($products->product_type_id) }}</td>
 									<td>{{ $products->name }}</td>
 									<td>{{ $products->price }}</td>
-									<td>{{ getSupplierName($products->supplier_id) }}</td>
-									<td>{{ getCompanyName($products->supplier_id) }}</td>
+									<td>{{ getSupplierFullName($products->supplier_id) }}</td>
+									<td>{{ getCompanyNames($products->supplier_id) }}</td>
+
+								<!-- Custom Field Data Value-->
+									@if(!empty($tbl_custom_fields))
+				
+										@foreach($tbl_custom_fields as $tbl_custom_field)	
+											<?php 
+												$tbl_custom = $tbl_custom_field->id;
+												$userid = $products->id;
+																						
+												$datavalue = getCustomDataProduct($tbl_custom,$userid);
+											?>
+
+											@if($tbl_custom_field->type == "radio")
+												@if($datavalue != "")
+													<?php
+														$radio_selected_value = getRadioSelectedValue($tbl_custom_field->id, $datavalue);
+													?>
+													<td>{{$radio_selected_value}}</td>
+												@else
+													<td>{{ trans('app.Data not available') }}</td>
+												@endif
+											@else
+												@if($datavalue != null)
+													<td>{{$datavalue}}</td>
+												@else
+													<td>{{ trans('app.Data not available') }}</td>
+												@endif
+											@endif
+										@endforeach
+									@endif
+								<!-- Custom Field Data End -->
+
 									<td>
-										<a href="{!! url('/product/list/edit/'.$products->id) !!}" ><button type="button" class="btn btn-round btn-success">{{ trans('app.Edit')}}</button></a>
-										<a url="{!! url('/product/list/delete/'.$products->id) !!}" class="sa-warning"><button type="button" class="btn btn-round btn-danger">{{ trans('app.Delete')}}</button></a>
+										@can('product_edit')
+											<a href="{!! url('/product/list/edit/'.$products->id) !!}" ><button type="button" class="btn btn-round btn-success editBtnCss">{{ trans('app.Edit')}}</button></a>
+										@endcan
+
+										@can('product_delete')
+											<a url="{!! url('/product/list/delete/'.$products->id) !!}" class="sa-warning"><button type="button" id="deleteBtnCss" class="btn btn-round btn-danger">{{ trans('app.Delete')}}</button></a>
+										@endcan
 									</td>
 								</tr>
 								<?php $i++; ?>
@@ -77,15 +126,7 @@
             </div>
         </div>
     </div>
-@else
-	<div class="right_col" role="main">
-		<div class="nav_menu main_title" style="margin-top:4px;margin-bottom:15px;">
-            <div class="nav toggle" style="padding-bottom:16px;">
-               <span class="titleup">&nbsp {{ trans('app.You are not authorize this page.')}}</span>
-            </div>
-        </div>
-	</div>
-@endif  
+
  <!-- /page content --> 
 <script src="{{ URL::asset('vendors/jquery/dist/jquery.min.js') }}"></script>
 <script>

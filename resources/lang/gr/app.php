@@ -1,5 +1,7 @@
 <?php 
 return[
+
+		// Greek
         //APP Menu page
       'Garrage Management System'=>'Σύστημα διαχείρισης Garrage',
 	  'Welcome'=>'καλως ΗΡΘΑΤΕ',
@@ -963,6 +965,389 @@ c r Tax Temp',
 	"Purchase Number"=>"Αριθμός αγοράς",
 	"RTO"=>"RTO",
 	"Regional Transport Office"=>"Περιφερειακό Γραφείο Μεταφορών",
+
+	// New lables added 8/06/2020
+	"Number Plate" => "Αριθμός πινακίδας",
+	"Enter Number Plate" => "Εισαγάγετε πινακίδα αριθμού",
+	"Maintenance History not available." => "Το ιστορικό συντήρησης δεν είναι διαθέσιμο.",
+	"Description not available" => "Η περιγραφή δεν είναι διαθέσιμη",
+	"Maintenance History" => "Ιστορικό συντήρησης",
+	"Company Name" => "Όνομα εταιρείας",
+	"Enter Company Name" => "Εισαγάγετε το όνομα της εταιρείας",
+	"Not Added" => "Δεν προστέθηκε",
+
+	// stripe
+	"Stripe API Key Information" => "Βασικές πληροφορίες API Stripe",
+	"Update Your Live Stripe Keys Here!" => "Ενημερώστε τα ζωντανά πλήκτρα λωρίδας εδώ!",
+	"Stripe Settings" => "Ρυθμίσεις λωρίδων",
+	"Stripe Secret key" => "Κλειδί Stripe Secret",
+	"Enter Stripe Publishable Key" => "Πληκτρολογήστε Stripe Publishable Key",
+	"Enter Stripe Secret Key" => "Πληκτρολογήστε Stripe Secret Key",
+	"Stripe Publishable key" => "Δημοσιεύσιμο κλειδί Stripe",
+	"Please update stripe API key details to take payment directly from the card!" => "Ενημερώστε τα βασικά στοιχεία του stripe API για να λάβετε την πληρωμή απευθείας από την κάρτα!",
+	"You can not pay more than 999999 using the card." => "Δεν μπορείτε να πληρώσετε περισσότερα από 999999 χρησιμοποιώντας την κάρτα.",
+
+
+
+	//MOT Module
+	"MOT Test" => "Δοκιμή MOT",
+
+	"MOT Test View" => "Προβολή δοκιμής MOT",
+	"Step 1: Fill MOT Details" => "Βήμα 1: Συμπληρώστε τις λεπτομέρειες MOT",
+	"OK = Satisfactory" => "ΟΚ = Ικανοποιητικό",
+	"X = Safety Item Defact" => "X = Ελάττωμα στοιχείου ασφαλείας",
+	"R = Repair Required" => "R = Απαιτείται επισκευή",
+	"NA = Not Applicable" => "NA = Δεν ισχύει",
+	"Inside Cab" => "Μέσα στην καμπίνα",
+	"Code" => "Κώδικας",
+	"Inspection Details" => "Λεπτομέρειες επιθεώρησης",
+	"Answer" => "Απάντηση",
+	"Ground Level and Under Vehicle" => "Επίπεδο εδάφους και κάτω από το όχημα",
+	"Step 2: Show Filled MOT Details" => "Βήμα 2: Εμφάνιση συμπληρωμένων λεπτομερειών MOT",
+
+	"MOT Test Service Charge" => "Χρέωση υπηρεσίας δοκιμής MOT",
+
+	"MOT TEST SERVICE CHARGE" => "ΧΡΕΩΣΗ ΥΠΗΡΕΣΙΩΝ MOT TEST",
+	"MOT Charge Detail" => "Λεπτομέρεια φόρτισης MOT",
+	"MOT Testing Charges" => "Χρεώσεις δοκιμής MOT",
+	"Completed" => "Ολοκληρώθηκε το",
+
+	"MOT Test Details" => "Λεπτομέρειες δοκιμής MOT",
+	"Vehicle Id" => "Αναγνωριστικό οχήματος",
+	"Service Id" => "Αναγνωριστικό υπηρεσίας",
+	"MOT Test Status" => "Κατάσταση δοκιμής MOT",
+	"MOT Test Number" => "Αριθμός δοκιμής MOT",
+	"MOT Test Details are not Available for This Vehicle" => "Δεν υπάρχουν διαθέσιμες λεπτομέρειες δοκιμής MOT για αυτό το όχημα",
+	"Point" => "Σημείο",
+	
+	//Custom Field for(Product, Purchase, Vehicle, VehicleType, VehicleBrand, Color, Service, Invoice, Sale, Salepart, Income, Expense, Rto)
+	"Data not available" => "Τα δεδομένα δεν είναι διαθέσιμα",
+	"OTHER INFORMATION" => "ΑΛΛΕΣ ΠΛΗΡΟΦΟΡΙΕΣ",
+
+	"OTHER INFORMATION OF INVOICE" => "ΑΛΛΕΣ ΠΛΗΡΟΦΟΡΙΕΣ ΤΙΜΟΛΟΓΙΟΥ",
+
+	"OTHER INFORMATION OF SERVICE" => "ΑΛΛΕΣ ΠΛΗΡΟΦΟΡΙΕΣ ΥΠΗΡΕΣΙΩΝ",
+	"Enter" => "Εισαγω",
+
+	"CUSTOMER OTHER DETAILS" => "ΑΛΛΕΣ ΛΕΠΤΟΜΕΡΕΙΕΣ ΠΕΛΑΤΗ",
+	"Customer Other Details" => "Άλλες λεπτομέρειες πελατών",
+
+	"Please enter correct purchase key" => "Εισαγάγετε το σωστό κλειδί αγοράς",
+	"This purchase key is already registered with the different domain. If you have any issue please contact us at sales@dasinfomedia.com" => "Αυτό το κλειδί αγοράς έχει ήδη εγγραφεί στον διαφορετικό τομέα. Εάν έχετε κάποιο πρόβλημα, επικοινωνήστε μαζί μας στο sales@dasinfomedia.com",
+	"There seems to be some problem please try after sometime or contact us on sales@dasinfomedia.com" => "Φαίνεται ότι υπάρχει κάποιο πρόβλημα, δοκιμάστε μετά από λίγο ή επικοινωνήστε μαζί μας στο sales@dasinfomedia.com",
+	"Please enter correct purchase key for this plugin." => "Εισαγάγετε το σωστό κλειδί αγοράς για αυτήν την προσθήκη.",
+	"Connection Problem occurs because server is down." => "Το πρόβλημα σύνδεσης παρουσιάζεται επειδή ο διακομιστής είναι εκτός λειτουργίας.",
+	"Vehicle Sale" => "Πώληση οχήματος",
+	"List Of Vehicle Sale" => "Λίστα πωλήσεων οχημάτων",
+	"Add Vehicle Sale" => "Προσθήκη πώλησης οχήματος",
+	"Edit Vehicle Sale" => "Επεξεργασία πώλησης οχήματος",
+	"Part Sales" => "Πωλήσεις ανταλλακτικών",
+	"List Of Part Sales" => "Λίστα πωλήσεων ανταλλακτικών",
+	"Add Part Sales" => "Προσθήκη πωλήσεων ανταλλακτικών",
+	"Edit Part Sales" => "Επεξεργασία ανταλλακτικών",
+	"Service Stock" => "Αποθέματα υπηρεσιών",
+	"Product Service" => "Υπηρεσία προϊόντων",
+
+	"Quotation" => "Προσφορά",
+	"Quotation List" => "Προσφορά Λίστα",
+	"Add Quotation" => "Προσθήκη Προσφορά",
+	"Edit Quotation" => "Επεξεργασία Προσφορά",
+	"Quotation Process" => "Προσφορά Διαδικασία",
+	"Quotation Process for..." => "Προσφορά διαδικασία για ...",
+	"Do you want to final submit?, if yes so tick mark on checkbox." => "Θέλετε να υποβάλετε τελική υποβολή ;, αν ναι, επιλέξτε το πλαίσιο ελέγχου.",
+	"Quotation Service Details for Jobcard Number" => "Προσφορά υπηρεσίας προσφοράς για τον αριθμό κάρτας εργασίας",
+	"Any kind of Tax not included inside quotation" => "Οποιοδήποτε είδος φόρου δεν περιλαμβάνεται στην προσφορά",
+	"Step - 1 : Add Quotation Service Details..." => "Βήμα - 1: Προσθήκη λεπτομερειών υπηρεσίας προσφοράς ...",
+	"Step - 2 : Add Quotation Service Details..." => "Βήμα - 2: Προσθήκη λεπτομερειών υπηρεσίας προσφοράς ...",
+	"Service Payment History" => "Ιστορικό πληρωμών υπηρεσίας",
+	"Due Amount Reminder" => "Υπενθύμιση οφειλόμενου ποσού",
+
+	"Quotation Service Details" => "Λεπτομέρειες υπηρεσίας προσφορών",
+	"Add" => "Προσθήκη",
+	"Own Data" => "Ίδια δεδομένα",
+	"Gatepass" => "Πύλη εισόδου",
+	"Observation Library" => "Βιβλιοθήκη Παρατήρησης",
+	"Other Setting [Timezone]" => "Άλλες ρυθμίσεις [Ζώνη ώρας]",
+	"Other Setting [Language]" => "Άλλο περιβάλλον [Γλώσσα]",
+	"Other Setting [Date Format]" => "Άλλες ρυθμίσεις [Μορφή ημερομηνίας]",
+	"Other Setting [Currency]" => "Άλλες ρυθμίσεις [Νόμισμα]",
+	"Quotation No" => "Προσφορά αριθ",
+	"Quotation Number" => "Αριθμός προσφοράς",
+	"Quotaion is final, then click here." => "Η προσφορά είναι οριστική και, στη συνέχεια, κάντε κλικ εδώ.",
+
+
+	/************ Custom field radio and checkbox ************/
+	"Radio" => "Radio",
+	"Checkbox" => "Πλαίσιο ελέγχου",
+	"Radio Field Label" => "Ετικέτα πεδίου ραδιοφώνου",
+	"Enter radio label name" => "Εισαγωγή ονόματος ετικέτας ραδιοφώνου",
+	"Checkbox Field Label" => "Ετικέτα πεδίου πλαισίου ελέγχου",
+	"Enter checkbox label name" => "Εισαγωγή ονόματος ετικέτας πλαισίου ελέγχου",
+
+	/********* Custom validation message translation (Customer, Employee, Supportstaff, Accountatnt, Supplyer) **********/
+	"First name is required." => "Απαιτείται το όνομα.",
+	"First name is only alphabets and space." => "Το όνομα είναι μόνο αλφάβητα και κενό διάστημα.",
+	"First name should not more than 50 character." => "Το όνομα δεν πρέπει να υπερβαίνει τους 50 χαρακτήρες.",
+	"Last name is required." => "Απαιτείται επώνυμο.",
+	"Last name is only alphabets and space." => "Το επώνυμο είναι μόνο αλφάβητα και κενό διάστημα.",
+	"Last name should not more than 50 character." => "Το επώνυμο δεν πρέπει να υπερβαίνει τους 50 χαρακτήρες.",
+	"Display name is required." => "Απαιτείται εμφανιζόμενο όνομα.",
+	"Display name is only alphabets and space." => "Το εμφανιζόμενο όνομα είναι μόνο αλφάβητα και κενό διάστημα.",
+	"Display name should not more than 50 character." => "Το εμφανιζόμενο όνομα δεν πρέπει να υπερβαίνει τους 50 χαρακτήρες.",
+	"Only alphanumeric, space, dot, @, _, and - are allowed." => "Επιτρέπονται μόνο αλφαριθμητικά, διαστήματα, τελείες, @, _ και -.",
+	"Company name should not more than 100 character." => "Το όνομα της εταιρείας δεν πρέπει να υπερβαίνει τους 100 χαρακτήρες.",
+	"Email is required." => "Απαιτείται email.",
+	"Please enter a valid email address. Like : sales@dasinfomedia.com" => "Εισαγάγετε μια έγκυρη διεύθυνση email. Όπως: sales@dasinfomedia.com",
+	"Email you entered is already registered." => "Το email που εισαγάγατε έχει ήδη εγγραφεί.",
+	"Password is required." => "Απαιτείται κωδικός πρόσβασης.",
+	"Password must be combination of letters and numbers." => "Ο κωδικός πρόσβασης πρέπει να είναι συνδυασμός γραμμάτων και αριθμών.",
+	"Password length minimum 6 character." => "Μήκος κωδικού πρόσβασης τουλάχιστον 6 χαρακτήρες.",
+	"Password length maximum 12 character." => "Μέγιστο μήκος κωδικού 12 χαρακτήρων.",
+	"Confirm password is required." => "Επιβεβαίωση κωδικού πρόσβασης απαιτείται.",
+	"Password and Confirm Password does not match." => "Ο κωδικός πρόσβασης και η επιβεβαίωση του κωδικού πρόσβασης δεν ταιριάζουν.",
+	"Password length minimum 6 character." => "Μήκος κωδικού πρόσβασης τουλάχιστον 6 χαρακτήρες.",
+	"Password length maximum 12 character." => "Μέγιστο μήκος κωδικού 12 χαρακτήρων.",
+	"Contact number is required." => "Απαιτείται αριθμός επαφής.",
+	"Contact number minimum 6 digits." => "Αριθμός επαφής τουλάχιστον 6 ψηφία.",
+	"Contact number maximum 16 digits." => "Αριθμός επαφής το πολύ 16 ψηφία.",
+	"Contact number must be number, plus, minus and space only." => "Ο αριθμός επαφής πρέπει να είναι αριθμός, συν, μείον και κενό.",
+	"Landline number only numbers are allowed." => "Επιτρέπονται μόνο αριθμοί σταθερού αριθμού.",
+	"Landline number minimum 6 digits." => "Αριθμός σταθερού αριθμού τουλάχιστον 6 ψηφία.",
+	"Landline number maximum 16 digits." => "Αριθμός σταθερού αριθμού έως 16 ψηφία.",
+	"Landline number must be number, plus, minus and space only." => "Ο αριθμός σταθερού δικτύου πρέπει να είναι αριθμός, συν, μείον και κενό.",
+	"Image must be a file of type: Jpg, Jpeg and Png." => "Η εικόνα πρέπει να είναι αρχείο τύπου: Jpg, Jpeg και Png.",
+	"Country field is required." => "Απαιτείται πεδίο χώρας.",
+	"Address field is required." => "Απαιτείται πεδίο διεύθυνσης.",
+
+	"Join date is required." => "Απαιτείται ημερομηνία συμμετοχής",
+	"Designation is required." => "Απαιτείται προσδιορισμός",
+	"Designation is only alphabets and space." => "Ο χαρακτηρισμός είναι μόνο αλφάβητα και κενό διάστημα.",
+	"Designation should not more than 50 character." => "Ο χαρακτηρισμός δεν πρέπει να υπερβαίνει τους 50 χαρακτήρες.",
+	"Company name is required." => "Απαιτείται όνομα εταιρείας.",
+	"Company name should not more than 100 character." => "Το όνομα της εταιρείας δεν πρέπει να υπερβαίνει τους 100 χαρακτήρες.",
+
+	/********* Custom validation message translation (Color Module) **********/
+	"Color name is required." => "Απαιτείται όνομα χρώματος.",
+	"Maximum 50 characters allowed." => "Επιτρέπονται έως 50 χαρακτήρες.",
+	"Special symbols are not allowed." => "Δεν επιτρέπονται ειδικά σύμβολα.",
+
+	/********* Custom validation message translation (Invoice Module) **********/
+	"Invoice type is required." => "Απαιτείται τύπος τιμολογίου.",
+	"Invoice number is required." => "Απαιτείται αριθμός τιμολογίου.",
+	"Customer name is required." => "Απαιτείται όνομα πελάτη.",
+	"Jobcard number is required." => "Απαιτείται αριθμός κάρτας εργασίας.",
+	"Vehicle name is required." => "Απαιτείται όνομα οχήματος.",
+	"Customer name is required." => "Απαιτείται όνομα πελάτη.",
+	"Invoice date is required." => "Απαιτείται ημερομηνία τιμολογίου.",
+	"Total amount is required." => "Απαιτείται συνολικό ποσό.",
+	"Status is required." => "Απαιτείται κατάσταση.",
+	"Payment type is required." => "Απαιτείται τύπος πληρωμής.",
+	"Grand total is required." => "Απαιτείται μεγάλο σύνολο.",
+	"Paid amount is required." => "Απαιτείται πληρωμένο ποσό.",
+
+	/********* Custom validation message translation (Product Module) **********/
+	"Product date is required." => "Απαιτείται ημερομηνία προϊόντος.",
+	"Name is required." => "Απαιτείται όνομα.",
+	"Name is only alphanumeric and space." => "Το όνομα είναι μόνο αλφαριθμητικό και κενό.",
+	"Name should not more than 100 character." => "Το όνομα δεν πρέπει να υπερβαίνει τους 100 χαρακτήρες.",
+	"The type of the uploaded file should be an image." => "Ο τύπος του μεταφορτωμένου αρχείου πρέπει να είναι εικόνα.",
+	"Unit of measurement is required." => "Ο τύπος του μεταφορτωμένου αρχείου πρέπει να είναι εικόνα.",
+	"Price is required." => "Απαιτείται τιμή.",
+	"Supplier is required." => "Απαιτείται προμηθευτής.",
+
+	/********* Custom validation message translation (Purchase Module) **********/
+	"Purchase number is required." => "Απαιτείται αριθμός αγοράς.",
+	"Purchase date is required." => "Απαιτείται ημερομηνία αγοράς.",
+	"Supplier name is required." => "Απαιτείται όνομα προμηθευτή.",
+
+	/********* Custom validation message translation (Service Module) **********/
+	"Jobcard number is required." => "Απαιτείται αριθμός κάρτας εργασίας.",
+	"Customer name is required." => "Απαιτείται όνομα πελάτη.",
+	"Vehicle name is required." => "Απαιτείται όνομα οχήματος.",
+	"Service date is required." => "Απαιτείται ημερομηνία υπηρεσίας.",
+	"Assigne to is required." => "Απαιτείται εκχώρηση.",
+	"Repair category is required." => "Απαιτείται κατηγορία επισκευής.",
+	"Service charge is required." => "Απαιτείται χρέωση υπηρεσίας.",
+	"Service charge is only numeric data." => "Η χρέωση υπηρεσίας είναι μόνο αριθμητικά δεδομένα.",
+	"Service charge is only number data." => "Η χρέωση υπηρεσίας είναι μόνο αριθμητικά δεδομένα.",
+	"First character is an alphabet after alphanumeric, space, dot, comma, hyphen and underscore are allowed." => "Ο πρώτος χαρακτήρας είναι ένα αλφάβητο αφού επιτρέπονται αλφαριθμητικά, διαστήματα, τελείες, κόμμα, παύλα και υπογράμμιση.",
+
+
+	/********* Custom validation message translation (Tax Module) **********/
+	"Tax name is required." => "Απαιτείται όνομα φόρου.",
+	"Only alphanumeric, space, dot, @, _, % and - are allowed." => "Επιτρέπονται μόνο αλφαριθμητικά, διαστήματα, τελείες, @, _,% και -.",
+	"Tax name should not more than 50 character." => "Το όνομα φόρου δεν πρέπει να υπερβαίνει τους 50 χαρακτήρες.",
+	"Tax rate is required." => "Απαιτείται φορολογικός συντελεστής.",
+	"The tax must be between 1 and 4 digits." => "Ο φόρος πρέπει να κυμαίνεται μεταξύ 1 και 4 ψηφίων.",
+
+	/********* Custom validation message translation (Business Module) **********/
+	"Date is required." => "Απαιτείται ημερομηνία.",
+	"Title is required." => "Απαιτείται τίτλος.",
+	"After alphabet alphanumeric, space, dot, @, _, and - are allowed." => "Μετά το αλφαβητικό αλφάβητο, το κενό, η τελεία, το @, _ και - επιτρέπονται.",
+	"Title field should not more than 100 character." => "Το πεδίο τίτλου δεν πρέπει να υπερβαίνει τους 100 χαρακτήρες.",
+	"After alphabet alphanumeric, space, dot, @, _, and - are allowed." => "Μετά το αλφαβητικό αλφάβητο, το κενό, η τελεία, το @, _ και - επιτρέπονται.",
+	"Description should not more than 300 character." => "Η περιγραφή δεν πρέπει να υπερβαίνει τους 300 χαρακτήρες.",
+
+	/********* Custom validation message translation (Custom Field Module) **********/
+	"Form name is required." => "Απαιτείται όνομα φόρμας.",
+	"Label name is required." => "Απαιτείται όνομα ετικέτας.",
+	"Start should be alphabets only after supports alphanumeric, space, dot, @, _, and - are allowed." => "Η εκκίνηση πρέπει να είναι αλφάβητα μόνο αφού επιτρέπονται αλφαριθμητικά, διαστήματα, κουκκίδες, @, _ και -.",
+	"Label name should not more than 50 character." => "Το όνομα της ετικέτας δεν πρέπει να υπερβαίνει τους 50 χαρακτήρες.",
+	"Type is required." => "Απαιτείται τύπος.",
+
+
+	/********* Custom validation message translation (Expenses Module) **********/
+	"Main label is required." => "Απαιτείται κύρια ετικέτα.",
+	"Only alphanumeric and space allowed." => "Επιτρέπονται μόνο αλφαριθμητικοί και κενό.",
+	"Status field is required." => "Απαιτείται πεδίο κατάστασης.",
+	"Expense entry field is required." => "Απαιτείται πεδίο εισαγωγής εξόδων.",
+	"Only numeric data allowed." => "Επιτρέπονται μόνο αριθμητικά δεδομένα.",
+	"After point two digit allowed." => "Μετά το σημείο δύο ψηφία επιτρέπονται.",
+	"Expense entry field is required." => "Απαιτείται πεδίο εισαγωγής εξόδων.",
+	"Only numeric data allowed." => "Επιτρέπονται μόνο αριθμητικά δεδομένα.",
+	"After point two digit allowed." => "Μετά το σημείο δύο ψηφία επιτρέπονται.",
+
+
+	/********* Custom validation message translation (Expenses Module) **********/
+	"Start date is required." => "Απαιτείται ημερομηνία έναρξης.",
+	"End date is required." => "Απαιτείται ημερομηνία λήξης.",
+
+	/********* Custom validation message translation (Gatepass Module) **********/
+	"Jobcard is required." => "Απαιτείται κάρτα εργασίας.",
+	"Gatepass number is required." => "Απαιτείται αριθμός Gatepass.",
+	"First name is required." => "Απαιτείται το όνομα.",
+	"Last name is required." => "Απαιτείται επώνυμο.",
+	"Email is required." => "Απαιτείται email.",
+	"Contact number is required." => "Απαιτείται αριθμός επαφής.",
+	"Vehicle name is required." => "Απαιτείται όνομα οχήματος.",
+	"Vehicle type is required." => "Απαιτείται τύπος οχήματος.",
+	"Kilometre is required." => "Απαιτείται χιλιόμετρο.",
+	"Enter only numeric data." => "Εισαγάγετε μόνο αριθμητικά δεδομένα.",
+	"Out date is required." => "Απαιτείται ημερομηνία εξόδου.",
+
+	/********* Custom validation message translation (GeneralSetting Module) **********/
+	"System name is required." => "Απαιτείται όνομα συστήματος.",
+	"System name must be alphabets, numbers and space." => "Το όνομα συστήματος πρέπει να είναι αλφάβητα, αριθμοί και κενό.",
+	"Phone number is required." => "Απαιτείται αριθμός τηλεφώνου.",
+	"Phone number minimum 6 digits." => "Αριθμός τηλεφώνου τουλάχιστον 6 ψηφία.",
+	"Phone number maximum 16 digits." => "Αριθμός τηλεφώνου το πολύ 16 ψηφία.",
+	"Phone number must be number, plus, minus and space only." => "Ο αριθμός τηλεφώνου πρέπει να είναι αριθμός, συν, μείον και κενό.",
+	"Image must be Jpg, Jpeg and Png only." => "Η εικόνα πρέπει να είναι μόνο Jpg, Jpeg και Png.",
+	"Please enter valid email address." => "Εισαγάγετε έγκυρη διεύθυνση email.",
+	"Address is required." => "Απαιτείται διεύθυνση.",
+	
+
+	/********* Custom validation message translation (Income Module) **********/
+	"Payment status is required." => "Απαιτείται κατάσταση πληρωμής.",
+	"Income date is required." => "Απαιτείται ημερομηνία εισοδήματος.",
+	"Main label is required." => "Απαιτείται κύρια ετικέτα.",
+	"Main label should be less than 50 charachters." => "Η κύρια ετικέτα πρέπει να είναι μικρότερη από 50 χαρακτήρες.",
+	"First character is an alphabet after number, space, dot, comma, hyphen,  underscore, at are allowed." => "Ο πρώτος χαρακτήρας είναι ένα αλφάβητο μετά τον αριθμό, το κενό, την τελεία, το κόμμα, το παύλα, την υπογράμμιση, στο επιτρέπονται.",
+	"Payment method is required." => "Απαιτείται τρόπος πληρωμής.",
+	"Income entry is required." => "Απαιτείται είσοδος εισοδήματος.",
+
+
+	"Invoice number is required." => "Απαιτείται αριθμός τιμολογίου.",
+	"Payment status is required." => "Απαιτείται κατάσταση πληρωμής.",
+	"Income date is required." => "Απαιτείται ημερομηνία εισοδήματος.",
+	"Main label is required." => "Απαιτείται κύρια ετικέτα.",
+	"Main label should be less than 50 charachters." => "Η κύρια ετικέτα πρέπει να είναι μικρότερη από 50 χαρακτήρες.",
+	"First character is an alphabet after number, space, dot, comma, hyphen,  underscore, at are allowed." => "Ο πρώτος χαρακτήρας είναι ένα αλφάβητο μετά τον αριθμό, το κενό, την τελεία, το κόμμα, το παύλα, την υπογράμμιση, στο επιτρέπονται.",
+	"Payment method is required." => "Απαιτείται τρόπος πληρωμής.",
+	"Income entry is required." => "Απαιτείται είσοδος εισοδήματος.",
+
+	/********* Custom validation message translation (Invoice Module) **********/
+	"Vehicle name is required." => "Απαιτείται όνομα οχήματος.",
+	"Invoice date is required." => "Απαιτείται ημερομηνία τιμολογίου.",
+	"Status is required." => "Απαιτείται κατάσταση.",
+	"Payment type is required." => "Απαιτείται τύπος πληρωμής.",
+	"Grand total is required." => "Απαιτείται μεγάλο σύνολο.",
+	"Paid amount is required." => "Απαιτείται πληρωμένο ποσό.",
+
+	/********* Custom validation message translation (Observation Library Module) **********/
+	"Vehicle name is required." => "Απαιτείται όνομα οχήματος.",
+	"Checkpoint category is required." => "Απαιτείται κατηγορία σημείων ελέγχου.",
+	"Check point is required." => "Απαιτείται σημείο ελέγχου.",
+	"Start should be alphabets only after supports alphanumeric, space, dot, @, _, and - are allowed." => "Η εκκίνηση πρέπει να είναι αλφάβητα μόνο αφού επιτρέπονται αλφαριθμητικά, διαστήματα, κουκκίδες, @, _ και -.",
+	"Check point should not more than 30 character." => "Το σημείο ελέγχου δεν πρέπει να υπερβαίνει τους 30 χαρακτήρες.",
+	
+	/********* Custom validation message translation (Other setting Module) **********/
+	"Timezone is required." => "Απαιτείται ζώνη ώρας.",
+	"Language is required." => "Απαιτείται γλώσσα.",
+	"Date format is required." => "Απαιτείται μορφή ημερομηνίας.",
+	"Currency is required." => "Απαιτείται νόμισμα.",
+
+	/********* Custom validation message translation (Payment Method Module) **********/
+	"Payment method is required." => "Απαιτείται τρόπος πληρωμής.",
+	"Payment method allowed only alphabets and space." => "Ο τρόπος πληρωμής επιτρέπεται μόνο αλφάβητα και κενό διάστημα.",
+	"Payment method should not more than 50 character." => "Ο τρόπος πληρωμής δεν πρέπει να υπερβαίνει τους 50 χαρακτήρες.",
+
+	/*** Custom validation message translation (Pay Payment(Inside Invoice Module) Form Module) ***/
+	"Invoice date is required." => "Απαιτείται ημερομηνία τιμολογίου.",
+	"Payment type is required." => "Απαιτείται τύπος πληρωμής.",
+	"Amount received is required." => "Απαιτείται ποσό που λαμβάνεται.",
+
+
+	/*** Custom validation message translation (Quotation Module) ***/
+	"Customer name is required." => "Απαιτείται όνομα πελάτη.",
+	"Vehicle name is required." => "Απαιτείται όνομα οχήματος.",
+	"Service date is required." => "Απαιτείται ημερομηνία υπηρεσίας.",
+	"Repair category is required." => "Απαιτείται κατηγορία επισκευής.",
+	"Service charge is required." => "Απαιτείται χρέωση υπηρεσίας.",
+	"Service charge is only number data." => "Η χρέωση υπηρεσίας είναι μόνο αριθμητικά δεδομένα.",
+	"First character is an alphabet after alphanumeric, space, dot, comma, hyphen and underscore are allowed." => "Ο πρώτος χαρακτήρας είναι ένα αλφάβητο αφού επιτρέπονται αλφαριθμητικά, διαστήματα, τελείες, κόμμα, παύλα και υπογράμμιση.",
+
+	/*** Custom validation message translation (Rto tax Module) ***/
+	"Vehicle name is required." => "Απαιτείται όνομα οχήματος.",
+	"RTO tax is required." => "Απαιτείται φόρος RTO.",
+	"RTO tax must be numeric data only." => "Ο φόρος RTO πρέπει να είναι μόνο αριθμητικά δεδομένα.",
+	"After point only two digit allowed." => "Μετά το σημείο επιτρέπονται μόνο δύο ψηφία.",
+	"Number plate charge is required." => "Απαιτείται χρέωση πινακίδας κυκλοφορίας.",
+	"Number plate charge must be numeric data only." => "Η χρέωση της πινακίδας αριθμού πρέπει να είναι μόνο αριθμητικά δεδομένα.",
+	"After point only two digit allowed." => "Μετά το σημείο επιτρέπονται μόνο δύο ψηφία.",
+	"Municiple road tax is required." => "Απαιτείται δημοτικός φόρος.",
+	"Municiple road tax must be numeric data only." => "Ο δημοτικός φόρος δρόμου πρέπει να είναι μόνο αριθμητικά δεδομένα.",
+	"After point only two digit allowed." => "Μετά το σημείο επιτρέπονται μόνο δύο ψηφία.",
+
+	/*** Custom validation message translation (Service second step (Service Module)) ***/
+	"Out time date is required." => "Απαιτείται ημερομηνία λήξης.",
+	"Kilometre is required." => "Απαιτείται χιλιόμετρο.",
+
+	/*** Custom validation message translation (Stripe setting Module) ***/
+	"Publish key is required." => "Απαιτείται κλειδί δημοσίευσης.",
+	"Secret key is required." => "Απαιτείται μυστικό κλειδί.",
+
+
+	/*** Custom validation message translation (Vehicle Sale Module) ***/
+	"Bill no is required." => "Δεν απαιτείται λογαριασμός.",
+	"Sales date is required." => "Απαιτείται ημερομηνία πώλησης.",
+	"Customer name is required." => "Απαιτείται όνομα πελάτη.",
+	"Salesman name is required." => "Απαιτείται όνομα πωλητή.",
+	"Brand name is required." => "Απαιτείται επωνυμία.",
+	"Model name is required." => "Απαιτείται όνομα μοντέλου.",
+	"Price is only numeric data allowed." => "Η τιμή επιτρέπεται μόνο αριθμητικά δεδομένα.",
+	"Price is only numeric data." => "Η τιμή είναι μόνο αριθμητικά δεδομένα.",
+	"Color is required." => "Απαιτείται χρώμα.",
+	"Total price is required." => "Απαιτείται συνολική τιμή.",
+	"After point only two digits allowed." => "Μετά το σημείο επιτρέπονται μόνο δύο ψηφία.",
+	"Total price is only numeric data." => "Η συνολική τιμή είναι μόνο αριθμητικά δεδομένα.",
+	"Interval is required." => "Απαιτείται διάστημα.",
+	"Number of service field is required." => "Απαιτείται αριθμός πεδίου υπηρεσίας.",
+	"Assigned to field is required." => "Απαιτείται αντιστοίχιση στο πεδίο.",
+
+
+	/*** Custom validation message translation (Vehicle Module) ***/
+	//"Vehicle type is required." => "Απαιτείται τύπος οχήματος.",
+	"Vehicle brand is required." => "Απαιτείται επωνυμία οχήματος.",
+	"Fuel type is required." => "Απαιτείται τύπος καυσίμου.",
+	"Model name is required." => "Απαιτείται όνομα μοντέλου.",
+	"Manufacturer name is required." => "Απαιτείται όνομα κατασκευαστή.",
+	"Product name is required." => "Απαιτείται όνομα προϊόντος.",
+	"Quantity is required." => "Απαιτείται ποσότητα.",
+	
+	"Employees" => "Υπάλληλος",
+	"Support Staffs" => "Προσωπικό υποστήριξης",
+	"Accountants" => "Λογιστής",
 ];
 
 ?>

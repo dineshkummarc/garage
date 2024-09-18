@@ -1,21 +1,23 @@
 @extends('layouts.app')
 @section('content')
+
 <style>
 .table>thead>tr>th {
     padding: 12px 2px 12px 4px;
 }
+
+
 </style>
+
 <!-- page content -->
-<?php $userid = Auth::user()->id; ?>
-@if (getAccessStatusUser('Invoices',$userid)=='yes')
         <div class="right_col" role="main">
 			<!--invoice modal-->
-			<div id="myModal-job" class="modal fade" role="dialog">
+			<div id="myModal-job" class="modal fade setTableSizeForSmallDevices" role="dialog">
 				<div class="modal-dialog modal-lg">
 					<!-- Modal content-->
 					<div class="modal-content">
 						<div class="modal-header"> 
-							<a href=""><button type="button" class="close">&times;</button></a>
+							<a href=""><button type="button" data-dismiss="modal" class="close">&times;</button></a>
 							<h4 id="myLargeModalLabel" class="modal-title">{{ trans('app.Invoice')}}</h4>
 						</div>
 						<div class="modal-body">
@@ -32,189 +34,230 @@
 					</div>
 				</div>
 			</div>
-          <div class="">
-           <div class="page-title">
-              <div class="nav_menu">
-            <nav>
-              <div class="nav toggle">
-                <a id="menu_toggle"><i class="fa fa-bars"></i><span class="titleup">&nbsp {{ trans('app.Invoice')}}</span></a>
-              </div>
-                  @include('dashboard.profile')
-            </nav>
-          </div>
-            </div>
-			@if(session('message'))
-			<div class="row massage">
-			 <div class="col-md-12 col-sm-12 col-xs-12">
-				<div class="checkbox checkbox-success checkbox-circle">
-					@if(session('message') == 'Successfully Submitted')
-					<label for="checkbox-10 colo_success"> {{trans('app.Successfully Submitted')}}  </label>
-				   @elseif(session('message')=='Successfully Updated')
-				   <label for="checkbox-10 colo_success"> {{ trans('app.Successfully Updated')}}  </label>
-				   @elseif(session('message')=='Successfully Deleted')
-				   <label for="checkbox-10 colo_success"> {{ trans('app.Successfully Deleted')}}  </label>
-				   @elseif(session('message')=='Successfully Sent')
-				   <label for="checkbox-10 colo_success"> {{ trans('app.Successfully Sent')}}  </label>
-				   @elseif(session('message')=='Error! Something went wrong.')
-				   <label for="checkbox-10 colo_success"> {{ trans('app.Error! Something went wrong.')}}  </label>
-				   @endif
-                </div>
-			</div>
-			</div>
-			@endif
-            <div class="row" >
-			<div class="col-md-12 col-sm-12 col-xs-12" >
-            <div class="x_content">
-				<ul class="nav nav-tabs bar_tabs" role="tablist">
-				<li role="presentation" class="active"><a href="{!! url('/invoice/list')!!}"><span class="visible-xs"></span><i class="fa fa-list fa-lg">&nbsp;</i><b>{{ trans('app.Invoice List')}}</b></a></li>
-				@if(getActiveCustomer($userid)=='yes')
-				<li role="presentation" class=""><a href="{!! url('/invoice/add')!!}"><span class="visible-xs"></span> <i class="fa fa-plus-circle fa-lg">&nbsp;</i>{{ trans('app.Add Invoice')}}</a></li>
-				<li role="presentation" class=""><a href="{!! url('/invoice/sale_part')!!}"><span class="visible-xs"></span> <i class="fa fa-plus-circle fa-lg">&nbsp;</i>{{ trans('app.Add Sale Part Invoice')}}</a></li>
+          	<div class="">
+           		<div class="page-title">
+              		<div class="nav_menu">
+            			<nav>
+              				<div class="nav toggle">
+                				<a id="menu_toggle"><i class="fa fa-bars"></i><span class="titleup">&nbsp; {{ trans('app.Invoice')}}</span></a>
+              				</div>
+                  			@include('dashboard.profile')
+            			</nav>
+          			</div>
+            	</div>
+				@if(session('message'))
+				<div class="row massage">
+			 		<div class="col-md-12 col-sm-12 col-xs-12">
+						<div class="checkbox checkbox-success checkbox-circle">
+							@if(session('message') == 'Successfully Submitted')
+								<label for="checkbox-10 colo_success"> 
+									{{trans('app.Successfully Submitted')}}  
+								</label>
+				   			@elseif(session('message')=='Successfully Updated')
+				   				<label for="checkbox-10 colo_success"> 
+				   					{{ trans('app.Successfully Updated')}}  
+				   				</label>
+				   			@elseif(session('message')=='Successfully Deleted')
+				   				<label for="checkbox-10 colo_success"> 
+				   					{{ trans('app.Successfully Deleted')}}  
+				   				</label>
+						   	@elseif(session('message')=='Successfully Sent')
+						   	<label for="checkbox-10 colo_success"> 
+						   		{{ trans('app.Successfully Sent')}}  
+						   	</label>
+						   	@elseif(session('message')=='Error! Something went wrong.')
+						   		<label for="checkbox-10 colo_success"> 
+						   			{{ trans('app.Error! Something went wrong.')}}  
+						   		</label>
+						   	@endif
+                		</div>
+					</div>
+				</div>
 				@endif
-				</ul>
-			</div>
-			 <div class="x_panel">
-                  <table id="datatable" class="table table-striped jambo_table" style="margin-top:20px;">
-                      <thead>
-                        <tr>
-						<th>#</th>
-						 <th>{{ trans('app.Invoice Number')}}</th>
-						 <th>{{ trans('app.Customer Name')}}</th>
-						 <th>{{ trans('app.Invoice For')}}</th>
-                         <th>{{ trans('app.Status')}}</th>
-						 <th>{{ trans('app.Total Amount')}} ({{getCurrencySymbols()}})</th>
-						 <th>{{ trans('app.Paid Amount')}} ({{getCurrencySymbols()}})</th>
-                         
-                         <th>{{ trans('app.Date')}}</th>
-                         <th>{{ trans('app.Action')}}</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-						<?php $i = 1; ?>   
-					  	@foreach($invoice as $invoices)
-						<tr class="texr-left">
-							<td>{{ $i }}</td>
-							<td>{{ $invoices->invoice_number }}</td>
-							<td>{{ getCustomerName($invoices->customer_id) }}</td>
-							@if($invoices->type == 2)
-								<td>{{ trans('app.Part')}}</td>
-							@else
-								<td>@if(getVehicleName($invoices->job_card) == null){{ $invoices->job_card }}
-								@else{{ getVehicleName($invoices->job_card) }}
-								@endif
-								</td>
-							@endif
-							<td><?php if($invoices->payment_status == 0)
-									{ echo"Unpaid"; }
-								elseif($invoices->payment_status == 1)
-									{ echo"Partially Paid"; }
-								elseif($invoices->payment_status == 2)
-									{ echo"Paid";}
-								else
-									{echo"Unpaid";}
-								?>
-							</td>
-							<td>{{ number_format($invoices->grand_total, 2) }}</td>
-							<td>{{ number_format($invoices->paid_amount, 2) }}</td>
-							
-							<td>{{ date(getDateFormat(),strtotime($invoices->date)) }}</td>
-							<td>
-							<?php $userid=Auth::User()->id; ?>
-							@if(getActiveCustomer($userid)=='yes')
-								@if($invoices->type != 2)
-								<button type="button" data-toggle="modal" data-target="#myModal-job" type_id ="{{ $invoices->type }}" serviceid="{{ $invoices->sales_service_id }}" auto_id = "{{ $invoices->id }}" url="{!! url('/jobcard/modalview') !!}" sale_url="{!! url('/sales/list/modal') !!}" class="btn btn-round btn-info save">{{ trans('app.View Invoice')}}</button>					
-								@else
-									<button type="button" data-toggle="modal" data-target="#myModal-job" type_id ="{{ $invoices->type }}" serviceid="{{ $invoices->sales_service_id }}" auto_id = "{{ $invoices->id }}" url="{!! url('/jobcard/modalview') !!}" sale_url="{!! url('/sales_part/list/modal') !!}" class="btn btn-round btn-info save">{{ trans('app.View Invoice')}}</button>	
-								@endif
-								<a href="{!! url('/invoice/list/edit/'.$invoices->id) !!}" ><button type="button" class="btn btn-round btn-success">{{ trans('app.Edit')}}</button></a>	
-								
-								<a url="{!! url('/invoice/list/delete/'.$invoices->id) !!}" class="sa-warning"><button type="button" class="btn btn-round btn-danger">{{ trans('app.Delete')}}</button></a>
-								
-								<button type="button" data-toggle="modal" data-target="#myModal-payment" invoice_id ="{{ $invoices->id }}" url="{!! url('/invoice/payment/paymentview') !!}"  class="btn btn-round btn-info Payment"> {{ trans('app.Payment History')}}</button>
-								
-								@if($invoices->grand_total == $invoices->paid_amount)
-									<a href="{!! url('/invoice/pay/'.$invoices->id) !!}" ><button type="button" class="btn btn-round btn-success" disabled >{{ trans('app.Pay')}}</button></a>
-								@else
-									<a href="{!! url('/invoice/pay/'.$invoices->id) !!}" ><button type="button" class="btn btn-round btn-success">{{ trans('app.Pay')}}</button></a>
-								@endif
-							
-									
-								
-								
-								
-							@else
-								<button type="button" data-toggle="modal" data-target="#myModal-job" type_id ="{{ $invoices->type }}" serviceid="{{ $invoices->sales_service_id }}" auto_id = "{{ $invoices->id }}" url="{!! url('/jobcard/modalview') !!}" sale_url="{!! url('/sales/list/modal') !!}" class="btn btn-round btn-info save">{{ trans('app.View Invoice')}} </button>
-								
-								<?php  
-									$grand_total = $invoices->grand_total; 
-									$paid_amount =$invoices->paid_amount;
-									$amountdue = $grand_total - $paid_amount; 
-								?>
-								@if(Auth::user()->role !='employee')
-									<button type="button" data-toggle="modal" data-target="#myModal-payment" invoice_id ="{{ $invoices->id }}" url="{!! url('/invoice/payment/paymentview') !!}"  class="btn btn-round btn-info Payment"> {{ trans('app.Payment History')}}</button>
-								
-									@if($amountdue != 0)
-										<script src="https://js.stripe.com/v3/"></script>
-										<form method="post" action="{{ url('invoice/stripe')}}" class="medium" id="medium">
-										  <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-										  <input type='hidden' name="invoice_amount" value="{{$amountdue}}">
-										  <input type='hidden' name="invoice_id" value="{{$invoices->id}}">
-										  <input type='hidden' name="invoice_no" value="{{$invoices->invoice_number}}">
-										  
-										  <input type="submit" class="submit2  btn btn-round btn-success" value="{{ trans('app.Pay')}}" data-key="{{$updatekey->publish_key}}" data-email="{{getCustomerEmail($invoices->customer_id)}}" 
-											 data-name="{{$logo->system_name}}"data-description="Invoice Number - {{$invoices->invoice_number}}" data-amount="{{$amountdue *100}}"  />
-											 
-										  <script src="https://checkout.stripe.com/v2/checkout.js"></script>
-										  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-										  <script>
-											 $(document).ready(function() {
-												$('.submit2').on('click', function(event) {
-													event.preventDefault();
-													
-														var $button = $(this),
-															$form = $button.parents('form');
-														var opts = $.extend({}, $button.data(), {
-															token: function(result) {
-																$form.append($('<input>').attr({
-																	type: 'hidden',
-																	name: 'stripeToken',
-																	value: result.id
-																})).submit();
-															}
-														});
-														StripeCheckout.open(opts);
-													 
-												});
-											 });
-										  </script>
-										</form>
+            	<div class="row" >
+					<div class="col-md-12 col-sm-12 col-xs-12" >
+            			<div class="x_content">
+							<ul class="nav nav-tabs bar_tabs" role="tablist">
+								@can('invoice_view')
+									<li role="presentation" class="active"><a href="{!! url('/invoice/list')!!}"><span class="visible-xs"></span><i class="fa fa-list fa-lg">&nbsp;</i><b>{{ trans('app.Invoice List')}}</b></a></li>
+								@endcan
+
+								@can('invoice_add')
+									<li role="presentation" class=""><a href="{!! url('/invoice/add')!!}"><span class="visible-xs"></span> <i class="fa fa-plus-circle fa-lg">&nbsp;</i>{{ trans('app.Add Invoice')}}</a></li>
+								@endcan
+								@can('invoice_add')
+									<li role="presentation" class="setMarginForAddSalePartInvoiceOnSmallDevice"><a href="{!! url('/invoice/sale_part')!!}"><span class="visible-xs"></span> <i class="fa fa-plus-circle fa-lg">&nbsp;</i>{{ trans('app.Add Sale Part Invoice')}}</a></li>
+								@endcan
+							</ul>
+						</div>
+			 			<div class="x_panel setMarginForXpanelDivOnSmallDevice">
+                  			<table id="datatable" class="table table-striped jambo_table" style="margin-top:20px;">
+                      			<thead>
+                        			<tr>
+										<th>#</th>
+										<th>{{ trans('app.Invoice Number')}}</th>
+										<th>{{ trans('app.Customer Name')}}</th>
+										<th>{{ trans('app.Invoice For')}}</th>
+				                        <th>{{ trans('app.Number Plate')}}</th>
+				                        <th>{{ trans('app.Status')}}</th>
+										<th>{{ trans('app.Total Amount')}} ({{getCurrencySymbols()}})</th>
+										<th>{{ trans('app.Paid Amount')}} ({{getCurrencySymbols()}})</th> 
+				                        <th>{{ trans('app.Date')}}</th>
+				                        <th>{{ trans('app.Action')}}</th>
+                        			</tr>
+                      			</thead>
+                      			<tbody>
+								<?php $i = 1; ?>   
+					  			@foreach($invoice as $invoices)
+								<tr class="texr-left">
+									<td>{{ $i }}</td>
+									<td>{{ $invoices->invoice_number }}</td>
+									<td>{{ getCustomerName($invoices->customer_id) }}</td>
+									@if($invoices->type == 2)
+										<td>{{ trans('app.Part')}}</td>
 									@else
-										<input type="submit" class="btn btn-round btn-success" value="{{ trans('app.Pay')}}" disabled/>	
+										<td>@if(getVehicleName($invoices->job_card) == null){{ $invoices->job_card }}
+										@else{{ getVehicleName($invoices->job_card) }}
+										@endif
+										</td>
 									@endif
-								@endif
+									<td> 
+										@if($invoices->type == 0)
+											{{getVehicleNumberPlateFromService($invoices->sales_service_id)??'Not Added' }}
+										@else
+											@if($invoices->type == 1)
+												{{getVehicleNumberPlateFromSale($invoices->sales_service_id)??'Not Added' }}
+											@else
+												{{ 'N/A' }}
+											@endif
+										@endif
+									</td>
+									<td>
+										<?php if($invoices->payment_status == 0)
+											{ echo"Unpaid"; }
+										elseif($invoices->payment_status == 1)
+											{ echo"Partially Paid"; }
+										elseif($invoices->payment_status == 2)
+											{ echo"Paid";}
+										else
+											{echo"Unpaid";}
+										?>
+									</td>
+									<td>{{ number_format($invoices->grand_total, 2) }}</td>
+									<td>{{ number_format($invoices->paid_amount, 2) }}</td>
+									
+									<td>{{ date(getDateFormat(),strtotime($invoices->date)) }}</td>
+									
+									<td>
+									@if(getUserRoleFromUserTable(Auth::User()->id) == 'admin' || getUserRoleFromUserTable(Auth::User()->id) == 'supportstaff' || getUserRoleFromUserTable(Auth::User()->id) == 'accountant' || getUserRoleFromUserTable(Auth::User()->id) == 'employee')
+										@if($invoices->type != 2)
+											@can('invoice_view')
+												<button type="button" data-toggle="modal" data-target="#myModal-job" type_id ="{{ $invoices->type }}" serviceid="{{ $invoices->sales_service_id }}" auto_id = "{{ $invoices->id }}" url="{!! url('/jobcard/modalview') !!}" sale_url="{!! url('/sales/list/modal') !!}" class="btn btn-round btn-info save">{{ trans('app.View Invoice')}}</button>		
+											@endcan			
+										@else
+											@can('invoice_view')
+												<button type="button" data-toggle="modal" data-target="#myModal-job" type_id ="{{ $invoices->type }}" serviceid="{{ $invoices->sales_service_id }}" auto_id = "{{ $invoices->id }}" url="{!! url('/jobcard/modalview') !!}" sale_url="{!! url('/sales_part/list/modal') !!}" class="btn btn-round btn-info save">{{ trans('app.View Invoice')}}</button>	
+											@endcan
+										@endif
+
+										@can('invoice_edit')
+											<a href="{!! url('/invoice/list/edit/'.$invoices->id) !!}" ><button type="button" class="btn btn-round btn-success">{{ trans('app.Edit')}}</button></a>	
+										@endcan
+										@can('invoice_delete')
+											<a url="{!! url('/invoice/list/delete/'.$invoices->id) !!}" class="sa-warning"><button type="button" class="btn btn-round btn-danger">{{ trans('app.Delete')}}</button></a>
+										@endcan
+
+										@if(Gate::allows('invoice_edit') || Gate::allows('invoice_delete'))
+										@canany(['invoice_edit','invoice_delete'])
+											<button type="button" data-toggle="modal" data-target="#myModal-payment" invoice_id ="{{ $invoices->id }}" url="{!! url('/invoice/payment/paymentview') !!}"  class="btn btn-round btn-info Payment"> {{ trans('app.Payment History')}}</button>
+										
+											@if($invoices->grand_total == $invoices->paid_amount)
+												<a href="{!! url('/invoice/pay/'.$invoices->id) !!}" ><button type="button" class="btn btn-round btn-success" disabled >{{ trans('app.Pay')}}</button></a>
+											@elseif($invoices->grand_total == 0)
+												<a href="{!! url('/invoice/pay/'.$invoices->id) !!}" ><button type="button" class="btn btn-round btn-success" disabled >{{ trans('app.Pay')}}</button></a>
+											@else
+												<a href="{!! url('/invoice/pay/'.$invoices->id) !!}" ><button type="button" class="btn btn-round btn-success">{{ trans('app.Pay')}}</button></a>
+											@endif
+										@endcanany
+										@endif
+									@elseif(getUserRoleFromUserTable(Auth::User()->id) == 'Customer')
+										@can('invoice_view')
+											<button type="button" data-toggle="modal" data-target="#myModal-job" type_id ="{{ $invoices->type }}" serviceid="{{ $invoices->sales_service_id }}" auto_id = "{{ $invoices->id }}" url="{!! url('/jobcard/modalview') !!}" sale_url="{!! url('/sales/list/modal') !!}" class="btn btn-round btn-info save">{{ trans('app.View Invoice')}} </button>
+										@endcan
+										@can('invoice_edit')
+											<a href="{!! url('/invoice/list/edit/'.$invoices->id) !!}" ><button type="button" class="btn btn-round btn-success">{{ trans('app.Edit')}}</button></a>	
+										@endcan
+										@can('invoice_delete')
+											<a url="{!! url('/invoice/list/delete/'.$invoices->id) !!}" class="sa-warning"><button type="button" class="btn btn-round btn-danger">{{ trans('app.Delete')}}</button></a>
+										@endcan
 								
-							@endif
-							</td>
-							
-						</tr>
-						 <?php $i++; ?>   
-						@endforeach
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-            </div>
-          </div>
+										<?php  
+											$grand_total = $invoices->grand_total; 
+											$paid_amount =$invoices->paid_amount;
+											$amountdue = $grand_total - $paid_amount; 
+										?>
+
+										@can('invoice_view')
+											<button type="button" data-toggle="modal" data-target="#myModal-payment" invoice_id ="{{ $invoices->id }}" url="{!! url('/invoice/payment/paymentview') !!}"  class="btn btn-round btn-info Payment"> {{ trans('app.Payment History')}}</button>
+										@endcan
+
+										@can('invoice_view')
+										@if($amountdue != 0 && $amountdue < 999999 && $updatekey->publish_key != null)
+											<script src="https://js.stripe.com/v3/"></script>
+											<form method="post" action="{{ url('invoice/stripe')}}" class="medium" id="medium">
+												<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
+												<input type='hidden' name="invoice_amount" value="{{$amountdue}}">
+												<input type='hidden' name="invoice_id" value="{{$invoices->id}}">
+												<input type='hidden' name="invoice_no" value="{{$invoices->invoice_number}}">
+										  
+										  		<input type="submit" class="submit2  btn btn-round btn-success" value="{{ trans('app.Pay')}}" data-key="{{$updatekey->publish_key}}" data-email="{{getCustomerEmail($invoices->customer_id)}}" 
+											 		data-name="{{$logo->system_name}}"data-description="Invoice Number - {{$invoices->invoice_number}}" data-amount="{{$amountdue *100}}"  />
+											 
+										  		<script src="https://checkout.stripe.com/v2/checkout.js"></script>
+										  		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+										  			
+										  		<script>
+											 		$(document).ready(function() {
+														$('.submit2').on('click', function(event) {
+															event.preventDefault();
+													
+															var $button = $(this),
+																$form = $button.parents('form');
+															var opts = $.extend({}, $button.data(), {
+																token: function(result) {
+																	$form.append($('<input>').attr({
+																		type: 'hidden',
+																		name: 'stripeToken',
+																		value: result.id
+																	})).submit();
+																}
+															});
+																
+															StripeCheckout.open(opts);
+														});
+											 		});
+										  		</script>
+											</form>
+										@elseif($amountdue > 999999)
+											<input type="submit" class="btn btn-round btn-success payWarning" value="{{ trans('app.Pay')}}"/>
+										@else
+											<input type="submit" class="btn btn-round btn-success" value="{{ trans('app.Pay')}}" disabled/>		
+										@endif
+										@endcan
+									@endif
+									</td>	
+								</tr>
+						 		<?php $i++; ?>   
+								@endforeach
+                      			</tbody>
+                    		</table>
+                  		</div>
+                	</div>
+            	</div>
+          	</div>
         </div>
-@else
-	<div class="right_col" role="main">
-		<div class="nav_menu main_title" style="margin-top:4px;margin-bottom:15px;">
-            <div class="nav toggle" style="padding-bottom:16px;">
-               <span class="titleup">&nbsp {{ trans('app.You are not authorize this page.')}}</span>
-            </div>
-        </div>
-	</div>
-@endif   
+
+ 
 <script src="{{ URL::asset('vendors/jquery/dist/jquery.min.js') }}"></script>
 <!-- language change in user selected -->	
 <script>
@@ -244,6 +287,15 @@ $(document).ready(function() {
             closeOnConfirm: false 
         }, function(){
 			window.location.href = url;
+        });
+    });
+
+ $('body').on('click', '.payWarning', function() {
+	
+        swal({   
+            title: "Stripe Payment Failed",
+			text: "You can not pay more than 999999.99 in a single transaction using card!",   
+            type: "warning",   
         });
     }); 
 </script>

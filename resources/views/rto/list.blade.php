@@ -1,8 +1,7 @@
 @extends('layouts.app')
 @section('content')
-		<!-- page content -->
-		<?php $userid = Auth::user()->id; ?>
-@if (getAccessStatusUser('Compliance',$userid)=='yes')
+
+<!-- page content -->
 	<div class="right_col" role="main">
 		<div class="">
 			<div class="page-title">
@@ -35,11 +34,12 @@
 				<div class="col-md-12 col-sm-12 col-xs-12" >
 					<div class="x_content">
 						<ul class="nav nav-tabs bar_tabs tabconatent" role="tablist">
-							<li role="presentation" class="active suppo_llng_li floattab"><a href="{!! url('/rto/list')!!}"><span class="visible-xs"></span> <i class="fa fa-list fa-lg">&nbsp;</i><b>{{ trans('app.List Of RTO Taxes')}}</b></span></a></li>
-							
-							<li role="presentation" class="suppo_llng_li_add floattab"><a href="{!! url('/rto/add')!!}"><span class="visible-xs"></span> <i class="fa fa-plus-circle fa-lg">&nbsp;</i>{{ trans('app.Add RTO Taxes')}}</span></a></li>
-			
-			
+							@can('rto_view')
+								<li role="presentation" class="active"><a href="{!! url('/rto/list')!!}"><span class="visible-xs"></span> <i class="fa fa-list fa-lg">&nbsp;</i><b>{{ trans('app.List Of RTO Taxes')}}</b></span></a></li>
+							@endcan
+							@can('rto_add')
+								<li role="presentation" class="setTabAddRtoTaxOnSmallDevice"><a href="{!! url('/rto/add')!!}"><span class="visible-xs"></span> <i class="fa fa-plus-circle fa-lg">&nbsp;</i>{{ trans('app.Add RTO Taxes')}}</span></a></li>
+							@endcan
 						</ul>
 					</div>
 					<div class="x_panel table_up_div">
@@ -51,7 +51,18 @@
 									<th>{{ trans('app.RTO / Registration C.R. Temp Tax')}}</th>
 									<th>{{ trans('app.Number Plate charge')}}</th>
 									<th>{{ trans('app.Municipal Road Tax')}}</th>
-									<th>{{ trans('app.Action')}}</th>
+
+								<!-- Custom Field Data Label Name-->
+									@if(!empty($tbl_custom_fields))
+										@foreach($tbl_custom_fields as $tbl_custom_field)	
+											<th>{{$tbl_custom_field->label}}</th>
+										@endforeach
+									@endif
+								<!-- Custom Field Data End -->
+
+									@canany(['rto_edit','rto_delete'])
+			                        	<th>{{ trans('app.Action')}}</th>
+			                        @endcan
 								</tr>
 							</thead>
 							<tbody>
@@ -63,10 +74,48 @@
 									<td>{{ $rtos->registration_tax }}</td>
 									<td>{{ $rtos->number_plate_charge }}</td>
 									<td>{{ $rtos->muncipal_road_tax }}</td>
+
+								<!-- Custom Field Data Value-->
+									@if(!empty($tbl_custom_fields))
+				
+										@foreach($tbl_custom_fields as $tbl_custom_field)	
+											<?php 
+												$tbl_custom = $tbl_custom_field->id;
+												$userid = $rtos->id;
+																						
+												$datavalue = getCustomDataRto($tbl_custom,$userid);
+											?>
+											
+											@if($tbl_custom_field->type == "radio")
+												@if($datavalue != "")
+													<?php
+														$radio_selected_value = getRadioSelectedValue($tbl_custom_field->id, $datavalue);
+													?>
+													<td>{{$radio_selected_value}}</td>
+												@else
+													<td>{{ trans('app.Data not available') }}</td>
+												@endif
+											@else
+												@if($datavalue != null)
+													<td>{{$datavalue}}</td>
+												@else
+													<td>{{ trans('app.Data not available') }}</td>
+												@endif
+											@endif
+										@endforeach
+									@endif
+								<!-- Custom Field Data End -->
+
+									@canany(['rto_edit','rto_delete'])
 									<td>
-										<a href="{{ url('rto/list/edit/'.$rtos->id) }}" ><button type="button" class="btn btn-round btn-success">{{ trans('app.Edit')}}</button></a>
-										<a url="{{ url('rto/list/delete/'.$rtos->id) }}" class="sa-warning"><button type="button" class="btn btn-round btn-danger dgr">{{ trans('app.Delete')}}</button></a>
+										@can('rto_edit')
+											<a href="{{ url('rto/list/edit/'.$rtos->id) }}" ><button type="button" class="btn btn-round btn-success">{{ trans('app.Edit')}}</button></a>
+										@endcan
+										@can('rto_delete')
+											<a url="{{ url('rto/list/delete/'.$rtos->id) }}" class="sa-warning"><button type="button" class="btn btn-round btn-danger dgr">{{ trans('app.Delete')}}</button></a>
+										@endcan
 									</td>
+									@endcan
 								</tr>
 							<?php $i++; ?>
 							@endforeach
@@ -78,16 +127,9 @@
 			</div>
 		</div>
 	</div>
-@else
-	<div class="right_col" role="main">
-		<div class="nav_menu main_title" style="margin-top:4px;margin-bottom:15px;">
-			<div class="nav toggle" style="padding-bottom:16px;">
-				<span class="titleup">&nbsp {{ trans('app.You are not authorize this page.')}}</span>
-			</div>
-		</div>
-	</div>
-	
-@endif   
+<!-- page content end-->
+
+
 <script src="{{ URL::asset('vendors/jquery/dist/jquery.min.js') }}"></script>
 <!-- language change in user selected -->	
 <script>

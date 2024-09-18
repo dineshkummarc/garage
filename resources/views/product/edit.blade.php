@@ -1,8 +1,11 @@
 @extends('layouts.app')
 @section('content')
+
+<style>
+	.select2-container { width: 100% !important; }
+</style>
+
 <!-- page content -->
-<?php $userid = Auth::user()->id; ?>
-@if (getAccessStatusUser('Inventory',$userid)=='yes')
 <div class="right_col" role="main">
     <div class="page-title">
         <div class="nav_menu">
@@ -16,39 +19,47 @@
     </div>
 	<div class="x_content">
         <ul class="nav nav-tabs bar_tabs" role="tablist">
-			<li role="presentation" class=""><a href="{!! url('/product/list')!!}"><span class="visible-xs"></span> <i class="fa fa-list fa-lg">&nbsp;</i>{{ trans('app.Product List')}}</a></li>
-			<li role="presentation" class="active"><a href="{!! url('/product/list/edit/'.$editid)!!}"><span class="visible-xs"></span><i class="fa fa-pencil-square-o" aria-hidden="true">&nbsp;</i><b>{{ trans('app.Edit Product')}}</b></a></li>
+        	@can('product_view')
+				<li role="presentation" class=""><a href="{!! url('/product/list')!!}"><span class="visible-xs"></span> <i class="fa fa-list fa-lg">&nbsp;</i>{{ trans('app.Product List')}}</a></li>
+			@endcan
+			
+			@can('product_edit')
+				<li role="presentation" class="active"><a href="{!! url('/product/list/edit/'.$editid)!!}"><span class="visible-xs"></span><i class="fa fa-pencil-square-o" aria-hidden="true">&nbsp;</i><b>{{ trans('app.Edit Product')}}</b></a></li>
+			@endcan
 		</ul>
 	</div>
     <div class="row">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_content">
-                   <form method="post" action="update/{{ $product->id }}" enctype="multipart/form-data"  class="form-horizontal upperform">
+                   <form id="productEdit-Form" method="post" action="update/{{ $product->id }}" enctype="multipart/form-data"  class="form-horizontal upperform">
 						<div class="form-group">
-							<div class="">
-								<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Product Number')}} <label class="text-danger">*</label></label>
+							<div class="my-form-group">
+								<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Product Number')}} <label class="color-danger">*</label></label>
 								<div class="col-md-4 col-sm-4 col-xs-12">
 								
 									<input type="text" id="p_no" name="p_no"  class="form-control" value="{{ $product->product_no }}" placeholder="{{ trans('app.Enter Product No')}}" readonly>
 								</div>
 							</div>
-							<div class="">
-								<label class="control-label col-md-2 col-sm-2 col-xs-12" for="last-name">{{ trans('app.Product Date')}} <label class="text-danger">*</label></label>
+
+							<div class="my-form-group">
+								<label class="control-label col-md-2 col-sm-2 col-xs-12" for="last-name">{{ trans('app.Product Date')}} <label class="color-danger">*</label></label>
 								<div class="col-md-4 col-sm-4 col-xs-12 input-group date datepicker">
 									<span class="input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-									<input type="text" id="p_date" name="p_date" class="form-control" placeholder="<?php echo getDateFormat();?>" value="{{ date(getDateFormat(),strtotime($product->product_date)) }}" onkeypress="return false;" required />
+									<input type="text" id="p_date" name="p_date" autocomplete="off" class="form-control productDate" placeholder="<?php echo getDateFormat();?>" value="{{ date(getDateFormat(),strtotime($product->product_date)) }}" onkeypress="return false;" required />
 								</div>
 							</div>
 						</div>
+
 						<div class="form-group">
-							<div class="">
-								<label class="control-label col-md-2 col-sm-2 col-xs-12" for="last-name">{{ trans('app.Name')}} <label class="text-danger">*</label></label>
+							<div class="my-form-group">
+								<label class="control-label col-md-2 col-sm-2 col-xs-12" for="last-name">{{ trans('app.Name')}} <label class="color-danger">*</label></label>
 								<div class="col-md-4 col-sm-4 col-xs-12">
 									<input type="text" id="name" name="name" class="form-control" maxlength="30" value="{{ $product->name }}" placeholder="{{ trans('app.Enter Product Name')}}" required>
 								</div>
 							</div>
-							<div class="">
+
+							<div class="my-form-group">
 								<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Product Image')}}</label>
 								<div class="col-md-4 col-sm-4 col-xs-12">
 									<input type="file" id="input-file-max-fs"  name="image"  class="form-control dropify" data-max-file-size="5M" >
@@ -70,9 +81,9 @@
 											</div>
 									</div>
 								</div>
-							</div>
-							
+							</div>							
 						</div>
+
 						<div class="form-group">
 							<div class="">
 								<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Manufacturer Name')}} </label>
@@ -90,8 +101,9 @@
 									<button type="button" data-target="#responsive-modal" data-toggle="modal" class="btn btn-default">{{ trans('app.Add Or Remove')}}</button>
 								</div>
 							</div>
-							<div class="{{ $errors->has('price') ? ' has-error' : '' }}">
-								<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Price')}} (<?php echo getCurrencySymbols(); ?>) <label class="text-danger">*</label></label>
+
+							<div class="{{ $errors->has('price') ? ' has-error' : '' }} my-form-group">
+								<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Price')}} (<?php echo getCurrencySymbols(); ?>) <label class="color-danger">*</label></label>
 								<div class="col-md-4 col-sm-4 col-xs-12">
 									<input type="text" id="price" name="price"  class="form-control" value="{{ $product->price }}" placeholder="{{ trans('app.Enter Product Price')}}" maxlength="10" required>
 									 @if ($errors->has('price'))
@@ -102,6 +114,7 @@
 								</div>
 							</div>
 						</div>
+
 						<div class="form-group">
 							 <div class="">
 								<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Color Name')}}</label>
@@ -119,6 +132,7 @@
 									<button type="button" data-target="#responsive-modal-color" data-toggle="modal" class="btn btn-default">{{ trans('app.Add Or Remove')}}</button>
 								</div>
 							</div>
+
 							<div class="">
 								<label class="control-label col-md-2 col-sm-2 col-xs-12" for="last-name">{{ trans('app.Warranty')}} </label>
 								<div class="col-md-4 col-sm-4 col-xs-12">
@@ -126,9 +140,10 @@
 								</div>
 							</div>
 						</div>
+
 						<div class="form-group">
-							<div class="">
-								<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Unit Of Measurement')}} <label class="text-danger">*</label></label>
+							<div class="my-form-group">
+								<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Unit Of Measurement')}} <label class="color-danger">*</label></label>
 								<div class="col-md-2 col-sm-2 col-xs-12">
 									<select  name="unit"  class="form-control unit_product_data" required>
 										<option value="">{{ trans('app.-- Select Unit --')}}</option>
@@ -142,14 +157,15 @@
 									<button type="button" data-target="#responsive-modal-unit" data-toggle="modal" class="btn btn-default">{{ trans('app.Add Or Remove')}}</button>
 								</div>
 							</div>
-							<div class="">
-								<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Supplier')}}</label>
+
+							<div class="my-form-group">
+								<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Supplier')}} <label class="color-danger">*</label></label>
 								<div class="col-md-4 col-sm-4 col-xs-12">
-									<select  id="sup_id" name="sup_id"  class="form-control">
+									<select  id="sup_id" name="sup_id"  class="form-control select_supplier_auto_search">
 									<option value="">{{ trans('app.-- Select Supplier --')}}</option>
 									@if(!empty($supplier))
 										@foreach ($supplier as $suppliers)
-											<option value="{{ $suppliers->id }}" <?php if($suppliers->id == $product->supplier_id) { echo 'selected'; } ?> >{{ $suppliers->name.' '.$suppliers->lastname }}</option>
+											<option value="{{ $suppliers->id }}" <?php if($suppliers->id == $product->supplier_id) { echo 'selected'; } ?> >{{ $suppliers->company_name }}</option>
 										@endforeach
 									@endif
 									</select>
@@ -158,13 +174,103 @@
 						</div>
 						<div class="form-group">
 							<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-								<label class="control-label col-md-4 col-sm-4 col-xs-12"> {{ trans('app.Category') }} <label class="text-danger">*</label></label>
+								<label class="control-label col-md-4 col-sm-4 col-xs-12"> {{ trans('app.Category') }} <label class="color-danger">*</label></label>
 								<div class="col-md-8 col-sm-8 col-xs-12 gender">
 									<input type="radio" name="category" value="0" required @if($product->category == '0') Checked @endif>Vehicle
 									<input type="radio" name="category" value="1" @if($product->category == '1') Checked @endif> Part
 								</div>
 							</div>
 						</div>
+
+					<!-- Custom Filed data value -->
+						@if(!empty($tbl_custom_fields))  
+							<div class="col-md-12 col-xs-12 col-sm-12 space">
+								<h4><b>{{ trans('app.Custom Fields')}}</b></h4>
+								<p class="col-md-12 col-xs-12 col-sm-12 ln_solid"></p>
+							</div>
+							<?php
+								$subDivCount = 0;
+							?>
+							@foreach($tbl_custom_fields as $myCounts => $tbl_custom_field)
+						       <?php 
+									if($tbl_custom_field->required == 'yes')
+									{
+										$required = "required";
+										$red = "*";
+									}else{
+										$required = "";
+										$red = "";
+									}
+									
+									$tbl_custom = $tbl_custom_field->id;
+									$userid = $product->id;
+									$datavalue = getCustomDataProduct($tbl_custom,$userid);
+									$subDivCount++;
+								?>
+
+								@if($myCounts%2 == 0)
+									<div class="col-md-12 col-sm-6 col-xs-12">
+								@endif
+
+								<div class="form-group col-md-6  col-sm-6 col-xs-12">
+									<label class="control-label col-md-4 col-sm-4 col-xs-12" for="account-no">{{$tbl_custom_field->label}} <label class="text-danger">{{$red}}</label></label>
+									<div class="col-md-8 col-sm-8 col-xs-12">
+										@if($tbl_custom_field->type == 'textarea')
+											<textarea  name="custom[{{$tbl_custom_field->id}}]" class="form-control" placeholder="{{ trans('app.Enter')}} {{$tbl_custom_field->label}}" maxlength="100" {{$required}}>{{$datavalue}}</textarea>
+										@elseif($tbl_custom_field->type == 'radio')
+											<?php
+												$radioLabelArrayList = getRadiolabelsList($tbl_custom_field->id)
+											?>
+											@if(!empty($radioLabelArrayList))
+											<div style="margin-top: 5px;">
+												@foreach($radioLabelArrayList as $k => $val)
+													<input type="{{$tbl_custom_field->type}}"  name="custom[{{$tbl_custom_field->id}}]" value="{{$k}}"    <?php
+															//$formName = "product";
+															$getRadioValue = getRadioLabelValueForUpdateForAllModules($tbl_custom_field->form_name ,$product->id, $tbl_custom_field->id);
+
+													 	if($k == $getRadioValue) { echo "checked"; }?> 
+
+													> {{ $val }} &nbsp;
+												@endforeach		
+												</div>								
+											@endif
+
+										@elseif($tbl_custom_field->type == 'checkbox')
+										<?php
+												$checkboxLabelArrayList = getCheckboxLabelsList($tbl_custom_field->id)
+											?>
+											@if(!empty($checkboxLabelArrayList))
+												<?php
+													$getCheckboxValue = getCheckboxLabelValueForUpdateForAllModules($tbl_custom_field->form_name, $product->id, $tbl_custom_field->id);
+												?>
+												<div style="margin-top: 5px;">
+												@foreach($checkboxLabelArrayList as $k => $val)
+													<input type="{{$tbl_custom_field->type}}" name="custom[{{$tbl_custom_field->id}}][]" value="{{$val}}"
+													<?php
+													 	if($val == getCheckboxValForAllModule($tbl_custom_field->form_name, $product->id, $tbl_custom_field->id,$val)) 
+													 			{ echo "checked"; }
+													 	?>
+													> {{ $val }} &nbsp;
+												@endforeach
+												</div>					
+											@endif								
+										@elseif($tbl_custom_field->type == 'textbox' || $tbl_custom_field->type == 'date')
+											<input type="{{$tbl_custom_field->type}}" name="custom[{{$tbl_custom_field->id}}]"  class="form-control" placeholder="{{ trans('app.Enter')}} {{$tbl_custom_field->label}}" value="{{$datavalue}}" maxlength="30" {{$required}}>
+										@endif
+									</div>
+								</div>
+								@if($myCounts%2 != 0)
+									</div>
+								@endif
+							@endforeach
+							<?php 
+								if ($subDivCount%2 != 0) {
+									echo "</div>";
+								}
+							?>
+						@endif					
+					<!-- Custom Filed data value End-->
+
 					  <input type="hidden" name="_token" value="{{csrf_token()}}">
                       <div class="form-group">
                         <div class="col-md-12 col-sm-12 col-xs-12 text-center">
@@ -319,19 +425,7 @@
             </div>
         </div>
     </div>
-           
-</div>
-@else
-	<div class="right_col" role="main">
-		<div class="nav_menu main_title" style="margin-top:4px;margin-bottom:15px;">
-           
-              <div class="nav toggle" style="padding-bottom:16px;">
-               <span class="titleup">&nbsp {{ trans('app.You are not authorize this page.')}}</span>
-              </div>
-          </div>
-	</div>
-	
-@endif   
+  
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="{{ URL::asset('vendors/moment/min/moment.min.js') }}"></script>
 <script src="{{ URL::asset('vendors/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
@@ -393,12 +487,33 @@
 $(document).ready(function(){
 	$('.addcolor').click(function(){
 		
-		var c_name = $('.c_name').val();
-		
+		var c_name = $('.c_name').val();		
 		var url = $(this).attr('colorurl');
-		if(c_name == ""){
-			swal("Please Enter Color Name!")
-        }else{
+
+		function define_variable()
+		{
+			return {
+				addcolor_value: $('.c_name').val(),
+				addcolor_pattern: /^[(a-zA-Z0-9\s)]+$/,
+			};
+		}
+		
+		var call_var_addcoloradd = define_variable();		 
+
+	        if(c_name == ""){
+	            swal('Please enter color name');
+	        }
+	        else if (!call_var_addcoloradd.addcolor_pattern.test(call_var_addcoloradd.addcolor_value))
+			{
+				$('.c_name').val("");
+				swal('Please enter only alphanumeric data');
+			}
+	        else if(!c_name.replace(/\s/g, '').length){
+				$('.c_name').val("");
+	        	swal('Only blank space not allowed');
+	    }
+        else
+        {
 			$.ajax({
 			    type: 'GET',
 						url: url,
@@ -419,8 +534,7 @@ $(document).ready(function(){
 								}
 						},
 						 error: function(e) {
-                 alert("An error occurred: " + e.responseText);
-                    console.log(e);
+                 
                 }
 						  
 	              });
@@ -469,39 +583,62 @@ $(document).ready(function(){
 <script>
 $(document).ready(function(){
 	$('.addtype').click(function(){
+
 		var product_type = $('.product_type').val();
 		var url = $(this).attr('producturl');
-		if(product_type == ""){
-            swal('Please Enter Product Type!');
-        }else{
-               $.ajax({
-                       type: 'GET',
-						url: url,
-						data : {product_type:product_type},
-						success:function(data)
-                        {
-							 var newd = $.trim(data);
-				             var classname = 'del-'+newd;
-								if(data == '01')
-								{
-									swal('This Record is Duplicate');
-								}else
-								{
-									$('.producttype').append('<tr class="'+classname+' data_of_type"><td class="text-center">'+product_type+'</td><td class="text-center"><button type="button" id='+data+' deleteproduct="{!! url('prodcttypedelete') !!}" class="btn btn-danger btn-xs">X</button></a></td><tr>');
-									$('.product_type_data').append('<option value='+data+'>'+product_type+'</option>');
-									$('.product_type').val('');
-								}
-						},
-                    error: function(e) {
-                 alert("An error occurred: " + e.responseText);
-                    console.log(e);
-                }
-       });
-            
+
+		function define_variable()
+		{
+			return {
+				product_type_value: $('.product_type').val(),
+				product_type_pattern: /^[(a-zA-Z0-9\s)]+$/,
+			};
+		}
+		
+		var call_var_product_typeadd = define_variable();		 
+
+	        if(product_type == ""){
+	            swal('Please enter product type');
+	        }
+	        else if (!call_var_product_typeadd.product_type_pattern.test(call_var_product_typeadd.product_type_value))
+			{
+				$('.product_type').val("");
+				swal('Please enter only alphanumeric data');
+			}
+	        else if(!product_type.replace(/\s/g, '').length){
+				$('.product_type').val("");
+	        	swal('Only blank space not allowed');
+	    }
+        else
+        {
+           	$.ajax({
+               	type: 'GET',
+				url: url,
+				data : {product_type:product_type},
+				success:function(data)
+                {
+					var newd = $.trim(data);
+		            var classname = 'del-'+newd;
+					
+					if(data == '01')
+					{
+						swal('This Record is Duplicate');
+					}
+					else
+					{
+						$('.producttype').append('<tr class="'+classname+' data_of_type"><td class="text-center">'+product_type+'</td><td class="text-center"><button type="button" id='+data+' deleteproduct="{!! url('prodcttypedelete') !!}" class="btn btn-danger btn-xs">X</button></a></td><tr>');
+						$('.product_type_data').append('<option value='+data+'>'+product_type+'</option>');
+						$('.product_type').val('');
+					}
+				},
+                error: function(e) {
+            	}
+   			});            
         }
 	});
 });
 </script>
+
 <script>
 $(document).ready(function(){
 	
@@ -545,9 +682,31 @@ $(document).ready(function(){
 		
 		var unit_measurement = $('.u_name').val();
 		var url = $(this).attr('uniturl');
-		if(unit_measurement == ""){
-            swal('Please Enter Unit of Measurement!');
-        }else{
+		
+		function define_variable()
+		{
+			return {
+				unit_measurement_value: $('.u_name').val(),
+				unit_measurement_pattern: /^[(a-zA-Z0-9\s)]+$/,
+			};
+		}
+
+		var call_var_unit_measurementadd = define_variable();		 
+
+        if(unit_measurement == ""){
+            swal('Please enter unit of measurement');
+        }
+        else if (!call_var_unit_measurementadd.unit_measurement_pattern.test(call_var_unit_measurementadd.unit_measurement_value))
+		{
+			$('.u_name').val("");
+			swal('Please enter only alphanumeric data');
+		}
+        else if(!unit_measurement.replace(/\s/g, '').length){
+			$('.u_name').val("");
+        	swal('Only blank space not allowed');
+	    }
+        else
+        {
 			$.ajax({
 			    type: 'GET',
 						url: url,
@@ -569,8 +728,6 @@ $(document).ready(function(){
 								}
 						},
 						 error: function(e) {
-                 alert("An error occurred: " + e.responseText);
-                    console.log(e);
                 }	  
 	              });
 		}
@@ -613,5 +770,48 @@ $(document).ready(function(){
  
 </script>
 
+<!-- Using Slect2 make auto searchable dropdown for supplier select -->
+<script>
+	$(document).ready(function(){
+   		// Initialize select2
+   		$(".select_supplier_auto_search").select2();
+   	});
+
+	/*If date field have value then error msg and has error class remove*/
+	$('body').on('change','.productDate',function(){
+
+		var outDateValue = $(this).val();
+
+		if (outDateValue != null) {
+			$('#p_date-error').css({"display":"none"});
+		}
+
+		if (outDateValue != null) {
+			$(this).parent().parent().removeClass('has-error');
+		}
+	});
+
+	
+
+	/*If select box have value then error msg and has error class remove*/
+	$(document).ready(function(){
+		$('#sup_id').on('change',function(){
+
+			var supplierValue = $('select[name=sup_id]').val();
+			
+			if (supplierValue != null) {
+				$('#sup_id-error').css({"display":"none"});
+			}
+
+			if (supplierValue != null) {
+				$(this).parent().parent().removeClass('has-error');
+			}
+		});
+	});
+</script>
+
+<!-- Form field validation -->
+{!! JsValidator::formRequest('App\Http\Requests\ProductAddEditFormRequest', '#productEdit-Form'); !!}
+<script type="text/javascript" src="{{ asset('public/vendor/jsvalidation/js/jsvalidation.js') }}"></script>
 
 @endsection

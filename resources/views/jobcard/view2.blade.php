@@ -55,9 +55,9 @@ label{margin-bottom:0px;}
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_content">
                    <ul class="nav nav-tabs bar_tabs tabconatent" role="tablist">
-						<li role="presentation" class="suppo_llng_li floattab"><a href="{!! url('/jobcard/list')!!}"><span class="visible-xs"	></span><i class="fa fa-list fa-lg">&nbsp;</i>{{ trans('app.List Of Job Cards')}}</span></a></li>
+						<li role="presentation" class=""><a href="{!! url('/jobcard/list')!!}"><span class="visible-xs"	></span><i class="fa fa-list fa-lg">&nbsp;</i>{{ trans('app.List Of Job Cards')}}</span></a></li>
 						
-					   <li role="presentation" class="active suppo_llng_li_add floattab"><a href="{!! url('/jobcard/list/'.$services->id)!!}" class="process"><span class="visible-xs"></span><i class="fa fa-plus-circle fa-lg i">&nbsp;</i><b>{{ trans('app.Process JobCard')}}</b></span></a></li>
+					   <li role="presentation" class="active"><a href="{!! url('/jobcard/list/'.$services->id)!!}" class="process"><span class="visible-xs"></span><i class="fa fa-plus-circle fa-lg i">&nbsp;</i><b>{{ trans('app.Process JobCard')}}</b></span></a></li>
 					</ul>
 				</div>
 			</div>
@@ -83,7 +83,8 @@ label{margin-bottom:0px;}
 										<div class="col-md-7 col-sm-12 col-xs-12 garrageadd" valign="top">
 										
 											<?php 
-											echo $logo->address;
+											echo $logo->address." ";
+                     						echo "<br>".getCityName($logo->city_id);
 											echo ", ".getStateName($logo->state_id);
 											echo ", ".getCountryName($logo->country_id);
 											echo "<br>".$logo->email;
@@ -270,7 +271,7 @@ label{margin-bottom:0px;}
 													<input type="text" name="other_price[]" class="form-control" id="oth_price" value="<?php echo $product->total_price; ?>" >
 												</td>
 												<td>
-												<span class="trash_product" data-id="<?php echo $id; ?>" oth_url="<?php echo url('jobcard/oth_pro_delete') ?>"><i class="fa fa-trash fa-2x"style="vertical-align: middle !important;" ></i></span>
+												<span class="trash_product" style="cursor: pointer;" data-id="<?php echo $id; ?>" oth_url="<?php echo url('jobcard/oth_pro_delete') ?>"><i class="fa fa-trash fa-2x"style="vertical-align: middle !important;" ></i></span>
 											</td>
 											</tr>
 											<?php $id++; ?>

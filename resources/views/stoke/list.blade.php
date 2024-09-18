@@ -1,8 +1,7 @@
 @extends('layouts.app')
 @section('content')
+	
 	<!-- page content -->
-<?php $userid = Auth::user()->id; ?>
-@if (getAccessStatusUser('Inventory',$userid)=='yes')
     <div class="right_col" role="main">
 		<div id="stockview" class="modal fade" role="dialog">
 			<div class="modal-dialog modal-lg">
@@ -43,8 +42,12 @@
             <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="x_content">
 					<ul class="nav nav-tabs bar_tabs" role="tablist">
-						<li role="presentation" class="active"><a href="{!! url('/stoke/list')!!}"><span class="visible-xs"></span><i class="fa fa-list fa-lg">&nbsp;</i><b> {{ trans('app.Stock List')}}</b></a></li>
-						<li role="presentation" class=""><a href="{!! url('/purchase/add')!!}"><span class="visible-xs"></span><i class="fa fa-plus-circle fa-lg">&nbsp;</i> {{ trans('app.Add Stock')}}</a></li>
+						@can('stock_view')
+							<li role="presentation" class="active"><a href="{!! url('/stoke/list')!!}"><span class="visible-xs"></span><i class="fa fa-list fa-lg">&nbsp;</i><b> {{ trans('app.Stock List')}}</b></a></li>
+						@endcan
+						@can('purchase_add')
+							<li role="presentation" class=""><a href="{!! url('/purchase/add')!!}"><span class="visible-xs"></span><i class="fa fa-plus-circle fa-lg">&nbsp;</i> {{ trans('app.Add Stock')}}</a></li>
+						@endcan
 					</ul>
 				</div>
 				<div class="x_panel bgr">
@@ -74,8 +77,9 @@
 								<td>{{getStockCurrent($stocks->product_id)}}</td>
 								<td>{{getUnitMeasurement($stocks->product_id)}}</td>
 								<td> 
-									<button type="button" data-toggle="modal" data-target="#stockview" stockid="{{ $stocks->id }}" url="{!! url('/stoke/list/stockview') !!}" class="btn btn-round btn-info stocksave">{{ trans('app.View')}}</button>
-									
+									@can('stock_view')
+										<button type="button" data-toggle="modal" data-target="#stockview" stockid="{{ $stocks->id }}" url="{!! url('/stoke/list/stockview') !!}" class="btn btn-round btn-info stocksave">{{ trans('app.View')}}</button>
+									@endcan
 								</td>
 							</tr>
 						  <?php $i++; ?>
@@ -86,16 +90,8 @@
             </div>
         </div>
     </div>
-@else
-	<div class="right_col" role="main">
-		<div class="nav_menu main_title" style="margin-top:4px;margin-bottom:15px;">
-            <div class="nav toggle" style="padding-bottom:16px;">
-               <span class="titleup">&nbsp {{ trans('app.You Are Not Authorize This page.')}}</span>
-            </div>
-        </div>
-	</div>
-@endif   
-    <!-- /page content -->
+
+<!-- /page content -->
 <script src="{{ URL::asset('vendors/jquery/dist/jquery.min.js') }}"></script>
 <script>
 $(document).ready(function() {
@@ -103,7 +99,6 @@ $(document).ready(function() {
 		responsive: true,
         "language": {
 			
-            // "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Hindi.json"
 			 "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/<?php echo getLanguageChange(); 
 			?>.json"
         }

@@ -68,7 +68,7 @@
 				</td>
 				
 				<td class="text-center">
-					<i class="fa fa-trash fa-2x delete" data_id_trash = "<?php echo $i; ?>" delete_data_url=" <?php echo url('/jobcard/delete_on_reprocess') ?>" service_id="<?php echo $s_id; ?>"></i>
+					<i class="fa fa-trash fa-2x delete" style="cursor: pointer;" data_id_trash = "<?php echo $i; ?>" delete_data_url=" <?php echo url('/jobcard/delete_on_reprocess') ?>" service_id="<?php echo $s_id; ?>"></i>
 					<input type="hidden" name="obs_id[]" class="form-control" value="<?php echo $datas->id;?>">
 				</td>
 				

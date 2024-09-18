@@ -4,17 +4,17 @@
 .first_width,.second_width{width:82%;}
 .table{margin-bottom:0px;}
 .all{width:42%;}
+
 </style>
+
 <!-- page content -->
-<?php $userid = Auth::user()->id; ?>
-@if (getAccessStatusUser('Sales',$userid)=='yes')
     <div class="right_col" role="main">
         <div class="">
             <div class="page-title">
 				<div class="nav_menu">
 					<nav>
 						<div class="nav toggle">
-							<a id="menu_toggle"><i class="fa fa-bars"></i><span class="titleup">&nbsp {{ trans('app.Sales')}}</span></a>
+							<a id="menu_toggle"><i class="fa fa-bars"></i><span class="titleup">&nbsp {{ trans('app.Vehicle Sale')}}</span></a>
 						</div>
 						@include('dashboard.profile')
 					</nav>
@@ -32,26 +32,30 @@
             </div>
 			<div class="x_content">
                 <ul class="nav nav-tabs bar_tabs" role="tablist">
-					<li role="presentation" class=""><a href="{!! url('/sales/list')!!}"><span class="visible-xs"></span> <i class="fa fa-list fa-lg">&nbsp;</i>{{ trans('app.List Of Sales')}}</span></a></li>
-			
-					<li role="presentation" class="active"><a href="{!! url('/sales/list/edit/'.$editid)!!}"><span class="visible-xs"></span> <i class="fa fa-pencil-square-o" aria-hidden="true">&nbsp;</i><b>{{ trans('app.Edit Sales')}}</b></span></a></li>
+                	@can('sales_view')
+						<li role="presentation" class=""><a href="{!! url('/sales/list')!!}"><span class="visible-xs"></span> <i class="fa fa-list fa-lg">&nbsp;</i>{{ trans('app.List Of Vehicle Sale')}}</span></a></li>
+					@endcan
+					@can('sales_edit')
+						<li role="presentation" class="active"><a href="{!! url('/sales/list/edit/'.$editid)!!}"><span class="visible-xs"></span> <i class="fa fa-pencil-square-o" aria-hidden="true">&nbsp;</i><b>{{ trans('app.Edit Vehicle Sale')}}</b></span></a></li>
+					@endcan
 				</ul>
 			</div>
             <div class="row">
 				<div class="col-md-12 col-sm-12 col-xs-12">
 					<div class="x_panel">
 						<div class="x_content">
-							<form method="post" action="update/{{ $sales->id }}" enctype="multipart/form-data"  class="form-horizontal upperform">
+							<form id="vehicleSalesEditForm" method="post" action="update/{{ $sales->id }}" enctype="multipart/form-data"  class="form-horizontal upperform">
 
 								<div class="form-group">
-									<div class="">
-										<label class="control-label col-md-2 col-sm-2 col-xs-12" for="last-name">{{ trans('app.Bill No')}} <label class="text-danger">*</label></label>
+									<div class="my-form-group">
+										<label class="control-label col-md-2 col-sm-2 col-xs-12" for="last-name">{{ trans('app.Bill No')}} <label class="color-danger">*</label></label>
 										<div class="col-md-4 col-sm-4 col-xs-12">
 											<input type="text" id="bill_no" name="bill_no" class="form-control" value="{{ $sales->bill_no }}" readonly>
 										</div>
 									</div>
-									<div class="">
-										<label class="control-label col-md-2 col-sm-2 col-xs-12" for="last-name">{{ trans('app.Sales Date')}} <label class="text-danger">*</label></label>
+
+									<div class="my-form-group">
+										<label class="control-label col-md-2 col-sm-2 col-xs-12" for="last-name">{{ trans('app.Sales Date')}} <label class="color-danger">*</label></label>
 										<div class="col-md-4 col-sm-4 col-xs-12 input-group date datepicker">
 										 <?php 
 										   if($sales->date == '0000-00-00')
@@ -64,15 +68,16 @@
 										   }
 										   ?>
 											<span class="input-group-addon"><i class="glyphicon glyphicon-calendar fa fa-calendar"></i></span>
-											<input type="text" id="date" name="date" class="form-control" placeholder="<?php echo getDateFormat();?>" value="{{ $salesdate }}" onkeypress="return false;" required>
+											<input type="text" id="sales_date" name="date" autocomplete="off" class="form-control salesDate" placeholder="<?php echo getDateFormat();?>" value="{{ $salesdate }}" onkeypress="return false;" required>
 										</div>
 									</div>
 								</div>
+
 								<div class="form-group">
-									<div class="">
-										<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Customer Name')}} <label class="text-danger">*</label></label>
+									<div class="my-form-group">
+										<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Customer Name')}} <label class="color-danger">*</label></label>
 										<div class="col-md-4 col-sm-4 col-xs-12">
-											<select class="form-control" name="cus_name" required>
+											<select class="form-control select_customer_auto_search customer_name" name="cus_name" id="supplier_select" required>
 												<option value="">{{ trans('app.Select Customer')}}</option>
 												@if(!empty($customer))
 													@foreach($customer as $customers)
@@ -82,22 +87,36 @@
 											</select>
 										</div>
 									</div>
-									<div class="has-feedback {{ $errors->has('qty') ? ' has-error' : '' }}">
+									<!-- <div class="has-feedback {{ $errors->has('qty') ? ' has-error' : '' }}">
 										<label class="control-label col-md-2 col-sm-2 col-xs-12" for="last-name">{{ trans('app.Quantity')}} <label class="text-danger">*</label></label>
 										<div class="col-md-4 col-sm-4 col-xs-12">
-											<input type="text" id="qty" name="qty"  class="form-control"  url="{!! url('sales/add/getqty')!!}" value="{{ $sales->quantity }}" maxlength="5" required>
+											<input type="text" id="qty" name="qty" min="0"  class="form-control"  url="{!! url('sales/add/getqty')!!}" value="{{ $sales->quantity }}" maxlength="5" required>
 											@if ($errors->has('qty'))
 												<span class="help-block">
 													<strong>{{ $errors->first('qty') }}</strong>
 												</span>
 											@endif
 										</div>
-									</div>
-									
+									</div> -->
+
+									<div class="my-form-group">
+										<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Salesman')}} <label class="color-danger">*</label></label>
+										<div class="col-md-4 col-sm-4 col-xs-12">
+											<select class="form-control" name="salesmanname" id="" required>
+												<option value="">{{ trans('app.Select Name')}}</option>
+												@if(!empty($employee))
+													@foreach($employee as $employees)
+														<option value="{{ $employees->id }}" <?php if($employees->id == $sales->salesmanname) {echo 'selected';} ?>>{{ $employees->name.' '.$employees->lastname }}</option>
+													@endforeach
+												@endif
+											</select>
+										</div>
+									</div>									
 								</div>
+
 								<div class="form-group">
-									<div class="">
-										<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Select Vehicle Brand')}} <label class="text-danger">*</label></label>
+									<div class="my-form-group">
+										<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Select Vehicle Brand')}} <label class="color-danger">*</label></label>
 										<div class="col-md-4 col-sm-4 col-xs-12">
 											<select class="form-control veh_brand" name="vehi_bra_name" id="vehi_bra_name" bran_url="{!! url('sales/edit/getmodel_name')!!}" required>
 												<option value="">{{ trans('app.Select Vehicle Brand')}}</option>
@@ -108,13 +127,14 @@
 											</select>
 										</div>
 									</div>
+
 									<div class="">
-										<label class="control-label col-md-2 col-sm-2 col-xs-12" for="last-name">{{ trans('app.Chassis')}} <label class="text-danger">*</label></label>
+										<label class="control-label col-md-2 col-sm-2 col-xs-12" for="last-name">{{ trans('app.Chassis')}} </label>
 										
 										<div class="col-md-4 col-sm-4 col-xs-12">
 										
 										
-											<select id="chassis_num" name="chassis"  class="form-control"  required>
+											<select id="chassis_num" name="chassis"  class="form-control">
 											
 												<option value=""> {{ trans('app.Select Chassis Number') }} </option>
 												<!-- Option Shows from controller -->
@@ -125,10 +145,10 @@
 										</div>
 									</div>
 								</div>
-								<div class="form-group">
-									
-									<div class="">
-										<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Select Model <label class="text-danger">*</label></label>
+
+								<div class="form-group">									
+									<div class="my-form-group">
+										<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">Select Model <label class="color-danger">*</label></label>
 										<div class="col-md-4 col-sm-4 col-xs-12">
 											<select class="form-control selectmodel" name="vehicale_name" id="vehicale_select" url="{!! url('sales/edit/getrecord')!!}" chasisurl="{!! url('sales/edit/getchasis') !!}" required>
 												<option value="">{{ trans('app.Select Model')}}</option>
@@ -140,8 +160,9 @@
 											</select>
 										</div>
 									</div>
-									<div class="has-feedback {{ $errors->has('price') ? ' has-error' : '' }}">
-										<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Price')}} (<?php echo getCurrencySymbols(); ?>) <label class="text-danger">*</label></label>
+
+									<div class="has-feedback {{ $errors->has('price') ? ' has-error' : '' }} my-form-group">
+										<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Price')}} (<?php echo getCurrencySymbols(); ?>) <label class="color-danger">*</label></label>
 										<div class="col-md-4 col-sm-4 col-xs-12">
 										
 											<input type="text" id="price" name="price"  class="form-control" id="price" maxlength="10"  value="{{ $sales->price }}" readonly>
@@ -151,12 +172,12 @@
 												</span>
 											@endif
 										</div>
-									</div>
-									
+									</div>									
 								</div>
+
 								<div class="form-group">
-									<div class="">
-										<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Color')}} <label class="text-danger">*</label></label>
+									<div class="my-form-group">
+										<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Color')}} <label class="color-danger">*</label></label>
 										<div class="col-md-2 col-sm-2 col-xs-12">
 											<select id="color_type" name="color"  class="form-control color_name_data" required>
 												<option value="">{{ trans('app.-- Select Color --')}}</option>
@@ -171,37 +192,28 @@
 											<button type="button" data-target="#responsive-modal-color" data-toggle="modal" class="btn btn-default">{{ trans('app.Add Or Remove')}}</button>
 										</div>
 									</div>
-									<div class="">
-										<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Total Price')}} (<?php echo getCurrencySymbols(); ?>) <label class="text-danger">*</label></label>
+
+									<div class="my-form-group">
+										<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Total Price')}} (<?php echo getCurrencySymbols(); ?>) <label class="color-danger">*</label></label>
 										<div class="col-md-4 col-sm-4 col-xs-12">
 										
 											<input type="text" id="total_price" name="total_price"   class="form-control" value="{{ $sales->total_price }}" readonly>
 										</div>
 									</div>
 								</div>
-								<div class="form-group">
-									<div class="">
-										<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Salesman')}} <label class="text-danger">*</label></label>
-										<div class="col-md-4 col-sm-4 col-xs-12">
-											<select class="form-control" name="salesmanname" id="" required>
-												<option value="">{{ trans('app.Select Name')}}</option>
-												@if(!empty($employee))
-													@foreach($employee as $employees)
-														<option value="{{ $employees->id }}" <?php if($employees->id == $sales->salesmanname) {echo 'selected';} ?>>{{ $employees->name.' '.$employees->lastname }}</option>
-													@endforeach
-												@endif
-											</select>
-										</div>
-									</div>
+
+								<div class="form-group">									
 								</div>
+
 								<div class="form-group" style="margin-top:20px;">
 									<div class="col-md-12">
 									<h2 style="margin-left:10px;">{{ trans('app.Number of Services')}}</h2>
 									</div>
 								</div>
+
 								<div class="form-group">
-									<div class="">
-										<label class="control-label col-md-2 col-sm-2 col-xs-12" for="last-name">{{ trans('app.Interval')}} <label class="text-danger">*</label></label>
+									<div class="my-form-group">
+										<label class="control-label col-md-2 col-sm-2 col-xs-12" for="last-name">{{ trans('app.Interval')}} <label class="color-danger">*</label></label>
 										<div class="col-md-4 col-sm-4 col-xs-12">
 											<select name="interval" id="interval" class="form-control"> 
 												<option value="">{{ trans('app.Number of Interval')}}</option>
@@ -211,6 +223,7 @@
 											</select>
 										</div>
 									</div>
+
 									<div class="">
 										<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Date Gap')}}</label>
 										<div class="col-md-4 col-sm-4 col-xs-12">
@@ -223,9 +236,10 @@
 										</div>
 									</div>
 								</div>
+
 								<div class="form-group">
-									<div class="">
-										<label class="control-label col-md-2 col-sm-2 col-xs-12" for="last-name">{{ trans('app.Number of Services')}} <label class="text-danger">*</label></label>
+									<div class="my-form-group">
+										<label class="control-label col-md-2 col-sm-2 col-xs-12" for="last-name">{{ trans('app.Number of Services')}} <label class="color-danger">*</label></label>
 										<div class="col-md-4 col-sm-4 col-xs-12">
 											<select name="no_of_services" id="no_of_service" class="form-control no_of_service" url="{!! url('sales/add/getservices')!!}" > 
 												<option value="0">{{ trans('app.Number of Services')}} </option>
@@ -244,8 +258,9 @@
 											</select>
 										</div>
 									</div>
-									<div class="">
-										<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Assign To')}} <label class="text-danger">*</label></label>
+
+									<div class="my-form-group">
+										<label class="control-label col-md-2 col-sm-2 col-xs-12" for="first-name">{{ trans('app.Assign To')}} <label class="color-danger">*</label></label>
 										<div class="col-md-4 col-sm-4 col-xs-12">
 											<select class="form-control" name="assigne_to" id="assigne_to" required>
 												<option value="">{{ trans('app.Select Name')}}</option>
@@ -258,9 +273,10 @@
 										</div>
 									</div>
 								</div>
+
 								<div class="form-group">
 									<div class="" id="load_service_data">
-										<table class="table" align="center" style="width:80%;">
+										<table class="table" id="widthOfTableForResponsive" align="center" style="width: 80%;">
 										<?php $i=1; ?>
 										@if(!empty($sales_services))
 											@foreach ($sales_services as $sales_service)
@@ -276,7 +292,93 @@
 										</table>
 									</div>
 								</div>
-									<input type="hidden" name="_token" value="{{csrf_token()}}">
+								
+							<!-- Custom Filed data value -->
+								@if(!empty($tbl_custom_fields))  
+									<div class="col-md-12 col-xs-12 col-sm-12 space">
+										<h4><b>{{ trans('app.Custom Fields')}}</b></h4>
+										<p class="col-md-12 col-xs-12 col-sm-12 ln_solid"></p>
+									</div>
+									<?php
+										$subDivCount = 0;
+									?>
+									@foreach($tbl_custom_fields as $myCounts => $tbl_custom_field)
+								       <?php 
+											if($tbl_custom_field->required == 'yes')
+											{
+												$required = "required";
+												$red = "*";
+											}else{
+												$required = "";
+												$red = "";
+											}
+											$tbl_custom = $tbl_custom_field->id;
+											$userid = $sales->id;
+											$datavalue = getCustomDataSales($tbl_custom,$userid);
+
+											$subDivCount++;
+										?>
+										@if($myCounts%2 == 0)
+										<div class="col-md-12 col-sm-6 col-xs-12">
+										@endif
+										<div class="form-group col-md-6  col-sm-6 col-xs-12">
+											<label class="control-label col-md-4 col-sm-4 col-xs-12" for="account-no">{{$tbl_custom_field->label}} <label class="text-danger">{{$red}}</label></label>
+											<div class="col-md-8 col-sm-8 col-xs-12">
+												@if($tbl_custom_field->type == 'textarea')
+													<textarea  name="custom[{{$tbl_custom_field->id}}]" class="form-control" placeholder="{{ trans('app.Enter')}} {{$tbl_custom_field->label}}" maxlength="100" {{$required}}>{{$datavalue}}</textarea>
+												@elseif($tbl_custom_field->type == 'radio')
+													<?php
+														$radioLabelArrayList = getRadiolabelsList($tbl_custom_field->id)
+													?>
+													@if(!empty($radioLabelArrayList))
+													<div style="margin-top: 5px;">
+														@foreach($radioLabelArrayList as $k => $val)
+															<input type="{{$tbl_custom_field->type}}"  name="custom[{{$tbl_custom_field->id}}]" value="{{$k}}"    <?php
+																	$getRadioValue = getRadioLabelValueForUpdateForAllModules($tbl_custom_field->form_name ,$sales->id, $tbl_custom_field->id);
+
+															 	if($k == $getRadioValue) { echo "checked"; }?> 
+
+															> {{ $val }} &nbsp;
+														@endforeach
+														</div>								
+													@endif
+												@elseif($tbl_custom_field->type == 'checkbox')
+												<?php
+														$checkboxLabelArrayList = getCheckboxLabelsList($tbl_custom_field->id)
+													?>
+													@if(!empty($checkboxLabelArrayList))
+														<?php
+															$getCheckboxValue = getCheckboxLabelValueForUpdateForAllModules($tbl_custom_field->form_name, $sales->id, $tbl_custom_field->id);
+														?>
+														<div style="margin-top: 5px;">
+														@foreach($checkboxLabelArrayList as $k => $val)
+															<input type="{{$tbl_custom_field->type}}" name="custom[{{$tbl_custom_field->id}}][]" value="{{$val}}"
+															<?php
+															 	if($val == getCheckboxValForAllModule($tbl_custom_field->form_name, $sales->id, $tbl_custom_field->id,$val)) 
+															 			{ echo "checked"; }
+															 	?>
+															> {{ $val }} &nbsp;
+														@endforeach
+														</div>					
+													@endif								
+												@elseif($tbl_custom_field->type == 'textbox' || $tbl_custom_field->type == 'date')
+													<input type="{{$tbl_custom_field->type}}" name="custom[{{$tbl_custom_field->id}}]"  class="form-control" placeholder="{{ trans('app.Enter')}} {{$tbl_custom_field->label}}" value="{{$datavalue}}" maxlength="30" {{$required}}>
+												@endif
+											</div>
+										</div>
+										@if($myCounts%2 != 0)
+											</div>
+										@endif
+									@endforeach
+									<?php 
+										if ($subDivCount%2 != 0) {
+											echo "</div>";
+										}
+									?>
+								@endif
+							<!-- Custom Filed data value End-->
+
+								<input type="hidden" name="_token" value="{{csrf_token()}}">
 								<div class="form-group">
 									<div class="col-md-12 col-sm-12 col-xs-12 text-center">
 									  <a class="btn btn-primary" href="{{ URL::previous() }}">{{ trans('app.Cancel')}}</a>
@@ -341,16 +443,14 @@
             </div>
         </div>
 	</div>
-@else
-	<div class="right_col" role="main">
-		<div class="nav_menu main_title" style="margin-top:4px;margin-bottom:15px;">
-			<div class="nav toggle" style="padding-bottom:16px;">
-				<span class="titleup">&nbsp {{ trans('app.You are not authorize this page.')}}</span>
-			</div>
-        </div>
-	</div>
-@endif   
-		 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>  
+<!-- page content end -->
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>  
+ <script>
+	$('input[name=qty]').keyup(function(){
+		$(this).val($(this).val().replace(/[^\d]/,''));
+	});
+</script>
 <script type="text/javascript">
 	$(function(){
 		
@@ -372,11 +472,8 @@
 								
 								$('#price').attr('value',res_cust.price);
 								
-								total_price =  price_dta * qty;
-								 $('#total_price').val(total_price);
-								//$('#chassis_num').attr('value',res_cust.chassisno);
-								
-								
+								total_price =  price_dta * 1;
+								 $('#total_price').val(total_price);								
 							},
 
 					    beforeSend:function()
@@ -411,7 +508,6 @@
 					
 						success: function (response)
 							 {	
-								//alert(response);
 								$('#chassis_num').html(response);
 							 },
 
@@ -478,7 +574,7 @@ $(document).ready(function(){
 						success: function (response)
 							 {	
 								
-								total_price =  price * qty;
+								total_price =  price * 1;
 								 $('#total_price').val(total_price);
 								
 							},
@@ -524,15 +620,6 @@ $(document).ready(function(){
 				  $('#no_of_service').html('<option value="0">No of service </option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>');
 				  return false;
 				}
-			 // if($("#date_gape").val() == 0){
-				  // swal({   
-							// title: "Date Gape",
-							// text: "Please select Date Gape!"   
-
-						// });
-				  // $('#no_of_service').html('<option value="0">No of service </option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option>');
-				  // return false;
-				// }
 			if(interval!='' && date_gape!='' && no_service!='') {
 			 
 					$("#date_gape").change(function(){
@@ -671,5 +758,74 @@ $(document).ready(function(){
 		minView: 2,
     });
 </script>
+
+<!-- Using Slect2 make auto searchable dropdown -->
+<script>
+	/*$(document).ready(function () {
+ 		
+ 		var sendUrl = '{{ url('service/customer_autocomplete_search') }}';
+    
+    	$('.select_customer_auto_search').select2({
+        	ajax: {
+            	url: sendUrl,
+            	dataType: 'json',
+            	delay: 250,
+            	processResults: function (data) {
+                	return {
+                    	results: $.map(data, function (item) {
+                        	return {
+                            	text: item.name +" "+ item.lastname,
+                            	id: item.id
+                        	};
+                    	})
+                	};
+            	},
+            	cache: true
+        	}
+    	});
+	});*/
+
+	$(document).ready(function(){
+   		// Initialize select2
+   		$(".select_customer_auto_search").select2();
+   	});
+</script>
+
+
+<script>
+	/*If select box have value then error msg and has error class remove*/
+	$('body').on('change','.salesDate',function(){
+
+		var dateValue = $(this).val();
+
+		if (dateValue != null) {
+			$('#sales_date-error').css({"display":"none"});
+		}
+
+		if (dateValue != null) {
+			$(this).parent().parent().removeClass('has-error');
+		}
+	});
+
+	$(document).ready(function(){
+
+		$('.customer_name').on('change',function(){
+
+			var customerValue = $('select[name=cus_name]').val();
+			
+			if (customerValue != null) {
+				$('#supplier_select-error').css({"display":"none"});
+			}
+
+			if (customerValue != null) {
+				$(this).parent().parent().removeClass('has-error');
+			}
+		});
+	});
+</script>
+
+<!-- Form field validation -->
+{!! JsValidator::formRequest('App\Http\Requests\StoreVehicleSaleAddEditFormRequest', '#vehicleSalesEditForm'); !!}
+<script type="text/javascript" src="{{ asset('public/vendor/jsvalidation/js/jsvalidation.js') }}"></script>
 
 @endsection

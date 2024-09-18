@@ -1,10 +1,7 @@
 @extends('layouts.app')
 @section('content')
-<!-- page content -->
 
-	<?php $userid = Auth::user()->id; ?>
-@if (getAccessStatusUser('Inventory',$userid)=='yes')
-		
+<!-- page content -->	
     <div class="right_col" role="main">
 		<div id="purchaseview" class="modal fade" role="dialog">
 			<div class="modal-dialog modal-lg">
@@ -33,27 +30,32 @@
 				</div>
 			</div>
         </div>
-             @if(session('message'))
-			<div class="row massage">
-				<div class="col-md-12 col-sm-12 col-xs-12">
-					<div class="checkbox checkbox-success checkbox-circle">
-						@if(session('message') == 'Successfully Submitted')
-								<label for="checkbox-10 colo_success"> {{trans('app.Successfully Submitted')}}  </label>
-							@elseif(session('message')=='Successfully Updated')
-								<label for="checkbox-10 colo_success"> {{ trans('app.Successfully Updated')}}  </label>
-							@elseif(session('message')=='Successfully Deleted')
-								<label for="checkbox-10 colo_success"> {{ trans('app.Successfully Deleted')}}  </label>
-							@endif
+            @if(session('message'))
+				<div class="row massage">
+					<div class="col-md-12 col-sm-12 col-xs-12">
+						<div class="checkbox checkbox-success checkbox-circle">
+							@if(session('message') == 'Successfully Submitted')
+									<label for="checkbox-10 colo_success"> {{trans('app.Successfully Submitted')}}  </label>
+								@elseif(session('message')=='Successfully Updated')
+									<label for="checkbox-10 colo_success"> {{ trans('app.Successfully Updated')}}  </label>
+								@elseif(session('message')=='Successfully Deleted')
+									<label for="checkbox-10 colo_success"> {{ trans('app.Successfully Deleted')}}  </label>
+								@endif
+						</div>
 					</div>
 				</div>
-			</div>
 			@endif
             <div class="row">
 				<div class="col-md-12 col-sm-12 col-xs-12">
 					<div class="x_content">
 						<ul class="nav nav-tabs bar_tabs" role="tablist">
-							<li role="presentation" class="active"><a href="{!! url('/purchase/list')!!}"><span class="visible-xs"></span><i class="fa fa-list fa-lg">&nbsp;</i><b> {{ trans('app.Purchase List')}}</b></a></li>
-							<li role="presentation" class=""><a href="{!! url('/purchase/add')!!}"><span class="visible-xs"></span><i class="fa fa-plus-circle fa-lg">&nbsp;</i> {{ trans('app.Add Purchase')}}</a></li>
+							@can('purchase_view')
+								<li role="presentation" class="active"><a href="{!! url('/purchase/list')!!}"><span class="visible-xs"></span><i class="fa fa-list fa-lg">&nbsp;</i><b> {{ trans('app.Purchase List')}}</b></a></li>
+							@endcan
+
+							@can('purchase_add')
+								<li role="presentation" class=""><a href="{!! url('/purchase/add')!!}"><span class="visible-xs"></span><i class="fa fa-plus-circle fa-lg">&nbsp;</i> {{ trans('app.Add Purchase')}}</a></li>
+							@endcan
 						</ul>
 					</div>
 					<div class="x_panel bgr">
@@ -75,14 +77,21 @@
 							<tr>
 								<td>{{ $i }}</td>
 								<td>{{$purchases->purchase_no}}</td>
-								<td>{{ getAssignTo($purchases->supplier_id)}}</td>
+								<td>{{ getCompanyNames($purchases->supplier_id)}}</td>
 								<td>{{$purchases->email}}</td>
 								<td>{{$purchases->mobile}}</td>
 								<td>{{ date(getDateFormat(),strtotime($purchases->date)) }}</td>
 								<td> 
-									<button type="button" data-toggle="modal" data-target="#purchaseview" purchaseid="{{ $purchases->id }}" url="{!! url('/purchase/list/modalview') !!}" class="btn btn-round btn-info purchasesave">{{ trans('app.View')}}</button>
-									<a href="{!! url ('/purchase/list/edit/'.$purchases->id) !!}"> <button type="button" class="btn btn-round btn-success">{{ trans('app.Edit')}}</button></a>
-									<a url="{!! url('/purchase/list/delete/'.$purchases->id)!!}" class="sa-warning"> <button type="button" class="btn btn-round btn-danger">{{ trans('app.Delete')}}</button></a>
+									@can('purchase_view')
+										<button type="button" data-toggle="modal" data-target="#purchaseview" purchaseid="{{ $purchases->id }}" url="{!! url('/purchase/list/modalview') !!}" class="btn btn-round btn-info purchasesave">{{ trans('app.View')}}</button>
+									@endcan
+									@can('purchase_edit')
+										<a href="{!! url ('/purchase/list/edit/'.$purchases->id) !!}"> <button type="button" class="btn btn-round btn-success">{{ trans('app.Edit')}}</button></a>
+									@endcan
+
+									@can('purchase_delete')
+										<a url="{!! url('/purchase/list/delete/'.$purchases->id)!!}" class="sa-warning buttonOfAtag"> <button type="button" class="btn btn-round btn-danger threeBtnInOneLine">{{ trans('app.Delete')}}</button></a>
+									@endcan
 								</td>
 							</tr>
 							<?php $i++; ?>
@@ -93,16 +102,8 @@
                 </div>
             </div>
     </div>
- @else
-	<div class="right_col" role="main">
-		<div class="nav_menu  main_title" style="margin-top:4px;margin-bottom:15px;">
-              <div class="nav toggle" style="padding-bottom:16px;">
-				<span class="titleup">&nbsp {{ trans('app.You are not authorize this page.')}}</span>
-              </div>
-        </div>
-	</div>
-@endif    
-        <!-- /page content -->
+
+<!-- /page content -->
 <script src="{{ URL::asset('vendors/jquery/dist/jquery.min.js') }}"></script>
 <!-- language change in user selected -->	
 <script>
@@ -161,8 +162,6 @@ $('body').on('click', '.purchasesave', function() {
 		},
 		error: function(e) 
 		{
-			alert("An error occurred: " + e.responseText);
-			console.log(e);	
 		}
 		});
 

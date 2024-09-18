@@ -58,8 +58,8 @@ th {
 				<div class="col-md-6 col-sm-12 col-xs-12">				
 								<p>
 									<?php 
-									echo $logo->address;
-									echo ", <br>".getCityName($logo->city_id);
+									echo $logo->address." ";
+									echo "<br>".getCityName($logo->city_id);
 									echo ", ".getStateName($logo->state_id);
 									echo ", ".getCountryName($logo->country_id);
 									echo "<br>".$logo->email;
@@ -271,7 +271,6 @@ th {
 	</div>
 	<div class="modal-footer">
 	
-		<!--<a href="<?php echo "http://".$_SERVER['SERVER_NAME']."/garrage/invoice/list"; ?>" class="btn btn-default ><button type="button" >Payment Record</button></a>-->
 		
 		<button type="button" class="btn btn-default printbtn" id="" onclick="PrintElem('sales_print')">{{ trans('app.Print')}} </button>
 		

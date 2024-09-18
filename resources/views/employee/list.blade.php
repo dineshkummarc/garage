@@ -1,8 +1,7 @@
 @extends('layouts.app')
 @section('content')
+
 <!-- page content -->
-<?php $userid = Auth::user()->id; ?>
-@if (getAccessStatusUser('Employees',$userid)=='yes')
     <div class="right_col" role="main">
         <div class="">
 			<div class="page-title">
@@ -35,11 +34,13 @@
 			<div class="col-md-12 col-sm-12 col-xs-12" >
 				<div class="x_content">
 					<ul class="nav nav-tabs bar_tabs" role="tablist">
-						<li role="presentation" class="active"><a href="{!! url('/employee/list')!!}"><span class="visible-xs"></span><i class="fa fa-list fa-lg">&nbsp;</i><b>{{ trans('app.Employee List')}}</b></a></li>
-						<?php $userid=Auth::User()->id; ?>
-					@if(!empty(getActiveCustomer($userid)=='yes'))
-						<li role="presentation" class=""><a href="{!! url('/employee/add')!!}"><span class="visible-xs"></span><i class="fa fa-plus-circle fa-lg">&nbsp;</i> {{ trans('app.Add Employee')}}</a></li>
-					@endif
+						@can('employee_view')
+							<li role="presentation" class="active"><a href="{!! url('/employee/list')!!}"><span class="visible-xs"></span><i class="fa fa-list fa-lg">&nbsp;</i><b>{{ trans('app.Employee List')}}</b></a></li>
+						@endcan
+						
+						@can('employee_add')
+							<li role="presentation" class=""><a href="{!! url('/employee/add')!!}"><span class="visible-xs"></span><i class="fa fa-plus-circle fa-lg">&nbsp;</i> {{ trans('app.Add Employee')}}</a></li>
+						@endcan
 					</ul>
 				</div>
 				<div class="x_panel">
@@ -54,7 +55,16 @@
 								<th>{{ trans('app.Last Name')}}</th>
 								<th>{{ trans('app.Email')}}</th>
 								<th>{{ trans('app.Mobile Number')}}</th>
-								<th>{{ trans('app.Action')}}</th>
+								
+								@if(getUserRoleFromUserTable(Auth::User()->id) != 'Customer')
+									<th>{{ trans('app.Action')}}</th>
+								@endif
+
+								@if(getUserRoleFromUserTable(Auth::User()->id) == 'Customer')
+									@if(Gate::allows('employee_add') || Gate::allows('employee_edit') || Gate::allows('employee_delete'))
+										<th>{{ trans('app.Action')}}</th>
+									@endif
+								@endif
 							</tr>
 						
 						</thead>
@@ -68,21 +78,47 @@
 								<td>{{ $users->lastname }}</td>
 								<td>{{ $users->email }}</td>
 								<td>{{ $users->mobile_no }}</td>
+								
+								@if(getUserRoleFromUserTable(Auth::User()->id) != 'Customer')
 								<td>
-									
-									<?php $userid=Auth::User()->id; ?>
-									@if(getActiveCustomer($userid)=='yes')
-										<a href="{!! url('/employee/view/'.$users->id) !!}"><button type="button" class="btn btn-round btn-info">{{ trans('app.View')}}</button></a>
-										<a href="{!! url('/employee/edit/'.$users->id) !!}" ><button type="button" class="btn btn-round btn-success">{{ trans('app.Edit')}}</button></a>
-										<a url="{!! url('/employee/list/delete/'.$users->id) !!}" class="sa-warning"><button type="button" class="btn btn-round btn-danger">{{ trans('app.Delete')}}</button></a>
-									@elseif(getActiveEmployee($userid)=='yes')
-										<a href="{!! url('/employee/view/'.$users->id) !!}"><button type="button" class="btn btn-round btn-info">{{ trans('app.View')}}</button></a>
-										@if($users->id == $userid )
+									@if(getUserRoleFromUserTable(Auth::User()->id) == 'admin' || 	getUserRoleFromUserTable(Auth::User()->id) == 'supportstaff' || getUserRoleFromUserTable(Auth::User()->id) == 'accountant' || getUserRoleFromUserTable(Auth::User()->id) == 'employee')
+										
+										@can('employee_view')
+											<a href="{!! url('/employee/view/'.$users->id) !!}"><button type="button" class="btn btn-round btn-info">{{ trans('app.View')}}</button></a>
+										@endcan
+										@can('employee_edit')
 											<a href="{!! url('/employee/edit/'.$users->id) !!}" ><button type="button" class="btn btn-round btn-success">{{ trans('app.Edit')}}</button></a>
+										@endcan
+										@can('employee_delete')
+											<a url="{!! url('/employee/list/delete/'.$users->id) !!}" class="sa-warning"><button type="button" class="btn btn-round btn-danger">{{ trans('app.Delete')}}</button></a>
+										@endcan
+									@endif
+
+									@if(Auth::User()->id == $users->id)
+										@if(!Gate::allows('employee_edit'))
+											@can('employee_owndata')
+											<a href="{!! url('/employee/edit/'.$users->id) !!}" ><button type="button" class="btn btn-round btn-success">{{ trans('app.Edit')}}</button></a>
+											@endcan
 										@endif
-									
-									@endif	
+									@endif
 								</td>
+								@endif
+
+								@if(getUserRoleFromUserTable(Auth::User()->id) == 'Customer')
+									@if(Gate::allows('employee_add') || Gate::allows('employee_edit') || Gate::allows('employee_delete'))
+									<td>
+										@can('employee_view')
+											<a href="{!! url('/employee/view/'.$users->id) !!}"><button type="button" class="btn btn-round btn-info">{{ trans('app.View')}}</button></a>
+										@endcan
+										@can('employee_edit')
+											<a href="{!! url('/employee/edit/'.$users->id) !!}" ><button type="button" class="btn btn-round btn-success">{{ trans('app.Edit')}}</button></a>
+										@endcan
+										@can('employee_delete')
+											<a url="{!! url('/employee/list/delete/'.$users->id) !!}" class="sa-warning"><button type="button" class="btn btn-round btn-danger">{{ trans('app.Delete')}}</button></a>
+										@endcan
+									</td>
+									@endif
+								@endif
 							</tr>
 							<?php $i++; ?>
 						@endforeach
@@ -92,16 +128,9 @@
             </div>
         </div>
     </div>
-@else
-	<div class="right_col" role="main">
-		<div class="nav_menu main_title" style="margin-top:4px;margin-bottom:15px;">
-            <div class="nav toggle" style="padding-bottom:16px;">
-               <span class="titleup">&nbsp {{ trans('app.You are not authorize this page.')}}</span>
-            </div>
-        </div>
-	</div>
-@endif   
- <!-- /page content -->
+<!-- /page content -->
+
+
 <script src="{{ URL::asset('vendors/jquery/dist/jquery.min.js') }}"></script>
 <script>
 $(document).ready(function() {

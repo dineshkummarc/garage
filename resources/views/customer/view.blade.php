@@ -16,9 +16,8 @@
     width: 100%;
 }
 </style>
-		<!-- page content -->
-  <?php $userid = Auth::user()->id; ?>
-@if (getAccessStatusUser('Customers',$userid)=='yes')
+
+<!-- page content -->
     <div class="right_col" role="main" >
 		<!-- free service  model-->
 		<div id="myModal-free-open" class="modal fade" role="dialog">
@@ -105,8 +104,13 @@
 			<div class="col-md-12 col-sm-12 col-xs-12">
 				<div class="x_content">
 					<ul class="nav nav-tabs bar_tabs" role="tablist">
-						<li role="presentation" class=""><a href="{!! url('/customer/list')!!}"><span class="visible-xs"></span><i class="fa fa-list fa-lg">&nbsp; </i> {{ trans('app.Customer List') }}</a></li>
-						<li role="presentation" class="active"><a href="{!! url('/customer/list/'.$viewid)!!}"><span class="visible-xs"></span><i class="fa fa-user">&nbsp; </i><b>{{ trans('app.View Customer') }}</b></a></li>
+						@can('customer_view')
+							<li role="presentation" class=""><a href="{!! url('/customer/list')!!}"><span class="visible-xs"></span><i class="fa fa-list fa-lg">&nbsp; </i> {{ trans('app.Customer List') }}</a></li>
+						@endcan
+						
+						@can('customer_view')
+							<li role="presentation" class="active"><a href="{!! url('/customer/list/'.$viewid)!!}"><span class="visible-xs"></span><i class="fa fa-user">&nbsp; </i><b>{{ trans('app.View Customer') }}</b></a></li>
+						@endcan
 					</ul>
 				</div>
 				<div class="row">
@@ -153,8 +157,10 @@
 										</div>
 										<div class="col-md-7 col-sm-12 col-xs-12 table_td">
 											<span class="txt_color">
-											@if($customer->birth_date)
+											@if(!empty($customer->birth_date))
 												{{ date(getDateFormat(),strtotime($customer->birth_date)) }}
+											@else
+												{{ trans('app.Not Added') }}
 											@endif
 											</span>
 										</div>
@@ -178,7 +184,9 @@
 											<i class="fa fa-map-marker"></i> <b>{{ trans('app.Address')}}</b>		</div>
 										<div class="col-md-7 col-sm-12 col-xs-12 table_td">
 											<span class="txt_color">
-											  {{ $customer->address }},<br/>{{ getCityName($customer->city_id) }},<br/>{{ getStateName($customer->state_id)}},{{ getCountryName($customer->country_id)}}.
+											  {{ $customer->address }},<br/>
+											  	<?php echo (getCityName($customer->city_id) != null) ? getCityName($customer->city_id) .",<br>" : "";?>
+											  {{ getStateName($customer->state_id)}}, {{ getCountryName($customer->country_id)}}.
 											</span>
 										</div>
 									</div>
@@ -198,22 +206,41 @@
 							@if(!empty($tbl_custom_fields))		
 								@foreach($tbl_custom_fields as $tbl_custom_field)	
 									<?php 
-									$tbl_custom=$tbl_custom_field->id;
-									$userid=$customer->id;
+									$tbl_custom = $tbl_custom_field->id;
+									$userid = $customer->id;
 								
-									$datavalue=getCustomData($tbl_custom,$userid);
+									$datavalue = getCustomData($tbl_custom,$userid);
 									?>
-									<div class="table_row">
-										<div class="col-md-6 col-sm-12 table_td">
-											<b>{{$tbl_custom_field->label}}</b>
-										</div>
-										<div class="col-md-6 col-sm-12 table_td">
-											<span class="txt_color">{{$datavalue}}</span>
-										</div>
-									</div>					
+
+									@if($tbl_custom_field->type == "radio")
+										@if($datavalue != "")
+											<?php
+												$radio_selected_value = getRadioSelectedValue($tbl_custom_field->id, $datavalue);
+											?>
+										
+											<div class="table_row">									
+												<div class="col-md-6 col-sm-12 table_td">
+													<b>{{$tbl_custom_field->label}}</b>
+												</div>
+												<div class="col-md-6 col-sm-12 table_td">
+													<span class="txt_color">{{$radio_selected_value}}</span>
+												</div>						
+											</div>
+										@endif
+									@else
+										@if($datavalue != "")
+											<div class="table_row">									
+												<div class="col-md-6 col-sm-12 table_td">
+													<b>{{$tbl_custom_field->label}}</b>
+												</div>
+												<div class="col-md-6 col-sm-12 table_td">
+													<span class="txt_color">{{$datavalue}}</span>
+												</div>						
+											</div>
+										@endif
+									@endif		
 								@endforeach
-							@endif
-						
+							@endif					
 							</div>
 						</div>
 					</div> 
@@ -222,72 +249,64 @@
 		</div>
 				
 			
-		<div class="row">
-			
+		<div class="row">			
             <div class="col-md-4 col-sm-12 col-xs-12">
                 <div class="x_panel">
-				
-                  <div class="x_title">
-				   
-                    <h2>{{ trans('app.Free Service Details')}}</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-					 
-                      <li>
-					   <form method="get" action="/garage/jobcard/list">
-						
-						 <input type="hidden" name="free"  value="<?php  echo'free';?>"/>
-					  <button type="submit"  class="btn  btn-default1 freeservice">{{ trans('app.View All')}}</button>
-					  </form>
-                      </li>
-					
-                    </ul>
-                    <div class="clearfix"></div>
-                  </div>
-				   @if(!empty($freeservice))
-				   @foreach($freeservice as $saless)
-                  <div class="x_content">
-				 
-				    <?php
-                        $date=$saless->service_date;
-						$month=date("M", strtotime($date));
-						$day=date("d", strtotime($date));
-						
-					?>
+					<div class="x_title">
+				   		<h2>{{ trans('app.Free Service Details')}}</h2>
+                    	<ul class="nav navbar-right panel_toolbox">
+					 		<li>
+					   			<form method="get" action="{{ action('JobCardcontroller@index') }}">
+									<input type="hidden" name="free"  value="<?php  echo'free';?>"/>
+					  				<button type="submit"  class="btn  btn-default1 freeservice">{{ trans('app.View All')}}</button>
+					  			</form>
+                      		</li>
+                      	</ul>
+                    	<div class="clearfix"></div>
+                  	</div>
+				   	@if(!empty($freeservice))
+				   		@foreach($freeservice as $saless)
+                  			<div class="x_content">
+					 			<?php
+			                        $date = $saless->service_date;
+									$month = date("M", strtotime($date));
+									$day = date("d", strtotime($date));
+								?>
+                    			<article class="media event">
+                      				<a class="pull-left date">
+                        				<p class="month"><?php echo $month; ?></p>
+                        				<p class="day"><?php echo $day; ?></p>
+                      				</a>
+					  				
+					  				<?php $view_data = getInvoiceStatus($saless->job_no); ?>
+										@if($view_data == "Yes")
+											<a href="" data-toggle="modal" f_serviceid="{{$saless->id }}"  url="{!! url('/customer/free-open') !!}"  data-target="#myModal-free-open" print="20" class="freeserviceopen">
+										@else
+											@if(!empty(getCustomersactive(Auth::User()->id)=='yes'))
+												<a href="" data-toggle="modal" open_customer_id="{{$saless->id }}"  url="{!! url('/service/list/view') !!}"  data-target="#myModal-customer-modal" print="20" class="customeropenmodel">
+											@else
+												<a href="{!! url('/jobcard/list/'.$saless->id) !!}">
+											@endif
+										@endif
 
-                    <article class="media event">
-                      <a class="pull-left date">
-                        <p class="month"><?php echo $month; ?></p>
-                        <p class="day"><?php echo $day; ?></p>
-                      </a>
-					  <?php $view_data = getInvoiceStatus($saless->job_no); ?>
-							@if($view_data == "Yes")
-								<a href="" data-toggle="modal" f_serviceid="{{$saless->id }}"  url="{!! url('/customer/free-open') !!}"  data-target="#myModal-free-open" print="20" class="freeserviceopen">
-							@else
-								@if(!empty(getCustomersactive($userid)=='yes'))
-									<a href="" data-toggle="modal" open_customer_id="{{$saless->id }}"  url="{!! url('/service/list/view') !!}"  data-target="#myModal-customer-modal" print="20" class="customeropenmodel">
-								@else
-									<a href="{!! url('/jobcard/list/'.$saless->id) !!}">
-								@endif
-							@endif
-                      <div class="media-body">
-						<?php $dateservicefree = date("Y-m-d", strtotime($saless->service_date)); ?>
-                        <span class="jobdetails">{{ $saless->job_no }} | {{ date(getDateFormat(),strtotime($dateservicefree)) }}</span></br> 
-                        <span> {{ getCustomerName($saless->customer_id)}} | {{ getRegistrationNo($saless->vehicle_id) }} |
-						{{ getVehicleName($saless->vehicle_id) }}</span>
-                      </div>
-					   @if($view_data == "Yes")
-								 <i class="fa fa-eye eye" style="color:#5FCE9B;" aria-hidden="true"></i></a>		  
-							@else
-								 <i class="fa fa-eye eye" style="color:#f0ad4e;" aria-hidden="true"></i></a>
-							@endif
-                    </article>
-					</div>
-				@endforeach
-				@endif
+                      					<div class="media-body">
+											<?php $dateservicefree = date("Y-m-d", strtotime($saless->service_date)); ?>
+                        					<span class="jobdetails">{{ $saless->job_no }} | {{ date(getDateFormat(),strtotime($dateservicefree)) }}</span></br> 
+                        					<span> {{ getCustomerName($saless->customer_id)}} | {{ getRegistrationNo($saless->vehicle_id) }} | {{ getVehicleName($saless->vehicle_id) }}</span>
+                      					</div>
+					   					
+					   					@if($view_data == "Yes")
+								 			<i class="fa fa-eye eye" style="color:#5FCE9B;" aria-hidden="true"></i></a>		  
+										@else
+								 			<i class="fa fa-eye eye" style="color:#f0ad4e;" aria-hidden="true"></i></a>
+										@endif
+                    			</article>
+							</div>
+						@endforeach
+					@endif
 				</div>
 			</div>
-			
-			
+						
 			
 			
             <div class="col-md-4 col-sm-12 col-xs-12">
@@ -298,7 +317,7 @@
                     <ul class="nav navbar-right panel_toolbox">
 					 
                       <li>
-					  <form method="get" action="/garage/jobcard/list">
+					  <form method="get" action="{{ action('JobCardcontroller@index') }}">
 						
 						 <input type="hidden" name="paid"  value="<?php  echo'paid';?>"/>
 						 
@@ -329,7 +348,7 @@
 					   @if($view_data == "Yes")
 						<a href="" data-toggle="modal" p_serviceid="{{$saless->id }}"  url="{!! url('/customer/paid-open') !!}"  data-target="#myModal-paid-service" print="20" class="paidservice">
 						@else
-							@if(!empty(getCustomersactive($userid)=='yes'))
+							@if(!empty(getCustomersactive(Auth::User()->id)=='yes'))
 								<a href="" data-toggle="modal" open_customer_id="{{$saless->id }}"  url="{!! url('/service/list/view') !!}"  data-target="#myModal-customer-modal" print="20" class="customeropenmodel">
 							@else
 								<a href="{!! url('/jobcard/list/'.$saless->id) !!}">
@@ -362,7 +381,7 @@
                     <ul class="nav navbar-right panel_toolbox">
 					 
                       <li>
-					  <form method="get" action="/garage/jobcard/list">
+					  <form method="get" action="{{ action('JobCardcontroller@index') }}">
 						
 						 <input type="hidden" name="repeatjob"  value="<?php  echo'repeat job';?>"/>
 					  <button type="submit"  class="btn  btn-default1 freeservice">{{ trans('app.View All')}}</button>
@@ -392,7 +411,7 @@
 							@if($view_data == "Yes")
 								 <a href="" data-toggle="modal" r_service="{{$saless->id }}"  url="{!! url('/customer/Repeatjob-modal') !!}"  data-target="#myModal-repeatjob" print="20" class="repeatjobservice">
 							@else
-								@if(!empty(getCustomersactive($userid)=='yes'))
+								@if(!empty(getCustomersactive(Auth::User()->id)=='yes'))
 									<a href="" data-toggle="modal" open_customer_id="{{$saless->id }}"  url="{!! url('/service/list/view') !!}"  data-target="#myModal-customer-modal" print="20" class="customeropenmodel">
 								@else
 									<a href="{!! url('/jobcard/list/'.$saless->id) !!}">
@@ -417,15 +436,8 @@
 			</div>
 		</div>
 	</div>
-@else
-	<div class="right_col" role="main">
-		<div class="nav_menu main_title" style="margin-top:4px;margin-bottom:15px;">
-            <div class="nav toggle" style="padding-bottom:16px;">
-               <span class="titleup">&nbsp {{ trans('app.You are not authorize this page.')}}</span>
-            </div>
-        </div>
-	</div>
-@endif    
+
+  
   <script src="{{ URL::asset('vendors/jquery/dist/jquery.min.js') }}"></script>
  <!-- Free Service only -->
   <script type="text/javascript">

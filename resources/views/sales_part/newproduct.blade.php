@@ -1,26 +1,48 @@
 <tr id="row_id_<?php echo $ids;?>">
 	
-	<td>
+	<td class="tbl_td_selectManufac_error_<?php echo $ids;?>">
+		<!-- <input type="hidden" value="1" name="product[tr_id][]"/> -->
+		<select class="form-control select_producttype select_producttype_<?php echo $ids;?>" name="product[Manufacturer_id][]" m_url="{!! url('/purchase/producttype/names') !!}" row_did="<?php echo $ids;?>" data-id="1" style="width:100%;" required="true">
+			<option value="">-{{ trans('app.Select Manufacturing Name')}}-</option>
+				@if(!empty($manufacture_name))
+					@foreach ($manufacture_name as $manufacture_nm)
+				 		<option value="{{ $manufacture_nm->id }}" >{{ $manufacture_nm->type }}</option>
+					@endforeach
+				@endif
+		</select>
+
+		<span id="select_producttype_error_<?php echo $ids;?>" class="help-block error-help-block color-danger" style="display: none">Manufacturer name is required.</span>
+	</td>
+	<td class="tbl_td_selectProductname_error_<?php echo $ids;?>">
 		<input type="hidden" value="" name="product[tr_id][]"/>
-		<select name="product[product_id][]" class="form-control  productid select_productname_<?php echo $ids;?>"   row_did="<?php echo $ids;?>" url="<?php echo url('purchase/add/getproduct');?>" data-id="<?php echo $ids;?>" style="width:100%;" required="required">
+		<select name="product[product_id][]" class="form-control  productid select_productname_<?php echo $ids;?>" id="productid"  row_did="<?php echo $ids;?>" url="<?php echo url('purchase/add/getproduct');?>" data-id="<?php echo $ids;?>" style="width:100%;" required="true">
 			<option value="">{{ trans('app.--Select Product--')}}</option>
 			<?php  foreach($product as $products) { ?>
 			<option value="<?php echo $products->id;?>"><?php echo $products->name;?></option> <?php } ?>					  												
 		</select>
+
+		<span id="select_productname_error_<?php echo $ids;?>" class="help-block error-help-block color-danger" style="display: none">Product name is required.</span>
     </td>
-	<td>
-		<input type="text" name="product[qty][]"  row_id="<?php echo $ids; ?>" class="quantity form-control qty qty_<?php echo $ids;?>" id="qty_<?php echo $ids;?>" value="1" style="width: 50%;" maxlength="8">
+	<td class="tbl_td_quantity_error_<?php echo $ids;?>">
+		<input type="text" name="product[qty][]"  row_id="<?php echo $ids; ?>" class="quantity form-control qty qty_<?php echo $ids;?> qtyt" id="qty_<?php echo $ids;?>" autocomplete="off"  value="" prd_url="{{url('/sale_part/get_available_product')}}" style="width: 50%;" maxlength="8" required="true">
 		<span class="qty_<?php echo $ids;?>"></span>
+
+		<span id="quantity_error_<?php echo $ids;?>" class="help-block error-help-block color-danger" style="display: none">Quantity is required.</span>
 	</td>
-	<td>
-		<input type="text" name="product[price][]" class="product form-control prices price_<?php echo $ids;?>"  value="" id="price_<?php echo $ids;?>" style="width:100%;" readonly="true">
+	<td class="tbl_td_price_error_<?php echo $ids;?>">
+		<!-- <input type="text" name="product[price][]" class="product form-control prices price_<?php echo $ids;?>"  value="" id="price_<?php echo $ids;?>" style="width:100%;" readonly="true"> -->
+		<input type="text" name="product[price][]" class="product form-control prices price_<?php echo $ids;?>"  value="" id="price_<?php echo $ids;?>" row_id="<?php echo $ids;?>" style="width:100%;" required="true">
+
+		<span id="price_error_<?php echo $ids;?>" class="help-block error-help-block color-danger" style="display: none">Price is required.</span>
 	</td>
-	<td>
-		<input type="text" name="product[total_price][]" class="product form-control total_price total_price_<?php echo $ids;?>"  value="" style="width:100%;"  id="total_price_<?php echo $ids;?>" readonly="true">
+	<td class="tbl_td_totaPrice_error_<?php echo $ids;?>">
+		<input type="text" name="product[total_price][]" class="product form-control total_price total_price_<?php echo $ids;?>"  value="" style="width:100%;"  id="total_price_<?php echo $ids;?>" readonly="true" required="true">
+
+		<span id="total_price_error_<?php echo $ids;?>" class="help-block error-help-block color-danger" style="display: none">Total price is required.</span>
 	</td>
 
 	<td align="center">
-		<span class="product_delete tax_<?php echo $ids;?>" data-id="<?php echo $ids;?>" id="tax_<?php echo $ids;?>"><i class="fa fa-trash"></i> </span>
+		<span class="product_delete tax_<?php echo $ids;?>" style="cursor: pointer;" data-id="<?php echo $ids;?>" id="tax_<?php echo $ids;?>"><i class="fa fa-trash"></i> </span>
 
 	</td>
 </tr>

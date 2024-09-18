@@ -1,6 +1,8 @@
 <?php
 
 return[
+
+		// chinese (Simplified)
         //APP Menu page
       'Garrage Management System'=>'加强管理系统',
 	  'Welcome'=>'欢迎',
@@ -960,6 +962,391 @@ return[
 	"Purchase Number"=>"购买号码",
 	"RTO"=>"RTO",
 	"Regional Transport Office"=>"区域运输办公室",
+
+	// New lables added 8/06/2020
+	"Number Plate" => "车牌号",
+	"Enter Number Plate" => "输入车牌",
+	"Maintenance History not available." => "维护历史记录不可用。",
+	"Description not available" => "说明不可用",
+	"Maintenance History" => "维修记录",
+	"Company Name" => "公司名",
+	"Enter Company Name" => "输入公司名称",
+	"Not Added" => "未添加",
+
+	// stripe
+	"Stripe API Key Information" => "Stripe API密钥信息",
+	"Update Your Live Stripe Keys Here!" => "在这里更新您的实时条纹密钥！",
+	"Stripe Settings" => "条纹设置",
+	"Stripe Secret key" => "条纹秘密钥匙",
+	"Enter Stripe Publishable Key" => "输入条纹可发布密钥",
+	"Enter Stripe Secret Key" => "输入条纹秘密密钥",
+	"Stripe Publishable key" => "条带发布密钥",
+	"Please update stripe API key details to take payment directly from the card!" => "请更新Stripe API密钥详细信息以直接从卡中付款！",
+	"You can not pay more than 999999 using the card." => "使用该卡支付的金额不能超过999999。",
+
+
+	//MOT Module
+	"MOT Test" => "MOT测试",
+
+	"MOT Test View" => "MOT测试视图",
+	"Step 1: Fill MOT Details" => "步骤1：填写MOT详细信息",
+	"OK = Satisfactory" => "OK =满意",
+	"X = Safety Item Defact" => "X =安全项目缺陷",
+	"R = Repair Required" => "R =需要维修",
+	"NA = Not Applicable" => "NA =不适用",
+	"Inside Cab" => "内室",
+	"Code" => "码",
+	"Inspection Details" => "检验细节",
+	"Answer" => "回答",
+	"Ground Level and Under Vehicle" => "地面和地下车辆",
+	"Step 2: Show Filled MOT Details" => "步骤2：显示填写的MOT详细信息",
+
+	"MOT Test Service Charge" => "MOT测试服务费",
+
+	"MOT TEST SERVICE CHARGE" => "模拟测试服务费",
+	"MOT Charge Detail" => "MOT收费明细",
+	"MOT Testing Charges" => "MOT测试费用",
+	"Completed" => "已完成",
+
+	"MOT Test Details" => "MOT测试详情",
+	"Vehicle Id" => "车辆编号",
+	"Service Id" => "服务编号",
+	"MOT Test Status" => "MOT测试状态",
+	"MOT Test Number" => "MOT测试编号",
+	"MOT Test Details are not Available for This Vehicle" => "该车辆没有MOT测试详细信息",
+	"Point" => "点",
+	
+	//Custom Field for(Product, Purchase, Vehicle, VehicleType, VehicleBrand, Color, Service, Invoice, Sale, Salepart, Income, Expense, Rto)
+	"Data not available" => "数据不可用",
+	"OTHER INFORMATION" => "其他资料",
+
+	"OTHER INFORMATION OF INVOICE" => "其他发票信息",
+
+	"OTHER INFORMATION OF SERVICE" => "其他服务信息",
+	"Enter" => "输入",
+
+	"CUSTOMER OTHER DETAILS" => "客户其他详细信息",
+	"Customer Other Details" => "客户其他详细信息",
+
+	"Please enter correct purchase key" => "请输入正确的购买密钥",
+	"This purchase key is already registered with the different domain. If you have any issue please contact us at sales@dasinfomedia.com" => "此购买密钥已在其他域中注册。 如果您有任何问题，请通过sales@dasinfomedia.com与我们联系。",
+	"There seems to be some problem please try after sometime or contact us on sales@dasinfomedia.com" => "似乎有问题，请稍后再试或通过sales@dasinfomedia.com与我们联系",
+	"Please enter correct purchase key for this plugin." => "请为此插件输入正确的购买密钥。",
+	"Connection Problem occurs because server is down." => "发生连接问题，因为服务器已关闭。",
+	"Vehicle Sale" => "车辆销售",
+	"List Of Vehicle Sale" => "车辆销售清单",
+	"Add Vehicle Sale" => "新增车辆销售",
+	"Edit Vehicle Sale" => "编辑车辆销售",
+	"Part Sales" => "零件销售",
+	"List Of Part Sales" => "零件销售清单",
+	"Add Part Sales" => "添加零件销售",
+	"Edit Part Sales" => "编辑零件销售",
+	"Service Stock" => "服务存货",
+	"Product Service" => "产品服务",
+
+	"Quotation" => "报价单",
+	"Quotation List" => "清单报价",
+	"Add Quotation" => "添加报价",
+	"Edit Quotation" => "编辑报价",
+	"Quotation Process" => "报价流程",
+	"Quotation Process for..." => "报价流程对于...",
+	"Do you want to final submit?, if yes so tick mark on checkbox." => "您要最终提交吗？如果可以，请在复选框中打勾。",
+	"Quotation Service Details for Jobcard Number" => "职位编号的报价服务详细信息",
+	"Any kind of Tax not included inside quotation" => "报价中未包含任何税种",
+	"Step - 1 : Add Quotation Service Details..." => "步骤-1：添加报价服务详细信息...",
+	"Step - 2 : Add Quotation Service Details..." => "步骤-2：添加报价服务详细信息...",
+	"Service Payment History" => "服务付款记录",
+	"Due Amount Reminder" => "到期金额提醒",
+
+	"Quotation Service Details" => "报价服务详情",
+	"Add" => "添加",
+	"Own Data" => "自己的数据",
+	"Gatepass" => "登机证",
+	"Observation Library" => "观察图书馆",
+	"Other Setting [Timezone]" => "其他设置[时区]",
+	"Other Setting [Language]" => "其他设定[语言]",
+	"Other Setting [Date Format]" => "其他设定[日期格式]",
+	"Other Setting [Currency]" => "其他设定[货币]",
+	"Quotation No" => "报价单号",
+	"Quotation Number" => "报价单",
+	"Quotaion is final, then click here." => "报价是最终的，然后单击此处。",
+
+
+
+	/************ Custom field radio and checkbox ************/
+	"Radio" => "收音机",
+	"Checkbox" => "选框",
+	"Radio Field Label" => "无线电字段标签",
+	"Enter radio label name" => "输入单选标签名称",
+	"Checkbox Field Label" => "复选框字段标签",
+	"Enter checkbox label name" => "输入复选框标签名称",
+
+	/********* Custom validation message translation (Customer, Employee, Supportstaff, Accountatnt, Supplyer) **********/
+	"First name is required." => "必须输入名字。",
+	"First name is only alphabets and space." => "名字仅是字母和空格。",
+	"First name should not more than 50 character." => "名字不得超过50个字符。",
+	"Last name is required." => "姓氏为必填项。",
+	"Last name is only alphabets and space." => "姓氏仅是字母和空格。",
+	"Last name should not more than 50 character." => "姓氏不得超过50个字符。",
+	"Display name is required." => "显示名称为必填。",
+	"Display name is only alphabets and space." => "显示名称仅是字母和空格。",
+	"Display name should not more than 50 character." => "显示名称不得超过50个字符。",
+	"Only alphanumeric, space, dot, @, _, and - are allowed." => "仅允许使用字母数字，空格，点，@，_和-。",
+	"Company name should not more than 100 character." => "公司名称不得超过100个字符。",
+	"Email is required." => "需要电子邮件。",
+	"Please enter a valid email address. Like : sales@dasinfomedia.com" => "请输入有效的电子邮件地址。例如：sales@dasinfomedia.com",
+	"Email you entered is already registered." => "您输入的电子邮件已经注册。",
+	"Password is required." => "需要密码。",
+	"Password must be combination of letters and numbers." => "密码必须是字母和数字的组合。",
+	"Password length minimum 6 character." => "密码长度至少为6个字符。",
+	"Password length maximum 12 character." => "密码长度最大为12个字符。",
+	"Confirm password is required." => "确认密码是必需的。",
+	"Password and Confirm Password does not match." => "密码和确认密码不匹配。",
+	"Password length minimum 6 character." => "密码长度至少为6个字符。",
+	"Password length maximum 12 character." => "密码长度最大为12个字符。",
+	"Contact number is required." => "需要联系电话。",
+	"Contact number minimum 6 digits." => "联系电话至少6位数字。",
+	"Contact number maximum 16 digits." => "联系电话最多16位数字。",
+	"Contact number must be number, plus, minus and space only." => "联系电话必须是数字，只能是正，负和空格。",
+	"Landline number only numbers are allowed." => "只允许拨打固定电话号码。",
+	"Landline number minimum 6 digits." => "座机号码至少6位数字。",
+	"Landline number maximum 16 digits." => "座机号码最大为16位数字。",
+	"Landline number must be number, plus, minus and space only." => "座机号码必须是数字，只能是加号，减号和空格。",
+	"Image must be a file of type: Jpg, Jpeg and Png." => "图像必须是以下类型的文件：Jpg，Jpeg和Png。",
+	"Country field is required." => "国家/地区字段为必填。",
+	"Address field is required." => "地址字段为必填。",
+
+	"Join date is required." => "加入日期为必填项",
+	"Designation is required." => "必须指定",
+	"Designation is only alphabets and space." => "名称仅是字母和空格。",
+	"Designation should not more than 50 character." => "名称不得超过50个字符。",
+	
+	"Company name is required." => "必须提供公司名称。",
+	"Company name should not more than 100 character." => "公司名称不得超过100个字符。",
+
+	/********* Custom validation message translation (Color Module) **********/
+	"Color name is required." => "必须输入颜色名称。",
+	"Maximum 50 characters allowed." => "最多允许50个字符。",
+	"Special symbols are not allowed." => "不允许使用特殊符号。",
+
+	/********* Custom validation message translation (Invoice Module) **********/
+	"Invoice type is required." => "发票类型为必填。",
+	"Invoice number is required." => "发票编号为必填。",
+	"Customer name is required." => "必须输入客户名称。",
+	"Jobcard number is required." => "必须提供工作卡号。",
+	"Vehicle name is required." => "必须输入车辆名称。",
+	"Customer name is required." => "必须输入客户名称。",
+	"Invoice date is required." => "发票日期为必填。",
+	"Total amount is required." => "总金额为必需。",
+	"Status is required." => "需要状态。",
+	"Payment type is required." => "付款方式为必填。",
+	"Grand total is required." => "需要总计。",
+	"Paid amount is required." => "需要付费。",
+
+	/********* Custom validation message translation (Product Module) **********/
+	"Product date is required." => "必须提供产品日期。",
+	"Name is required." => "必须输入名称。",
+	"Name is only alphanumeric and space." => "名称仅是字母数字和空格。",
+	"Name should not more than 100 character." => "名称不得超过100个字符。",
+	"The type of the uploaded file should be an image." => "上传的文件的类型应该是图像。",
+	"Unit of measurement is required." => "需要度量单位。",
+	"Price is required." => "需要价格。",
+	"Supplier is required." => "需要供应商。",
+
+	/********* Custom validation message translation (Purchase Module) **********/
+	"Purchase number is required." => "需要购买编号。",
+	"Purchase date is required." => "购买日期为必填项。",
+	"Supplier name is required." => "供应商名称为必填。",
+
+	/********* Custom validation message translation (Service Module) **********/
+	"Jobcard number is required." => "必须提供工作卡号。",
+	"Customer name is required." => "必须输入客户名称。",
+	"Vehicle name is required." => "必须输入车辆名称。",
+	"Service date is required." => "服务日期为必填。",
+	"Assigne to is required." => "必须分配给。",
+	"Repair category is required." => "需要维修类别。",
+	"Service charge is required." => "需要收取服务费。",
+	"Service charge is only numeric data." => "服务费仅是数字数据。",
+	"Service charge is only number data." => "服务费仅是数字数据。",
+	"First character is an alphabet after alphanumeric, space, dot, comma, hyphen and underscore are allowed." => "第一个字符是字母，字母，数字，空格，点，逗号，连字符和下划线允许。",
+
+
+	/********* Custom validation message translation (Tax Module) **********/
+	"Tax name is required." => "必须提供税名。",
+	"Only alphanumeric, space, dot, @, _, % and - are allowed." => "仅允许使用字母数字，空格，点，@，_，％和-。",
+	"Tax name should not more than 50 character." => "税名不得超过50个字符。",
+	"Tax rate is required." => "需要税率。",
+	"The tax must be between 1 and 4 digits." => "税金必须介于1到4位数字之间。",
+
+	/********* Custom validation message translation (Business Module) **********/
+	"Date is required." => "需要日期。",
+	"Title is required." => "标题是必需的。",
+	"After alphabet alphanumeric, space, dot, @, _, and - are allowed." => "在字母字母数字之后，可以使用空格，点，@，_和-。",
+	"Title field should not more than 100 character." => "标题字段不得超过100个字符。",
+	"After alphabet alphanumeric, space, dot, @, _, and - are allowed." => "在字母字母数字之后，可以使用空格，点，@，_和-。",
+	"Description should not more than 300 character." => "描述不得超过300个字符。",
+
+	/********* Custom validation message translation (Custom Field Module) **********/
+	"Form name is required." => "表单名称为必填。",
+	"Label name is required." => "标签名称为必填。",
+	"Start should be alphabets only after supports alphanumeric, space, dot, @, _, and - are allowed." => "仅在支持字母数字，空格，点，@，_和-后才应将字母作为字母。",
+	"Label name should not more than 50 character." => "标签名称不得超过50个字符。",
+	"Type is required." => "必须输入类型。",
+
+
+	/********* Custom validation message translation (Expenses Module) **********/
+	"Main label is required." => "需要主标签。",
+	"Only alphanumeric and space allowed." => "仅允许使用字母数字和空格。",
+	"Status field is required." => "状态字段为必填。",
+	"Expense entry field is required." => "必须输入费用输入字段。",
+	"Only numeric data allowed." => "仅允许数字数据。",
+	"After point two digit allowed." => "允许点两位数之后。",
+	"Expense entry field is required." => "必须输入费用输入字段。",
+	"Only numeric data allowed." => "仅允许数字数据。",
+	"After point two digit allowed." => "允许点两位数之后。",
+
+
+	/********* Custom validation message translation (Expenses Module) **********/
+	"Start date is required." => "需要开始日期。",
+	"End date is required." => "需要结束日期。",
+
+	/********* Custom validation message translation (Gatepass Module) **********/
+	"Jobcard is required." => "需要工作卡。",
+	"Gatepass number is required." => "需要通行证编号。",
+	"First name is required." => "必须输入名字。",
+	"Last name is required." => "姓氏为必填项。",
+	"Email is required." => "需要电子邮件。",
+	"Contact number is required." => "需要联系电话。",
+	"Vehicle name is required." => "必须输入车辆名称。",
+	"Vehicle type is required." => "需要车辆类型。",
+	"Kilometre is required." => "需要公里。",
+	"Enter only numeric data." => "仅输入数字数据。",
+	"Out date is required." => "需要过期日期。",
+
+	/********* Custom validation message translation (GeneralSetting Module) **********/
+	"System name is required." => "需要系统名称。",
+	"System name must be alphabets, numbers and space." => "系统名称必须是字母，数字和空格。",
+	"Phone number is required." => "需要电话号码。",
+	"Phone number minimum 6 digits." => "电话号码至少6位数字。",
+	"Phone number maximum 16 digits." => "电话号码最多16位数字。",
+	"Phone number must be number, plus, minus and space only." => "电话号码必须是数字，只能是加号，减号和空格。",
+	"Image must be Jpg, Jpeg and Png only." => "图像必须只能是Jpg，Jpeg和Png。",
+	"Please enter valid email address." => "请输入有效的电子邮件地址。",
+	"Address is required." => "需要地址。",
+	
+
+	/********* Custom validation message translation (Income Module) **********/
+	"Payment status is required." => "需要付款状态。",
+	"Income date is required." => "需要输入收入日期。",
+	"Main label is required." => "需要主标签。",
+	"Main label should be less than 50 charachters." => "主标签应少于50个字符。",
+	"First character is an alphabet after number, space, dot, comma, hyphen,  underscore, at are allowed." => "第一个字符是字母，后跟数字，空格，点，逗号，连字符，下划线和at。",
+	"Payment method is required." => "需要付款方式。",
+	"Income entry is required." => "需要输入收入。",
+
+
+	"Invoice number is required." => "发票编号为必填。",
+	"Payment status is required." => "需要付款状态。",
+	"Income date is required." => "需要输入收入日期。",
+	"Main label is required." => "需要主标签。",
+	"Main label should be less than 50 charachters." => "主标签应少于50个字符。",
+	"First character is an alphabet after number, space, dot, comma, hyphen,  underscore, at are allowed." => "第一个字符是字母，后跟数字，空格，点，逗号，连字符，下划线和at。",
+	"Payment method is required." => "需要付款方式。",
+	"Income entry is required." => "需要输入收入。",
+
+	/********* Custom validation message translation (Invoice Module) **********/
+	"Vehicle name is required." => "必须输入车辆名称。",
+	"Invoice date is required." => "发票日期为必填。",
+	"Status is required." => "需要状态。",
+	"Payment type is required." => "付款方式为必填。",
+	"Grand total is required." => "需要总计。",
+	"Paid amount is required." => "需要付费。",
+
+	/********* Custom validation message translation (Observation Library Module) **********/
+	"Vehicle name is required." => "必须输入车辆名称。",
+	"Checkpoint category is required." => "需要检查点类别。",
+	"Check point is required." => "需要检查点。",
+	"Start should be alphabets only after supports alphanumeric, space, dot, @, _, and - are allowed." => "仅在支持字母数字，空格，点，@，_和-后才应将字母作为字母。",
+	"Check point should not more than 30 character." => "检查点不得超过30个字符。",
+	
+	/********* Custom validation message translation (Other setting Module) **********/
+	"Timezone is required." => "需要时区。",
+	"Language is required." => "需要语言。",
+	"Date format is required." => "日期格式为必填。",
+	"Currency is required." => "需要货币。",
+
+	/********* Custom validation message translation (Payment Method Module) **********/
+	"Payment method is required." => "需要付款方式。",
+	"Payment method allowed only alphabets and space." => "付款方式只允许使用字母和空格。",
+	"Payment method should not more than 50 character." => "付款方式不得超过50个字符。",
+
+	/*** Custom validation message translation (Pay Payment(Inside Invoice Module) Form Module) ***/
+	"Invoice date is required." => "发票日期为必填。",
+	"Payment type is required." => "付款方式为必填。",
+	"Amount received is required." => "需要收到的金额。",
+
+
+	/*** Custom validation message translation (Quotation Module) ***/
+	"Customer name is required." => "必须输入客户名称。",
+	"Vehicle name is required." => "必须输入车辆名称。",
+	"Service date is required." => "服务日期为必填。",
+	"Repair category is required." => "需要维修类别。",
+	"Service charge is required." => "需要收取服务费。",
+	"Service charge is only number data." => "服务费仅是数字数据。",
+	"First character is an alphabet after alphanumeric, space, dot, comma, hyphen and underscore are allowed." => "第一个字符是字母，字母，数字，空格，点，逗号，连字符和下划线允许。",
+
+	/*** Custom validation message translation (Rto tax Module) ***/
+	"Vehicle name is required." => "必须输入车辆名称。",
+	"RTO tax is required." => "需要RTO税。",
+	"RTO tax must be numeric data only." => "RTO税必须仅是数字数据。",
+	"After point only two digit allowed." => "在点之后仅允许两位数。",
+	"Number plate charge is required." => "需要牌照费。",
+	"Number plate charge must be numeric data only." => "车牌号收费必须仅是数字数据。",
+	"After point only two digit allowed." => "在点之后仅允许两位数。",
+	"Municiple road tax is required." => "需要市政道路税。",
+	"Municiple road tax must be numeric data only." => "市政道路税必须仅是数字数据。",
+	"After point only two digit allowed." => "在点之后仅允许两位数。",
+
+	/*** Custom validation message translation (Service second step (Service Module)) ***/
+	"Out time date is required." => "需要超时日期。",
+	"Kilometre is required." => "需要公里。",
+
+	/*** Custom validation message translation (Stripe setting Module) ***/
+	"Publish key is required." => "需要发布密钥。",
+	"Secret key is required." => "需要密钥。",
+
+
+	/*** Custom validation message translation (Vehicle Sale Module) ***/
+	"Bill no is required." => "必须没有帐单。",
+	"Sales date is required." => "需要销售日期。",
+	"Customer name is required." => "必须输入客户名称。",
+	"Salesman name is required." => "销售员姓名为必填。",
+	"Brand name is required." => "必须输入品牌名称。",
+	"Model name is required." => "型号名称为必填。",
+	"Price is only numeric data allowed." => "价格仅是数字数据。",
+	"Price is only numeric data." => "价格只是数字数据。",
+	"Color is required." => "需要颜色。",
+	"Total price is required." => "总价是必需的。",
+	"After point only two digits allowed." => "点后仅允许两位数。",
+	"Total price is only numeric data." => "总价仅是数字数据。",
+	"Interval is required." => "需要时间间隔。",
+	"Number of service field is required." => "服务编号字段为必填。",
+	"Assigned to field is required." => "必须分配给字段。",
+
+
+	/*** Custom validation message translation (Vehicle Module) ***/
+	//"Vehicle type is required." => "需要车辆类型。",
+	"Vehicle brand is required." => "必须有汽车品牌。",
+	"Fuel type is required." => "需要燃料类型。",
+	"Model name is required." => "型号名称为必填。",
+	"Manufacturer name is required." => "制造商名称为必填。",
+	"Product name is required." => "必须输入产品名称。",
+	"Quantity is required." => "需要数量。",
+	
+	"Employees" => "雇员",
+	"Support Staffs" => "支持人员",
+	"Accountants" => "会计",
+	
 ];
  
  

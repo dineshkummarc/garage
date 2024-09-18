@@ -3,22 +3,8 @@
 <style>
 .step{color:#5A738E !important;}
 </style>
-<!-- page content -->
-<?php $userid = Auth::user()->id; ?>
-@if (getAccessStatusUser('Job Card',$userid)=='yes')
-	@if(getActiveCustomer($userid)=='no')
-        <div class="right_col" role="main">
-			<div class="">
-				<div class="nav_menu">
-					<nav>
-						<div class="nav toggle titleup">
-							<span class="">&nbsp {{ trans('app.You are not authorize this page.')}}</span>
-						</div>
-					</nav>
-				</div>
-			</div>
-		</div>
-    @else	
+
+<!-- page content -->	
 	<div class="right_col" role="main">
     <div class="page-title">
           <div class="nav_menu">
@@ -32,9 +18,12 @@
     </div>
 	<div class="x_content">
         <ul class="nav nav-tabs bar_tabs tabconatent" role="tablist">
-			<li role="presentation" class="floattab suppo_llng_li"><a href="{!! url('/jobcard/list')!!}"><span class="visible-xs"></span> <i class="fa fa-list fa-lg">&nbsp;</i>{{ trans('app.List Of Job Cards')}}</a></li>
-		
-			<li role="presentation" class="active floattab suppo_llng_li_add"><a href="{!! url('/jobcard/add')!!}"><span class="visible-xs"></span><i class="fa fa-plus-circle fa-lg">&nbsp;</i><b>{{ trans('app.Add Jobcard')}}</b></a></li>
+        	@can('jobcard_view')
+				<li role="presentation" class=""><a href="{!! url('/jobcard/list')!!}"><span class="visible-xs"></span> <i class="fa fa-list fa-lg">&nbsp;</i>{{ trans('app.List Of Job Cards')}}</a></li>
+			@endcan
+			@can('jobcard_add')
+				<li role="presentation" class="active "><a href="{!! url('/jobcard/add')!!}"><span class="visible-xs"></span><i class="fa fa-plus-circle fa-lg">&nbsp;</i><b>{{ trans('app.Add Jobcard')}}</b></a></li>
+			@endcan
 		</ul>
 	</div>
     <div class="row">
@@ -43,7 +32,7 @@
                 <div class="x_content">
 				<div class="panel panel-default">
 				<div class="panel-heading step titleup">{{ trans('app.Step - 1 : Add Service Details...')}}</div>
-                   <form method="post" action="{{ url('/service/store') }}" enctype="multipart/form-data"  class="form-horizontal upperform">
+                   <form method="post" action="{{ url('/service/store') }}" enctype="multipart/form-data"  class="form-horizontal upperform addJobcardForm">
 
                        <div class="form-group">
 							<div class="">
@@ -151,7 +140,7 @@
                       <div class="form-group">
                         <div class="col-md-12 col-sm-12 col-xs-12 text-center">
                           <a class="btn btn-primary" href="{{ URL::previous() }}">{{ trans('app.Cancel')}}</a>
-                          <button type="submit" class="btn btn-success">{{ trans('app.Submit')}}</button>
+                          <button type="submit" class="btn btn-success addJobcardSubmitButton">{{ trans('app.Submit')}}</button>
                         </div>
                       </div>
 						</form>
@@ -160,19 +149,8 @@
             </div>
         </div>
     </div>
-@endif
  </div>
-           
-@else
-	<div class="right_col" role="main">
-		<div class="nav_menu main_title" style="margin-top:4px;margin-bottom:15px;">
-           
-              <div class="nav toggle" style="padding-bottom:16px;">
-               <span class="titleup">&nbsp {{ trans('app.You are not authorize this page.')}}</span>
-              </div>
-        </div>
-	</div>
-@endif  
+ 
 	<script src="{{ URL::asset('vendors/jquery/dist/jquery.min.js') }}"></script>
 	<script src="{{ URL::asset('vendors/moment/min/moment.min.js') }}"></script>
     <script src="{{ URL::asset('vendors/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
@@ -269,4 +247,21 @@ $(document).ready(function(){
 	});	
 });
 </script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<!-- Form submit at a time only one -->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.addJobcardSubmitButton').removeAttr('disabled'); //re-enable on document ready
+    });
+    $('.addJobcardForm').submit(function () {
+        $('.addJobcardSubmitButton').attr('disabled', 'disabled'); //disable on any form submit
+    });
+
+    $('.addJobcardForm').bind('invalid-form.validate', function () {
+      $('.addJobcardSubmitButton').removeAttr('disabled'); //re-enable on form invalidation
+    });
+</script>
+
 @endsection

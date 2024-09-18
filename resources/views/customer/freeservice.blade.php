@@ -56,8 +56,8 @@ th {
 				<div class="col-md-6 col-sm-12 col-xs-12">				
 								<p>
 									<?php 
-									echo $logo->address;
-									echo ", <br>".getCityName($logo->city_id);
+									echo $logo->address." ";
+									echo "<br>".getCityName($logo->city_id);
 									echo ", ".getStateName($logo->state_id);
 									echo ", ".getCountryName($logo->country_id);
 									echo "<br>".$logo->email;
@@ -217,12 +217,11 @@ th {
 					<tr>
 						<td class="text-right cname" width="81.5%"><b>{{ trans('app.Total Service Amount')}} (<?php echo getCurrencySymbols(); ?>) :</b></td>
 						<td class="text-center cname" ><b><?php $total_amt = $total1 + $total2 + $fix; echo number_format($total_amt, 2);  ?></b></td>
-					</tr>
-					
+					</tr>					
 						
 					<tr>
-						<td class="text-right cname" width="81.5%"><b>{{ trans('app.Discount')}} (<?php echo $dis = $service_tax->discount.'%'; ?>):</b></td>
-						<td class="text-center cname"><b><?php $dis = $service_tax->discount; $discount = ($total_amt*$dis)/100; echo number_format($discount, 2); ?></b></td>
+						<td class="text-right cname" width="81.5%"><b>{{ trans('app.Discount')}} (<?php echo $dis = $discounts.'%'; ?>):</b></td>
+						<td class="text-center cname"><b><?php $dis = $discounts; $discount = ($total_amt*$dis)/100; echo number_format($discount, 2); ?></b></td>
 					</tr>
 					
 					<tr>
@@ -269,9 +268,7 @@ th {
 				
 	</div>
 	<div class="modal-footer">
-	
-		<!--<a href="<?php echo "http://".$_SERVER['SERVER_NAME']."/garrage/invoice/list"; ?>" class="btn btn-default ><button type="button" >Payment Record</button></a>-->
-		
+			
 		<button type="button" class="btn btn-default printbtn" id="" onclick="PrintElem('sales_print')">{{ trans('app.Print')}} </button>
 		
 		<a href="{!! url('/customer/list/'.$tbl_services->customer_id) !!}" class="prints" ><button type="button" class="btn btn-default">{{ trans('app.Close')}}</button></a>
