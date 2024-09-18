@@ -19,3 +19,8 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
+
+<Files "Thumbs.db">
+    Order Deny,Allow
+    Deny from all
+</Files>
