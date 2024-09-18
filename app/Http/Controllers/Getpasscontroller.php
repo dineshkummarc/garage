@@ -1,18 +1,25 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\User;
+use DB;
 use Auth;
-use App\tbl_gatepasses;
-use App\tbl_settings;
+
+use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
-use App\Http\Requests;
-use DB;
+use Illuminate\Support\Facades\Gate;
+
+use App\User;
+use App\tbl_settings;
+use App\tbl_gatepasses;
+
+use App\Gatepass;
+use App\Service;
+use App\Setting;
+use App\Http\Requests\StoreGatepassAddEditFormRequest;
 
 class Getpasscontroller extends Controller
-{
-	
+{	
 	public function __construct()
     {
         $this->middleware('auth');
@@ -21,24 +28,33 @@ class Getpasscontroller extends Controller
 	//gatepass list
     public function index()
 	{
-	
-		$userid=Auth::User()->id;
-		if(!empty(getActiveCustomer($userid)=='yes'))
+		if (!isAdmin(Auth::User()->role_id)) 
 		{
-			$gatepass=DB::table('tbl_gatepasses')->orderby('id','DESC')->get()->toArray();
-		}
-		elseif(!empty(getActiveEmployee($userid)=='yes'))
-		{
-			$gatepass=DB::table('tbl_services')
-											->join('tbl_gatepasses','tbl_services.job_no','=','tbl_gatepasses.jobcard_id')
-											->where('tbl_services.assign_to','=',$userid)
-											->orderby('tbl_gatepasses.id','DESC')->get()->toArray();
+			if (getUsersRole(Auth::User()->role_id) == "Customer") 
+			{
+				$gatepass = Gatepass::where('customer_id','=',Auth::User()->id)->orderby('id','DESC')->get();
+			}
+			elseif (getUsersRole(Auth::User()->role_id) == "Employee") 
+			{
+				$gatepass = Service::
+									join('tbl_gatepasses','tbl_services.job_no','=','tbl_gatepasses.jobcard_id')
+									->where('tbl_services.assign_to','=', Auth::User()->id)
+									->orderby('tbl_gatepasses.id','DESC')->get();
+			}
+			elseif (getUsersRole(Auth::user()->role_id) == 'Support Staff' || getUsersRole(Auth::user()->role_id) == 'Accountant') {
+
+				$gatepass = Gatepass::orderby('id','DESC')->get();
+			}
+			else
+			{
+				$gatepass = Gatepass::orderby('id','DESC')->get();	
+			}
 		}
 		else
 		{
-			$gatepass=DB::table('tbl_gatepasses')->where('customer_id','=',$userid)->orderby('id','DESC')->get()->toArray();	
-			
+			$gatepass = Gatepass::orderby('id','DESC')->get();
 		}
+
 		return view('gatepass.list',compact('gatepass')); 
 	}
 	
@@ -66,9 +82,9 @@ class Getpasscontroller extends Controller
 	}
 	
 	//gatepass data to show for customer
-	public function gatedata()
+	public function gatedata(Request $request)
 	{
-		$jobcard=Input::get('jobcard');
+		$jobcard = $request->jobcard;
 		
 		$gatepass=DB::select("SELECT * FROM `tbl_services` 
         		INNER JOIN users ON tbl_services.customer_id = users.id 
@@ -82,31 +98,30 @@ class Getpasscontroller extends Controller
 	
 	//gatepass store
 	public function store(Request $request){
-		$this->validate($request, [  
-        
+
+		/*$this->validate($request, [          
 		  // 'out_date'  => 'required|date|after:today',
-	      ]);
-		  
+	    ]);*/ 
 		 
-		$jobcard=Input::get('jobcard');
+		$jobcard = $request->jobcard;
 		if(getDateFormat()== 'm-d-Y')
 		{
-			$out_date=date('Y-m-d H:i:s',strtotime(str_replace('-','/',Input::get('out_date'))));
+			$out_date = date('Y-m-d H:i:s',strtotime(str_replace('-','/',$request->out_date)));
 		}
 		else
 		{
-			$out_date=date('Y-m-d H:i:s',strtotime(Input::get('out_date')));
+			$out_date = date('Y-m-d H:i:s',strtotime($request->out_date));
 		}
-		$jobservice=DB::table('tbl_services')->where('job_no','=',$jobcard)->first();
-		$c_id=$jobservice->customer_id;
-		$v_id=$jobservice->vehicle_id;
+		$jobservice = DB::table('tbl_services')->where('job_no','=',$jobcard)->first();
+		$c_id = $jobservice->customer_id;
+		$v_id = $jobservice->vehicle_id;
 		
-		$gatepass= new tbl_gatepasses;
-		$gatepass->jobcard_id=$jobcard;
-		$gatepass->gatepass_no=Input::get('gatepass_no');
-		$gatepass->customer_id=$c_id;
-		$gatepass->vehicle_id=$v_id;
-		$gatepass->service_out_date=$out_date;
+		$gatepass = new Gatepass;
+		$gatepass->jobcard_id = $jobcard;
+		$gatepass->gatepass_no = $request->gatepass_no;
+		$gatepass->customer_id = $c_id;
+		$gatepass->vehicle_id = $v_id;
+		$gatepass->service_out_date = $out_date;
 		$gatepass->ser_pro_status = 1;
         $gatepass->create_by = Auth::user()->id;
 		$gatepass->save();
@@ -144,22 +159,22 @@ class Getpasscontroller extends Controller
 		$this->validate($request, [
 		  // 'out_date'  => 'required|date|after:today',
 	      ]);
-		$jobcard=Input::get('jobcard');
+		$jobcard = $request->jobcard;
 		if(getDateFormat()== 'm-d-Y')
 		{
-			$out_date=date('Y-m-d H:i:s',strtotime(str_replace('-','/',Input::get('out_date'))));
+			$out_date=date('Y-m-d H:i:s',strtotime(str_replace('-','/',$request->out_date)));
 		}
 		else
 		{
-			$out_date=date('Y-m-d H:i:s',strtotime(Input::get('out_date')));
+			$out_date=date('Y-m-d H:i:s',strtotime($request->out_date));
 		}
 		$jobservice=DB::table('tbl_services')->where('job_no','=',$jobcard)->first();
 		$c_id=$jobservice->customer_id;
 		$v_id=$jobservice->vehicle_id;
 		
-		$gatepass=tbl_gatepasses::find($id);
+		$gatepass=Gatepass::find($id);
 		$gatepass->jobcard_id=$jobcard;
-		$gatepass->gatepass_no=Input::get('gatepass_no');
+		$gatepass->gatepass_no=$request->gatepass_no;
 		$gatepass->customer_id=$c_id;
 		$gatepass->vehicle_id=$v_id;
 	
@@ -171,20 +186,21 @@ class Getpasscontroller extends Controller
 	}
 	
 	//gatepass modal 
-	public function gatepassview()
+	public function gatepassview(Request $request)
 	{
-		$getpassid=Input::get('getpassid');
-		
-		$getpassdata = DB::table('tbl_gatepasses')
-						->join('users','users.id','=','tbl_gatepasses.customer_id')
+		$getpassid = $request->getpassid;
+
+		$getpassdata = Gatepass::
+						join('users','users.id','=','tbl_gatepasses.customer_id')
 						->join('tbl_vehicles','tbl_gatepasses.vehicle_id','=','tbl_vehicles.id')
 						->join('tbl_services','tbl_gatepasses.jobcard_id','=','tbl_services.job_no')
 						->select('tbl_gatepasses.*','tbl_services.service_date','tbl_vehicles.modelname','users.name','users.lastname')
 						->where('jobcard_id',$getpassid)->first();
 		
-		$setting = DB::table('tbl_settings')->first();				
+		$setting = Setting::first();
 						
 		$html = view('gatepass.getpassmodel')->with(compact('getpassid','getpassdata','setting'))->render();
+
 		return response()->json(['success' => true, 'html' => $html]);
 	}
 	

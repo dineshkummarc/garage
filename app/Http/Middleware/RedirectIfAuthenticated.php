@@ -24,11 +24,17 @@ class RedirectIfAuthenticated
 			Artisan::call('route:clear');
 			Artisan::call('view:clear');
 			Artisan::call('config:clear');
+            Artisan::call('dump-autoload');
             return redirect()->route('installation_form');
         }
 
+        // * For By Pass *
+        // Auth::loginUsingId(1);
+        // return redirect('/');
+
+
         if (Auth::guard($guard)->check()) {
-            return redirect('/home');
+            return redirect('/');
         }
 
         return $next($request);

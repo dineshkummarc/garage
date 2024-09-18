@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\User;
-use Auth;
-use App\tbl_observation_types;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
-use App\Http\Requests;
+
 use DB;
+use Auth;
+use App\User;
+use App\Http\Requests;
+use Illuminate\Http\Request;
+use App\tbl_observation_types;
+use Illuminate\Support\Facades\Input;
 
 class ObservationTypecontroller extends Controller
 {	
@@ -33,7 +34,7 @@ class ObservationTypecontroller extends Controller
 	public function store(Request $request)
 	{	
 		$o_point = new tbl_observation_types;
-		$o_point->type = Input::get('o_type');
+		$o_point->type = $request->o_type;
 		$o_point->save();
 		return redirect('/observation_type/list')->with('message','Successfully Submitted');
 	}
@@ -54,10 +55,10 @@ class ObservationTypecontroller extends Controller
 	}
 	
 	//observation type update
-	public function update($id)
+	public function update($id, Request $request)
 	{
 		$o_point = tbl_observation_types::find($id);
-		$o_point->type = Input::get('o_type');
+		$o_point->type = $request->o_type;
 		$o_point->save();
 		return redirect('/observation_type/list')->with('message','Successfully Updated');
 	}

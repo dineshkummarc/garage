@@ -1,13 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\User;
-use Auth;
-use App\tbl_observation_points;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
-use App\Http\Requests;
+
 use DB;
+use Auth;
+use App\User;
+use App\Http\Requests;
+use Illuminate\Http\Request;
+use App\tbl_observation_points;
+use Illuminate\Support\Facades\Input;
 
 class ObservationPointcontroller extends Controller
 {	
@@ -34,8 +35,8 @@ class ObservationPointcontroller extends Controller
 	public function store(Request $request)
 	{	
 		$tbl_observation_points = new tbl_observation_points;
-		$tbl_observation_points->observation_type_id = Input::get('o_type_id');
-		$tbl_observation_points->observation_point = Input::get('o_point');
+		$tbl_observation_points->observation_type_id = $request->o_type_id;
+		$tbl_observation_points->observation_point = $request->o_point;
 		$tbl_observation_points->save();
 		return redirect('/observation_point/list')->with('message','Successfully Submitted');
 	}
@@ -57,11 +58,11 @@ class ObservationPointcontroller extends Controller
 	}
 	
 	////observation points update
-	public function update($id)
+	public function update($id, Request $request)
 	{
 		$tbl_observation_points = tbl_observation_points::find($id);
-		$tbl_observation_points->observation_type_id = Input::get('o_type_id');
-		$tbl_observation_points->observation_point = Input::get('o_point');
+		$tbl_observation_points->observation_type_id = $request->o_type_id;
+		$tbl_observation_points->observation_point = $request->o_point;
 		$tbl_observation_points->save();
 		return redirect('/observation_point/list')->with('message','Successfully Updated');
 	}

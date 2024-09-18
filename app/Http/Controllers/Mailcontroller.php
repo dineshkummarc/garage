@@ -1,13 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\User;
+
+use DB;
 use Auth;
-use App\tbl_mail_notifications;
+
+use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
-use App\Http\Requests;
-use DB;
+
+use App\User;
+use App\tbl_mail_notifications;
+
+
+
+use App\MailNotification;
 
 class Mailcontroller extends Controller
 {	
@@ -19,20 +26,22 @@ class Mailcontroller extends Controller
 	//mail form
 	public function index()
 	{
-		$mailformat=DB::table('tbl_mail_notifications')->get()->toArray();
+		//$mailformat=DB::table('tbl_mail_notifications')->get()->toArray();
+		$mailformat = MailNotification::get();
+		
 		return view('mail.mail',compact('mailformat')); 
 		
 	}
 	
 	//mail update
-	public function emailupadte($id)
+	public function emailupadte($id, Request $request)
 	{
-		$emailformat = tbl_mail_notifications::find($id);
+		$emailformat = MailNotification::find($id);
 		
-		$emailformat->subject = Input::get('subject');
-		$emailformat->send_from = Input::get('send_from'); 
-		$emailformat->notification_text = Input::get('notification_text');
-		$emailformat->is_send = Input::get('is_send');
+		$emailformat->subject = $request->subject;
+		$emailformat->send_from = $request->send_from; 
+		$emailformat->notification_text = $request->notification_text;
+		$emailformat->is_send = $request->is_send;
 		$emailformat->save();
 		
 		return redirect('/mail/mail')->with('message','Successfully Updated');
@@ -55,6 +64,5 @@ class Mailcontroller extends Controller
 	{	
 		return view('mail.service');
 	}
-	
 	
 }	

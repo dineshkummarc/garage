@@ -1,14 +1,18 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\User;
-use Auth;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Input;
-use App\Http\Requests;
+
 use DB;
 use URL;
 use Mail;
+use Auth;
+use App\User;
+use App\Http\Requests;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
+
+use App\Http\Requests\StoreProfileSettingEditFormRequest;
+
 class Profilecontroller extends Controller
 {	
 	public function __construct()
@@ -30,8 +34,8 @@ class Profilecontroller extends Controller
 		$this->validate($request, [  
          'firstname' => 'regex:/^[(a-zA-Z\s)]+$/u',
 		 'lastname'=>'regex:/^[(a-zA-Z\s)]+$/u',
-		 'password'=>'min:6|max:12|regex:/(^[A-Za-z0-9]+$)+/',
-         'mobile'=>'max:15|min:10|regex:/^[- +()]*[0-9][- +()0-9]*$/',
+		 'password'=>'nullable|min:6|max:12|regex:/(^[A-Za-z0-9]+$)+/',
+         'mobile'=>'nullable|max:15|min:10|regex:/^[- +()]*[0-9][- +()0-9]*$/',
 		 'password_confirmation' => 'same:password',
 		 'image' => 'image|mimes:jpg,png,jpeg',
 		 // 'dob' => 'required',
@@ -40,7 +44,7 @@ class Profilecontroller extends Controller
 		 $usimgdtaa = DB::table('users')->where('id','=',$id)->first();
 			 $email = $usimgdtaa->email;
 
-				if($email != Input::get('email'))
+				if($email != $request->email)
 				{
 				$this->validate($request, [
 					'email' => 'required|email|unique:users'
@@ -48,46 +52,47 @@ class Profilecontroller extends Controller
 				]);
 				}
 		   
-		$firstname=Input::get('firstname');
-		$lastname=Input::get('lastname');
+		$firstname = $request->firstname;
+		$lastname = $request->lastname;
 		
-		$gender=Input::get('gender');
-		$dd=Input::get('dob');
+		$gender = $request->gender;
+		$dd = $request->dob;
 		if(!empty($dd))
 		{
-			if(getDateFormat()== 'm-d-Y')
+			if(getDateFormat() == 'm-d-Y')
 			{
-				$dob=date('Y-m-d',strtotime(str_replace('-','/',Input::get('dob'))));
+				$dob = date('Y-m-d',strtotime(str_replace('-','/',$request->dob)));
 			}
 			else
 			{
-				$dob=date('Y-m-d',strtotime(Input::get('dob')));
+				$dob = date('Y-m-d',strtotime($request->dob));
 			}
 		}
 		else
 		{
-			$dob="";
+			$dob = "";
 		}
-		$email=Input::get('email');
-		$password=(Input::get('password'));
-		$mobile=Input::get('mobile');
+		$email = $request->email;
+		$password = ($request->password);
+		$mobile = $request->mobile;
 		
 		$profile = User::find($id);
-		$profile->name=$firstname;
-		$profile->lastname=$lastname;
-		$profile->gender=$gender;
-		$profile->birth_date=$dob;	
-		$profile->email=$email;
+		$profile->name = $firstname;
+		$profile->lastname = $lastname;
+		$profile->gender = $gender;
+		$profile->birth_date = $dob;	
+		$profile->email = $email;
 	
 		if(!empty($password)){
-		$profile->password=bcrypt($password);
+			$profile->password = bcrypt($password);
 		}
 		
-		$profile->mobile_no=$mobile;
-		if(!empty(Input::hasFile('image')))
+		$image = $request->image;
+		$profile->mobile_no = $mobile;
+		if(!empty($image))
 			{
-			$file= Input::file('image');
-			$filename=$file->getClientOriginalName();
+			$file = $image;
+			$filename = $file->getClientOriginalName();
 			
 			if($usimgdtaa->role == "admin")
 			{
@@ -109,15 +114,15 @@ class Profilecontroller extends Controller
 			{
 				$file->move(public_path().'/accountant/', $file->getClientOriginalName());	
 			}
-			$profile->image=$filename;
+			$profile->image = $filename;
 			}
 		 $profile->save();
 		//email format
 			$logo = DB::table('tbl_settings')->first();
-			$systemname=$logo->system_name;
+			$systemname = $logo->system_name;
 			if($profile -> save())
 			{
-				$emailformat=DB::table('tbl_mail_notifications')->where('notification_for','=','User_registration')->first();
+				$emailformat = DB::table('tbl_mail_notifications')->where('notification_for','=','User_registration')->first();
 				$mail_format = $emailformat->notification_text;		
 				$mail_subjects = $emailformat->subject;		
 				$mail_send_from = $emailformat->send_from;
@@ -134,13 +139,13 @@ class Profilecontroller extends Controller
 				
 												
 			    $actual_link = $_SERVER['HTTP_HOST'];
-			    $startip='0.0.0.0';
-			    $endip='255.255.255.255';
-				if(($actual_link == 'localhost' || $actual_link == 'localhost:8080') || ($actual_link >= $startip && $actual_link <=$endip ))
+			    $startip = '0.0.0.0';
+			    $endip = '255.255.255.255';
+				if(($actual_link == 'localhost' || $actual_link == 'localhost:8080') || ($actual_link >= $startip && $actual_link <= $endip ))
 				{
 					//local format email
 				
-					$data=array(
+					$data = array(
 					'email'=>$email,
 					'mail_sub1' => $mail_sub,
 					'email_content1' => $email_content,
@@ -156,7 +161,7 @@ class Profilecontroller extends Controller
 				}
 				else
 				{						
-						//Live format email
+					//Live format email
 					$headers = 'Content-type: text/plain; charset=iso-8859-1' . "\r\n";
 					$headers .= 'From:'. $mail_send_from . "\r\n";
 					mail($email,$mail_sub,$email_content,$headers);

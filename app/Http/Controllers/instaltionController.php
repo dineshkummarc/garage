@@ -1,44 +1,49 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
-use App\Http\Requests;
-use Auth; 
+
 use DB;
 use PDO;
+use Auth; 
+use Mail;
 use Session;
+use App\User;
 use statement;
+use App\Http\Requests;
+use Illuminate\Mail\Mailer;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
-use App\User;
-use Mail;
-use Illuminate\Mail\Mailer;
-use Illuminate\Support\Facades\Input;
 
 class instaltionController extends Controller
 {
 	
+	// Database Setup wizard render
     public function index(Request $request)
 	{	
+		//dd($request->all());
 		$this->validate($request, [  
          
-		 'password'=>'min:6|max:12|regex:/(^[A-Za-z0-9]+$)+/',
-		 'confirm' => 'same:password',
-	      ]);
+		 	'password'=>'min:6',
+		 	'confirm' => 'same:password',
+	    ]);
+
 	
 		if(file_exists( 'installed.txt' ))
 		{ 
-				return view('\auth.login');
+			return view('\auth.login');
 		}
 		else
 		{	
+		//dd(in_array($_SERVER['REMOTE_ADDR'], $whitelist), "outside whitelist");
 			$file = '.env';
 			$content = file_get_contents($file);
-			$host=Input::get('db_host');
-			$d_user_name=Input::get('db_username');
-			$db_password=Input::get('db_pass');
-			$databasename=Input::get('db_name');
+			$host = $request->db_host;
+			$d_user_name = $request->db_username;
+			$db_password = $request->db_pass;
+			$databasename = $request->db_name;
 			
 			$conn = new PDO("mysql:host=$host;port=3306", "$d_user_name", "$db_password");
 			$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -54,10 +59,9 @@ class instaltionController extends Controller
 			$db_selected = mysqli_select_db($con, $databasename);
 			if (!$db_selected) 
 			{
-				$sql="TRUNCATE DATABASE $databasename";	
+				$sql="TRUNCATE DATABASE $databasename";
 			    $data=$conn->exec($sql);
 			}
-			
 			
 			
 			$con = mysqli_connect($host,$d_user_name,$db_password,$databasename);		
@@ -69,32 +73,31 @@ class instaltionController extends Controller
 
 			$content = str_replace(["CUST_HOST","CUST_USERNAME","CUST_PW","CUST_DB_NAME"],[$host,$d_user_name,$db_password,$databasename],$content);
 			$status = file_put_contents($file, $content);
-			$systemname=Input::get('name');
-			$s_email=Input::get('email');
-			$address=Input::get('address');
-			$f_name=Input::get('firstname');
-			$l_name=Input::get('lastname');
-			$email=Input::get('loginemail');
-			$password=bcrypt(Input::get('password'));
-			$c_password=Input::get('confirm');
+			$systemname=$request->name;
+			$s_email=$request->email;
+			$address=$request->address;
+			$f_name=$request->firstname;
+			$l_name=$request->lastname;
+			$email=$request->loginemail;
+			$password=bcrypt($request->password);
+			$c_password=$request->confirm;
 			$this->garageTableInstall($databasename,$d_user_name,$host,$db_password,$f_name,$l_name,$address,$email,$password,$systemname,$con,$s_email);
+		
+
+		 	Session::put('firsttime','Your Installation is Successful');
+		 	return redirect('/');
+				
 		}
-		 Session::put('firsttime','Your Installation is Successful');
-		 return redirect('/');
-		 
+	 
 	}
-	
+
+
+	// Database installation
 	private function garageTableInstall($databasename,$d_user_name,$host,$db_password,$f_name,$l_name,$address,$email,$password,$systemname,$con,$s_email)
     {		
 		
 		$conn = new PDO("mysql:host=$host;dbname=$databasename;port=3306", "$d_user_name", "$db_password");
 		$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		
-		/* $sql="DROP DATABASE $databasename";	
-		$data=$conn->exec($sql);
-		
-		$sql1="CREATE DATABASE $databasename";	
-		$data=$conn->exec($sql1); */
 		
 		$conn = new PDO("mysql:host=$host;dbname=$databasename;port=3306", "$d_user_name", "$db_password");
 		$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -138,7 +141,8 @@ class instaltionController extends Controller
 		  `updated_at` timestamp NULL DEFAULT NULL,
 		  PRIMARY KEY (`id`)
 		) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=23";
-		$data=$conn->exec($sql);		
+		$data=$conn->exec($sql);
+
 		$insert ="INSERT INTO `tbl_accessrights` (`id`, `menu_name`, `customers`, `employee`, `support_staff`, `accountant`, `created_at`, `updated_at`) VALUES
 		(1, 'Settings', 1, 1, 1, 1, '2018-08-07 23:39:13', NULL),
 		(2, 'Inventory', 0, 1, 1, 1, '2017-11-29 05:26:09', '2017-11-29 05:26:09'),
@@ -155,9 +159,9 @@ class instaltionController extends Controller
 		(13, 'Compliance', 0, 0, 1, 1, '2017-11-30 01:13:30', '2017-11-30 01:13:30'),
 		(14, 'Reports', 0, 0, 1, 1, '2017-11-30 01:38:27', '2017-11-30 01:38:27'),
 		(15, 'Email Templates', 0, 0, 1, 1, '2017-11-30 05:28:23', '2017-11-30 05:28:23'),
-		(18, 'Custom Fields', 0, 0, 1, 1, '2017-11-30 06:34:13', '2017-11-30 06:34:13'),
-		(19, 'Observation library', 0, 0, 1, 1, '2017-11-30 06:34:13', '2017-11-30 06:34:13'),
-		(20, 'Sales Part', 0, 1, 1, 1, '2017-11-30 01:13:30', '2017-11-30 01:13:30')";
+		(16, 'Custom Fields', 0, 0, 1, 1, '2017-11-30 06:34:13', '2017-11-30 06:34:13'),
+		(17, 'Observation library', 0, 0, 1, 1, '2017-11-30 06:34:13', '2017-11-30 06:34:13'),
+		(18, 'Sales Part', 0, 1, 1, 1, '2017-11-30 01:13:30', '2017-11-30 01:13:30')";
 		$data=$conn->exec($insert);
 		
 		//tbl_account_tax_rates
@@ -213,6 +217,8 @@ class instaltionController extends Controller
 		  `total_price` decimal(10,2) DEFAULT NULL,
 		  `price` decimal(10,2) DEFAULT NULL,
 		  `customer_id` int(11) DEFAULT NULL,
+		  `product_type_id` int(11) NULL DEFAULT NULL,
+		  `custom_field` varchar(255) DEFAULT NULL,
 		  `created_at` timestamp NULL DEFAULT NULL,
 		  `updated_at` timestamp NULL DEFAULT NULL,
 		  PRIMARY KEY (`id`)
@@ -48611,6 +48617,7 @@ $data=$conn->exec($sql);
 $sql="CREATE TABLE IF NOT EXISTS `tbl_colors` (
 	 `id` int(11) NOT NULL AUTO_INCREMENT,
 	 `color` varchar(255) DEFAULT NULL,
+	 `custom_field` varchar(255) DEFAULT NULL,
 	 `created_at` timestamp NULL DEFAULT NULL,
 	`updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -48968,7 +48975,7 @@ $sql ="INSERT INTO `tbl_currency_records` (`id`, `country`, `currency`, `code`, 
 (75, 'Malaysia', 'Ringgits', 'MYR', 'RM', 'Asia/Kuala_Lumpur'),
 (76, 'Malta', 'Euro', 'EUR', '€', 'Europe/Malta'),
 (77, 'Mauritius', 'Rupees', 'MUR', '₨', 'Indian/Mauritius'),
-(78, 'Mexico', 'Pesos', 'MX', '$', 'America/Mexico_City'),
+(78, 'Mexico', 'Pesos', 'MXN', '$', 'America/Mexico_City'),
 (79, 'Mongolia', 'Tugriks', 'MNT', '₮', 'Asia/Hovd'),
 (80, 'Mozambique', 'Meticais', 'MZ', 'MT', 'Africa/Maputo'),
 (81, 'Namibia', 'Dollars', 'NAD', '$', 'Africa/Windhoek'),
@@ -49026,150 +49033,236 @@ $data=$conn->exec($sql);
 
 // table currencies
 
-$sql="CREATE TABLE `currencies` (
+$sql="CREATE TABLE IF NOT EXISTS `currencies` (
   `id` int(11) DEFAULT NULL,
-  `country` varchar(100) DEFAULT NULL,
-  `currency` varchar(100) DEFAULT NULL,
-  `code` varchar(25) DEFAULT NULL,
-  `symbol` varchar(25) DEFAULT NULL,
-  `thousand_separator` varchar(10) DEFAULT NULL,
-  `decimal_separator` varchar(10) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=132";	
+  `country` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `currency` varchar(100) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `code` varchar(25) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `symbol` varchar(25) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `thousand_separator` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `decimal_separator` varchar(10) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL
+) ENGINE=MyISAM AUTO_INCREMENT=114 DEFAULT CHARSET=utf8";	
 $data=$conn->exec($sql);
 
 $sql ="INSERT INTO `currencies` (`id`, `country`, `currency`, `code`, `symbol`, `thousand_separator`, `decimal_separator`) VALUES
 (1, 'Albania', 'Leke', 'ALL', 'Lek', ',', '.'),
 (2, 'America', 'Dollars', 'USD', '$', ',', '.'),
-(3, 'Afghanistan', 'Afghanis', 'AF', '؋', ',', '.'),
+(3, 'Afghanistan', 'Afghanis', 'AFN', '؋', ',', '.'),
 (4, 'Argentina', 'Pesos', 'ARS', '$', ',', '.'),
 (5, 'Aruba', 'Guilders', 'AWG', 'ƒ', ',', '.'),
 (6, 'Australia', 'Dollars', 'AUD', '$', ',', '.'),
-(7, 'Azerbaijan', 'New Manats', 'AZ', 'ман', ',', '.'),
+(7, 'Azerbaijan', 'New Manats', 'AZN', 'ман', ',', '.'),
 (8, 'Bahamas', 'Dollars', 'BSD', '$', ',', '.'),
 (9, 'Barbados', 'Dollars', 'BBD', '$', ',', '.'),
-(10, 'Belarus', 'Rubles', 'BYR', 'p.', ',', '.'),
-(11, 'Belgium', 'Euro', 'EUR', '€', ',', '.'),
-(12, 'Beliz', 'Dollars', 'BZD', 'BZ$', ',', '.'),
-(13, 'Bermuda', 'Dollars', 'BMD', '$', ',', '.'),
-(14, 'Bolivia', 'Bolivianos', 'BOB', 'B$', ',', '.'),
-(15, 'Bosnia and Herzegovina', 'Convertible Marka', 'BAM', 'KM', ',', '.'),
-(16, 'Botswana', 'Pula\'s', 'BWP', 'P', ',', '.'),
-(17, 'Bulgaria', 'Leva', 'BG', 'лв', ',', '.'),
-(18, 'Brazil', 'Reais', 'BRL', 'R$', ',', '.'),
-(19, 'Britain (United Kingdom)', 'Pounds', 'GBP', '£', ',', '.'),
-(20, 'Brunei Darussalam', 'Dollars', 'BND', '$', ',', '.'),
-(21, 'Cambodia', 'Riels', 'KHR', '៛', ',', '.'),
-(22, 'Canada', 'Dollars', 'CAD', '$', ',', '.'),
-(23, 'Cayman Islands', 'Dollars', 'KYD', '$', ',', '.'),
-(24, 'Chile', 'Pesos', 'CLP', '$', ',', '.'),
-(25, 'China', 'Yuan Renminbi', 'CNY', '¥', ',', '.'),
-(26, 'Colombia', 'Pesos', 'COP', '$', ',', '.'),
-(27, 'Costa Rica', 'Colón', 'CRC', '₡', ',', '.'),
-(28, 'Croatia', 'Kuna', 'HRK', 'kn', ',', '.'),
-(29, 'Cuba', 'Pesos', 'CUP', '₱', ',', '.'),
-(30, 'Cyprus', 'Euro', 'EUR', '€', ',', '.'),
-(31, 'Czech Republic', 'Koruny', 'CZK', 'Kč', ',', '.'),
-(32, 'Denmark', 'Kroner', 'DKK', 'kr', ',', '.'),
-(33, 'Dominican Republic', 'Pesos', 'DOP ', 'RD$', ',', '.'),
-(34, 'East Caribbean', 'Dollars', 'XCD', '$', ',', '.'),
-(35, 'Egypt', 'Pounds', 'EGP', '£', ',', '.'),
-(36, 'El Salvador', 'Colones', 'SVC', '$', ',', '.'),
-(37, 'England (United Kingdom)', 'Pounds', 'GBP', '£', ',', '.'),
-(38, 'Euro', 'Euro', 'EUR', '€', ',', '.'),
-(39, 'Falkland Islands', 'Pounds', 'FKP', '£', ',', '.'),
-(40, 'Fiji', 'Dollars', 'FJD', '$', ',', '.'),
-(41, 'France', 'Euro', 'EUR', '€', ',', '.'),
-(42, 'Ghana', 'Cedis', 'GHC', '¢', ',', '.'),
-(43, 'Gibraltar', 'Pounds', 'GIP', '£', ',', '.'),
-(44, 'Greece', 'Euro', 'EUR', '€', ',', '.'),
-(45, 'Guatemala', 'Quetzales', 'GTQ', 'Q', ',', '.'),
-(46, 'Guernsey', 'Pounds', 'GGP', '£', ',', '.'),
-(47, 'Guyana', 'Dollars', 'GYD', '$', ',', '.'),
-(48, 'Holland (Netherlands)', 'Euro', 'EUR', '€', ',', '.'),
-(49, 'Honduras', 'Lempiras', 'HNL', 'L', ',', '.'),
-(50, 'Hong Kong', 'Dollars', 'HKD', '$', ',', '.'),
-(51, 'Hungary', 'Forint', 'HUF', 'Ft', ',', '.'),
-(52, 'Iceland', 'Kronur', 'ISK', 'kr', ',', '.'),
-(53, 'India', 'Rupees', 'INR', 'Rp', ',', '.'),
-(54, 'Indonesia', 'Rupiahs', 'IDR', 'Rp', ',', '.'),
-(55, 'Iran', 'Rials', 'IRR', '﷼', ',', '.'),
-(56, 'Ireland', 'Euro', 'EUR', '€', ',', '.'),
-(57, 'Isle of Man', 'Pounds', 'IMP', '£', ',', '.'),
-(58, 'Israel', 'New Shekels', 'ILS', '₪', ',', '.'),
-(59, 'Italy', 'Euro', 'EUR', '€', ',', '.'),
-(60, 'Jamaica', 'Dollars', 'JMD', 'J$', ',', '.'),
-(61, 'Japan', 'Yen', 'JPY', '¥', ',', '.'),
-(62, 'Jersey', 'Pounds', 'JEP', '£', ',', '.'),
-(63, 'Kazakhstan', 'Tenge', 'KZT', 'лв', ',', '.'),
-(64, 'Korea (North)', 'Won', 'KPW', '₩', ',', '.'),
-(65, 'Korea (South)', 'Won', 'KRW', '₩', ',', '.'),
-(66, 'Kyrgyzstan', 'Soms', 'KGS', 'лв', ',', '.'),
-(67, 'Laos', 'Kips', 'LAK', '₭', ',', '.'),
-(68, 'Latvia', 'Lati', 'LVL', 'Ls', ',', '.'),
-(69, 'Lebanon', 'Pounds', 'LBP', '£', ',', '.'),
-(70, 'Liberia', 'Dollars', 'LRD', '$', ',', '.'),
-(71, 'Liechtenstein', 'Switzerland Francs', 'CHF', 'CHF', ',', '.'),
-(72, 'Lithuania', 'Litai', 'LTL', 'Lt', ',', '.'),
-(73, 'Luxembourg', 'Euro', 'EUR', '€', ',', '.'),
-(74, 'Macedonia', 'Denars', 'MKD', 'ден', ',', '.'),
-(75, 'Malaysia', 'Ringgits', 'MYR', 'RM', ',', '.'),
-(76, 'Malta', 'Euro', 'EUR', '€', ',', '.'),
-(77, 'Mauritius', 'Rupees', 'MUR', '₨', ',', '.'),
-(78, 'Mexico', 'Pesos', 'MX', '$', ',', '.'),
-(79, 'Mongolia', 'Tugriks', 'MNT', '₮', ',', '.'),
-(80, 'Mozambique', 'Meticais', 'MZ', 'MT', ',', '.'),
-(81, 'Namibia', 'Dollars', 'NAD', '$', ',', '.'),
-(82, 'Nepal', 'Rupees', 'NPR', '₨', ',', '.'),
-(83, 'Netherlands Antilles', 'Guilders', 'ANG', 'ƒ', ',', '.'),
-(84, 'Netherlands', 'Euro', 'EUR', '€', ',', '.'),
-(85, 'New Zealand', 'Dollars', 'NZD', '$', ',', '.'),
-(86, 'Nicaragua', 'Cordobas', 'NIO', 'C$', ',', '.'),
-(87, 'Nigeria', 'Nairas', 'NG', '₦', ',', '.'),
-(88, 'North Korea', 'Won', 'KPW', '₩', ',', '.'),
-(89, 'Norway', 'Krone', 'NOK', 'kr', ',', '.'),
-(90, 'Oman', 'Rials', 'OMR', '﷼', ',', '.'),
-(91, 'Pakistan', 'Rupees', 'PKR', '₨', ',', '.'),
-(92, 'Panama', 'Balboa', 'PAB', 'B/.', ',', '.'),
-(93, 'Paraguay', 'Guarani', 'PYG', 'Gs', ',', '.'),
-(94, 'Peru', 'Nuevos Soles', 'PE', 'S/.', ',', '.'),
-(95, 'Philippines', 'Pesos', 'PHP', 'Php', ',', '.'),
-(96, 'Poland', 'Zlotych', 'PL', 'zł', ',', '.'),
-(97, 'Qatar', 'Rials', 'QAR', '﷼', ',', '.'),
-(98, 'Romania', 'New Lei', 'RO', 'lei', ',', '.'),
-(99, 'Russia', 'Rubles', 'RUB', 'руб', ',', '.'),
-(100, 'Saint Helena', 'Pounds', 'SHP', '£', ',', '.'),
-(101, 'Saudi Arabia', 'Riyals', 'SAR', '﷼', ',', '.'),
-(102, 'Serbia', 'Dinars', 'RSD', 'Дин.', ',', '.'),
-(103, 'Seychelles', 'Rupees', 'SCR', '₨', ',', '.'),
-(104, 'Singapore', 'Dollars', 'SGD', '$', ',', '.'),
-(105, 'Slovenia', 'Euro', 'EUR', '€', ',', '.'),
-(106, 'Solomon Islands', 'Dollars', 'SBD', '$', ',', '.'),
-(107, 'Somalia', 'Shillings', 'SOS', 'S', ',', '.'),
-(108, 'South Africa', 'Rand', 'ZAR', 'R', ',', '.'),
-(109, 'South Korea', 'Won', 'KRW', '₩', ',', '.'),
-(110, 'Spain', 'Euro', 'EUR', '€', ',', '.'),
-(111, 'Sri Lanka', 'Rupees', 'LKR', '₨', ',', '.'),
-(112, 'Sweden', 'Kronor', 'SEK', 'kr', ',', '.'),
-(113, 'Switzerland', 'Francs', 'CHF', 'CHF', ',', '.'),
-(114, 'Suriname', 'Dollars', 'SRD', '$', ',', '.'),
-(115, 'Syria', 'Pounds', 'SYP', '£', ',', '.'),
-(116, 'Taiwan', 'New Dollars', 'TWD', 'NT$', ',', '.'),
-(117, 'Thailand', 'Baht', 'THB', '฿', ',', '.'),
-(118, 'Trinidad and Tobago', 'Dollars', 'TTD', 'TT$', ',', '.'),
-(119, 'Turkey', 'Lira', 'TRY', 'TL', ',', '.'),
-(120, 'Turkey', 'Liras', 'TRL', '£', ',', '.'),
-(121, 'Tuvalu', 'Dollars', 'TVD', '$', ',', '.'),
-(122, 'Ukraine', 'Hryvnia', 'UAH', '₴', ',', '.'),
-(123, 'United Kingdom', 'Pounds', 'GBP', '£', ',', '.'),
-(124, 'United States of America', 'Dollars', 'USD', '$', ',', '.'),
-(125, 'Uruguay', 'Pesos', 'UYU', 'U$', ',', '.'),
-(126, 'Uzbekistan', 'Sums', 'UZS', 'лв', ',', '.'),
-(127, 'Vatican City', 'Euro', 'EUR', '€', ',', '.'),
-(128, 'Venezuela', 'Bolivares Fuertes', 'VEF', 'Bs', ',', '.'),
-(129, 'Vietnam', 'Dong', 'VND', '₫', ',', '.'),
-(130, 'Yemen', 'Rials', 'YER', '﷼', ',', '.'),
-(131, 'Zimbabwe', 'Zimbabwe Dollars', 'ZWD', 'Z$', ',', '.')";
+(10, 'Belgium', 'Euro', 'EUR', '€', ',', '.'),
+(11, 'Beliz', 'Dollars', 'BZD', 'BZ$', ',', '.'),
+(12, 'Bermuda', 'Dollars', 'BMD', '$', ',', '.'),
+(13, 'Bolivia', 'Bolivianos', 'BOB', 'B$', ',', '.'),
+(14, 'Bosnia and Herzegovina', 'Convertible Marka', 'BAM', 'KM', ',', '.'),
+(15, 'Botswana', 'Pula\'s', 'BWP', 'P', ',', '.'),
+(16, 'Bulgaria', 'Leva', 'BGN', 'лв', ',', '.'),
+(17, 'Brazil', 'Reais', 'BRL', 'R$', ',', '.'),
+(18, 'Britain (United Kingdom)', 'Pounds', 'GBP', '£', ',', '.'),
+(19, 'Brunei Darussalam', 'Dollars', 'BND', '$', ',', '.'),
+(20, 'Cambodia', 'Riels', 'KHR', '៛', ',', '.'),
+(21, 'Canada', 'Dollars', 'CAD', '$', ',', '.'),
+(22, 'Cayman Islands', 'Dollars', 'KYD', '$', ',', '.'),
+(23, 'Chile', 'Pesos', 'CLP', '$', ',', '.'),
+(24, 'China', 'Yuan Renminbi', 'CNY', '¥', ',', '.'),
+(25, 'Colombia', 'Pesos', 'COP', '$', ',', '.'),
+(26, 'Costa Rica', 'Colón', 'CRC', '₡', ',', '.'),
+(27, 'Croatia', 'Kuna', 'HRK', 'kn', ',', '.'),
+(28, 'Cyprus', 'Euro', 'EUR', '€', ',', '.'),
+(29, 'Czech Republic', 'Koruny', 'CZK', 'Kč', ',', '.'),
+(30, 'Denmark', 'Kroner', 'DKK', 'kr', ',', '.'),
+(31, 'Dominican Republic', 'Pesos', 'DOP ', 'RD$', ',', '.'),
+(32, 'East Caribbean', 'Dollars', 'XCD', '$', ',', '.'),
+(33, 'Egypt', 'Pounds', 'EGP', '£', ',', '.'),
+(34, 'England (United Kingdom)', 'Pounds', 'GBP', '£', ',', '.'),
+(35, 'Euro', 'Euro', 'EUR', '€', ',', '.'),
+(36, 'Falkland Islands', 'Pounds', 'FKP', '£', ',', '.'),
+(37, 'Fiji', 'Dollars', 'FJD', '$', ',', '.'),
+(38, 'France', 'Euro', 'EUR', '€', ',', '.'),
+(39, 'Gibraltar', 'Pounds', 'GIP', '£', ',', '.'),
+(40, 'Greece', 'Euro', 'EUR', '€', ',', '.'),
+(41, 'Guatemala', 'Quetzales', 'GTQ', 'Q', ',', '.'),
+(42, 'Guyana', 'Dollars', 'GYD', '$', ',', '.'),
+(43, 'Holland (Netherlands)', 'Euro', 'EUR', '€', ',', '.'),
+(44, 'Honduras', 'Lempiras', 'HNL', 'L', ',', '.'),
+(45, 'Hong Kong', 'Dollars', 'HKD', '$', ',', '.'),
+(46, 'Hungary', 'Forint', 'HUF', 'Ft', ',', '.'),
+(47, 'Iceland', 'Kronur', 'ISK', 'kr', ',', '.'),
+(48, 'India', 'Indian - Rupees', 'INR', 'Rp', ',', '.'),
+(49, 'Indonesia', 'Rupiahs', 'IDR', 'Rp', ',', '.'),
+(50, 'Ireland', 'Euro', 'EUR', '€', ',', '.'),
+(51, 'Israel', 'New Shekels', 'ILS', '₪', ',', '.'),
+(52, 'Italy', 'Euro', 'EUR', '€', ',', '.'),
+(53, 'Jamaica', 'Dollars', 'JMD', 'J$', ',', '.'),
+(54, 'Japan', 'Yen', 'JPY', '¥', ',', '.'),
+(55, 'Kazakhstan', 'Tenge', 'KZT', 'лв', ',', '.'),
+(56, 'Korea (South)', 'Won', 'KRW', '₩', ',', '.'),
+(57, 'Kyrgyzstan', 'Soms', 'KGS', 'лв', ',', '.'),
+(58, 'Laos', 'Kips', 'LAK', '₭', ',', '.'),
+(59, 'Lebanon', 'Pounds', 'LBP', '£', ',', '.'),
+(60, 'Liberia', 'Dollars', 'LRD', '$', ',', '.'),
+(61, 'Liechtenstein', 'Switzerland Francs', 'CHF', 'CHF', ',', '.'),
+(62, 'Luxembourg', 'Euro', 'EUR', '€', ',', '.'),
+(63, 'Macedonia', 'Denars', 'MKD', 'ден', ',', '.'),
+(64, 'Malaysia', 'Ringgits', 'MYR', 'RM', ',', '.'),
+(65, 'Malta', 'Euro', 'EUR', '€', ',', '.'),
+(66, 'Mauritius', 'Mauritius - Rupees', 'MUR', '₨', ',', '.'),
+(67, 'Mexico', 'Pesos', 'MXN', '$', ',', '.'),
+(68, 'Mongolia', 'Tugriks', 'MNT', '₮', ',', '.'),
+(69, 'Mozambique', 'Meticais', 'MZN', 'MT', ',', '.'),
+(70, 'Namibia', 'Dollars', 'NAD', '$', ',', '.'),
+(71, 'Nepal', 'Nepal - Rupees', 'NPR', '₨', ',', '.'),
+(72, 'Netherlands Antilles', 'Guilders', 'ANG', 'ƒ', ',', '.'),
+(73, 'Netherlands', 'Euro', 'EUR', '€', ',', '.'),
+(74, 'New Zealand', 'Dollars', 'NZD', '$', ',', '.'),
+(75, 'Nicaragua', 'Cordobas', 'NIO', 'C$', ',', '.'),
+(76, 'Nigeria', 'Nairas', 'NGN', '₦', ',', '.'),
+(77, 'North Korea', 'Won', 'KPW', '₩', ',', '.'),
+(78, 'Norway', 'Krone', 'NOK', 'kr', ',', '.'),
+(79, 'Pakistan', 'Pakistan - Rupees', 'PKR', '₨', ',', '.'),
+(80, 'Panama', 'Balboa', 'PAB', 'B/.', ',', '.'),
+(81, 'Paraguay', 'Guarani', 'PYG', 'Gs', ',', '.'),
+(82, 'Peru', 'Nuevos Soles', 'PEN', 'S/.', ',', '.'),
+(83, 'Philippines', 'Pesos', 'PHP', 'Php', ',', '.'),
+(84, 'Poland', 'Zlotych', 'PLN', 'zł', ',', '.'),
+(85, 'Qatar', 'Rials', 'QAR', '﷼', ',', '.'),
+(85, 'Romania', 'New Lei', 'RON', 'lei', ',', '.'),
+(86, 'Russia', 'Rubles', 'RUB', 'руб', ',', '.'),
+(87, 'Saint Helena', 'Pounds', 'SHP', '£', ',', '.'),
+(88, 'Saudi Arabia', 'Riyals', 'SAR', '﷼', ',', '.'),
+(89, 'Serbia', 'Dinars', 'RSD', 'Дин.', ',', '.'),
+(90, 'Seychelles', 'Seychelles - Rupees', 'SCR', '₨', ',', '.'),
+(91, 'Singapore', 'Dollars', 'SGD', '$', ',', '.'),
+(92, 'Slovenia', 'Euro', 'EUR', '€', ',', '.'),
+(92, 'Solomon Islands', 'Dollars', 'SBD', '$', ',', '.'),
+(94, 'Somalia', 'Shillings', 'SOS', 'S', ',', '.'),
+(95, 'South Africa', 'Rand', 'ZAR', 'R', ',', '.'),
+(96, 'South Korea', 'Won', 'KRW', '₩', ',', '.'),
+(97, 'Spain', 'Euro', 'EUR', '€', ',', '.'),
+(98, 'Sri Lanka', 'Sri Lankan - Rupees', 'LKR', '₨', ',', '.'),
+(99, 'Sweden', 'Kronor', 'SEK', 'kr', ',', '.'),
+(100, 'Switzerland', 'Francs', 'CHF', 'CHF', ',', '.'),
+(101, 'Suriname', 'Dollars', 'SRD', '$', ',', '.'),
+(102, 'Taiwan', 'New Dollars', 'TWD', 'NT$', ',', '.'),
+(103, 'Thailand', 'Baht', 'THB', '฿', ',', '.'),
+(104, 'Trinidad and Tobago', 'Dollars', 'TTD', 'TT$', ',', '.'),
+(105, 'Turkey', 'Lira', 'TRY', 'TL', ',', '.'),
+(106, 'Ukraine', 'Hryvnia', 'UAH', '₴', ',', '.'),
+(107, 'United Kingdom', 'Pounds', 'GBP', '£', ',', '.'),
+(108, 'United States of America', 'Dollars', 'USD', '$', ',', '.'),
+(109, 'Uruguay', 'Pesos', 'UYU', 'U$', ',', '.'),
+(110, 'Uzbekistan', 'Sums', 'UZS', 'лв', ',', '.'),
+(111, 'Vatican City', 'Euro', 'EUR', '€', ',', '.'),
+(112, 'Vietnam', 'Dong', 'VND', '₫', ',', '.'),
+(113, 'Yemen', 'Rials', 'YER', '﷼', ',', '.')";
 $data=$conn->exec($sql);
+
+//table inspection_points_library
+$sql="CREATE TABLE IF NOT EXISTS `inspection_points_library` (
+  `id` int(11) NOT NULL,
+  `code` varchar(20) DEFAULT NULL,
+  `point` varchar(255) DEFAULT NULL,
+  `inspection_type` int(5) DEFAULT NULL COMMENT '1 = Inside cab, 2 = Ground Level & Under Vehicle',
+  `description` text DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=74";
+$data=$conn->exec($sql);
+
+$sql ="INSERT INTO `inspection_points_library` (`id`, `code`, `point`, `inspection_type`, `description`) VALUES
+	(1, '1', 'Seats', 1, 'What is status about seats inside a vehicle'),
+	(2, '2', 'Hands-free kit', 1, 'What is status about seat belts inside a vehicle'),
+	(3, '3', 'Mirrors', 1, 'What is status about mirrors inside a vehicle'),
+	(4, '4', 'Glass & view of the road', 1, 'What is status about glass and views of the road inside a vehicle'),
+	(5, '5', 'Windscreen wipers & washers', 1, 'What is status about Windscreen wipers & washers inside a vehicle'),
+	(6, '6', 'Speedometer/Tachograph', 1, 'What is status about Speedometer/Tachograph inside a vehicle'),
+	(7, '7', 'Horn', 1, 'What is status about horn inside a vehicle'),
+	(8, '8', 'Driving controls', 1, 'What is the status about Driving controls inside a vehicle'),
+	(9, '9', 'Steering controls', 1, 'What is status about Steering controls inside a vehicle'),
+	(10, '10', 'Service break pedal', 1, 'What is status about service break pedal inside a vehicle'),
+	(11, '11', 'Service break operation', 1, 'What is status about service break operation inside a vehicle'),
+	(12, '12', 'Pressure/vacuum warning & build-up', 1, 'What is status about pressure/vacuum warning & build-up inside a vehicle'),
+	(13, '13', 'Hand lever operating mechanical break', 1, 'What is status about hand lever operating mechanical break inside a vehicle'),
+	(14, '14', 'Hand operated break control valve', 1, 'What is status about hand operated break control valve inside a vehicle'),
+	(15, '15', 'Cab floors & steps', 1, 'What is status about cab floors & steps inside a vehicle'),
+	(16, '16', 'Conditions of cab interior', 1, 'What is status about conditions of cab interior inside a vehicle'),
+	(17, '17', 'Anti-theft device/alarm', 1, 'What is status about anti-theft device/alarm inside a vehicle'),
+	(18, '18', 'Other instruments', 1, 'What is status about other instruments inside a vehicle'),
+	(19, '19', 'Interior & panel lights', 1, 'What is status about interior & panel lights inside a vehicle'),
+	(20, '20', 'Heating & demisting system', 1, 'What is status about heating & demisting system inside a vehicle'),
+	(21, '21', 'Licences', 1, 'What is status about licence'),
+	(22, '22', 'Legal writing', 1, 'What is status about legal writing'),
+	(23, '23', 'Alcohol breath tester', 1, 'What is status about alcohol breath tester'),
+	(24, '24', 'Fire extinguisher', 1, 'What is status about fire extinguisher inside vehicle'),
+	(25, '25', 'First aid kit', 1, 'What is status about first aid kit inside vehicle'),
+	(26, '26', 'Seat belts & supplementary restraint systems', 1, 'What is status about hands-free kit inside a vehicle'),
+	(27, '27', 'Emergency glass hammer', 1, 'What is status about emergency glass hammer inside a vehicle'),
+	(28, '28', 'Registration plate', 2, 'What is status about registration plate in vehicle'),
+	(29, '29', 'Cab doors', 2, 'What is status about cab doors in vehicle'),
+	(30, '30', 'Cab security', 2, 'What is status about cab security in vehicle'),
+	(31, '31', 'Auxiliary drive belts', 2, 'What is status about security of body,containers & crane support legs in vehicle'),
+	(32, '32', 'Condition of body', 2, 'What is status about condition of body in vehicle'),
+	(33, '33', 'Exhaust emissions', 2, 'What is status about exhaust emissions in vehicle'),
+	(34, '34', 'Road wheels & hubs', 2, 'What is status about road wheels & hubs in vehicle'),
+	(35, '35', 'Load securing devices', 2, 'What is status about sideguards, under-run devices & bumper bars in vehicle'),
+	(36, '36', 'Spare wheel & carrier', 2, 'What is status about spare wheel & carrier in vehicle'),
+	(37, '37', 'Condition of chassis', 2, 'What is status about condition of chassis in vehicle'),
+	(38, '38', 'Vehicle to trailer coupling', 2, 'What is status about vehicle to trailer coupling '),
+	(39, '39', 'Hydraulic equipment', 2, 'What is status about trailer parking, emergency break & air line connections '),
+	(40, '40', 'Spray suppression, wings & wheel arches', 2, 'What is status about spray suppression, wings & wheel arches'),
+	(41, '41', 'Speed limiter', 2, 'What is status about speed limiter'),
+	(42, '42', 'Electrical wiring & equipment', 2, 'What is status about electrical wiring & equipment in vehicle'),
+	(43, '43', 'Engine & transmission mountings', 2, 'What is status about engine & transmission mountings in vehicle'),
+	(44, '44', 'Oil leaks', 2, 'What is status about oil leakage in vehicle'),
+	(45, '45', 'Fuel tanks & system', 2, 'What is status about fuel tanks & system in vehicle'),
+	(46, '46', 'Exhaust Systems', 2, 'What is status about exhaust Systems in vehicle'),
+	(47, '47', 'Steering mechanism', 2, 'What is status about steering mechanism in vehicle'),
+	(48, '48', 'Suspension', 2, 'What is status about suspension in vehicle'),
+	(49, '49', 'Axles, stub axles & wheel bearings', 2, 'What is status about axles, stub axles & wheel bearings in vehicle'),
+	(50, '50', 'Transmission', 2, 'What is status about transmission in vehicle'),
+	(51, '51', 'Other dangerous defects', 2, 'What is status about other dangerous defects in vehicle'),
+	(52, '52', 'Additional breaking devices', 2, 'What is status about additional breaking devices in vehicle'),
+	(53, '53', 'Break system and components', 2, 'What is status about break system and components in vehicle'),
+	(54, '54', 'Markers and reflectors', 2, 'What is status about markers and reflectors in vehicle'),
+	(55, '55', 'Lamps', 2, 'What is status about lamps in vehicle'),
+	(56, '56', 'Lifting equipment', 2, 'What is status about direction indicators and hazard warning lamps in vehicle'),
+	(57, '57', 'Aim of headlamps', 2, 'What is status about aim of headlamps in vehicle'),
+	(58, '58', 'Cab exterior', 2, 'What is status about cab exterior in vehicle'),
+	(59, '59', 'Susies', 2, 'What is status about susies'),
+	(60, '60', 'Final drive', 2, 'What is status about final drive in vehicle'),
+	(61, '61', 'Axle lifting equipment', 2, 'What is status about axle lifting equipment in vehicle'),
+	(62, '62', 'Rear wheel bearings and seals', 2, 'What is status about rear wheel bearings and seals in vehicle'),
+	(63, '63', 'Axle alignment', 2, 'What is status about axle alignment in vehicle'),
+	(64, '64', 'Steering alignment', 2, 'What is status about steering alignment in vehicle'),
+	(65, '65', 'End outline marker lamps', 2, 'What is status about end outline marker lamps'),
+	(66, '66', 'Side marker lamps', 2, 'What is status about side marker lamps in vehicle'),
+	(67, '67', 'Ancillary equipment', 2, 'What is status about ancillary equipment in vehicle'),
+	(68, '68', 'Cooling system', 2, 'What is status about cooling system in vehicle'),
+	(69, '69', 'Generator', 2, 'What is status about generator in vehicle'),
+	(70, '70', 'Security of body, containers & crane support legs', 2, 'What is status about auxiliary drive belts in vehicle'),
+	(71, '71', 'Sideguards, under-run devices & bumper bars', 2, 'What is status about load securing devices in vehicle'),
+	(72, '72', 'Direction indicators and hazard warning lamps', 2, 'What is status about lifting equipment in vehicle'),
+	(73, '73', 'Trailer parking, emergency break & air line connections', 2, 'What is status about hydraulic equipment in vehicle')";
+$data=$conn->exec($sql);
+
+//table mot_vehicle_inspection
+$sql="CREATE TABLE `mot_vehicle_inspection` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `answer_question_id` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'We store here answer and question library id in json format to avoid to store multiple rows' CHECK (json_valid(`answer_question_id`)),
+  `vehicle_id` int(11) DEFAULT NULL,
+  `service_id` int(11) DEFAULT NULL,
+  `jobcard_number` varchar(20) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1";
+$data=$conn->exec($sql);
+
 //tbl_custom_fields
 $sql="CREATE TABLE IF NOT EXISTS `tbl_custom_fields` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -49181,7 +49274,7 @@ $sql="CREATE TABLE IF NOT EXISTS `tbl_custom_fields` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1";
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1";
 $data=$conn->exec($sql);
 //tbl_expenses
 $sql="CREATE TABLE IF NOT EXISTS `tbl_expenses` (
@@ -49189,6 +49282,7 @@ $sql="CREATE TABLE IF NOT EXISTS `tbl_expenses` (
   `main_label` varchar(255) DEFAULT NULL,
   `status` int(11) DEFAULT NULL,
   `date` date DEFAULT NULL,
+  `custom_field` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -49244,13 +49338,14 @@ $data=$conn->exec($sql);
 //tbl_incomes		
 $sql="CREATE TABLE IF NOT EXISTS `tbl_incomes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `invoice_number` int(15) DEFAULT NULL,
+  `invoice_number` varchar(255) DEFAULT NULL,
   `payment_number` varchar(255) DEFAULT NULL,
   `customer_id` int(11) DEFAULT NULL,
   `status` int(11) DEFAULT '0' COMMENT '{ 0 - Unpaid . 1-Half Paid , 2-Full Paid }',
   `payment_type` varchar(255) DEFAULT NULL,
   `date` date DEFAULT NULL,
   `main_label` varchar(255) DEFAULT NULL,
+  `custom_field` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -49270,7 +49365,7 @@ $data=$conn->exec($sql);
 //tbl_invoices
 $sql="CREATE TABLE IF NOT EXISTS `tbl_invoices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `invoice_number` int(15) DEFAULT NULL,
+  `invoice_number` varchar(255) DEFAULT NULL,
   `payment_number` varchar(20) DEFAULT NULL,
   `customer_id` varchar(255) DEFAULT NULL,
   `job_card` varchar(50) DEFAULT NULL,
@@ -49287,6 +49382,7 @@ $sql="CREATE TABLE IF NOT EXISTS `tbl_invoices` (
   `type` int(11) DEFAULT NULL COMMENT '0=Service, 1=Sales,2=salepart',
   `charge_id` varchar(255) DEFAULT NULL,
   `sales_service_id` int(11) DEFAULT NULL,
+  `custom_field` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -49350,7 +49446,7 @@ $sql="CREATE TABLE `updatekey` (
 $data=$conn->exec($sql);
 
 $sql="INSERT INTO `updatekey` (`id`, `stripe_id`, `secret_key`, `publish_key`, `created_at`, `updated_at`) VALUES
-(1, 9, 'sk_test_Cm3dIuyredSIdYArKGp9INBU', 'pk_test_8xNuwYhDeaKJIGgIJ9OmCHa0', '2018-08-17 09:27:26', '2018-08-17 09:30:26')";
+(1, 9, '', '', '2018-08-17 09:27:26', '2018-08-17 09:30:26')";
 $data=$conn->exec($sql);
 
 //tbl_mail_notifications
@@ -49377,8 +49473,9 @@ $sql ="INSERT INTO `tbl_mail_notifications` (`id`, `notification_label`, `notifi
 (4, 'On successful job card creation', 'successful_jobcard', 'Dear { Customer_name },\r\n\r\n         Thank you for bringing your vehicle to our service center.Your Jobcard Number is { jobcard_number } on { service_date }  for { detail }\r\n     \r\nRegards From { system_name }. ', 'Your recent Vehicle service request is successful and jobcard { jobcard_number } is created for you.', 'yatin.patel@dasinfomedia.com',0, 0, '{ customer_name } = Customer name </br>\n{ jobcard_number } = Jobcard number </br>\n{ service_date } = Service date </br>\n{ detail } = Service details </br>\n{ system_name } = System name \n', '2018-01-10 04:26:37', '2018-01-11 18:09:02'),
 (5, 'Service done status Invoice notification of customer', 'done_service_invoice', 'Dear { Customer_name },\r\n\r\n         Your services { service_title }  has been completed on { service_date }.\r\n     The total amount due is { total_amount }.\r\n   { Invoice }\r\nRegards From { system_name }. ', 'Your recent Vehicle service request is successful and jobcard { jobcard_no } is created for you.', 'yatin.patel@dasinfomedia.com',0, 0, '{ customer_name } = Customer name </br>\r\n{ service_title } = Service title </br>\r\n{ service_date } = Service date </br>\r\n{ total_amount } = Total amount sales </br>\r\n{ Invoice } = Invoice service </br>\r\n{ system_name } = system name </br>\r\n{ jobcard_number } = Service jobcard number ', '2018-01-10 04:18:25', '2018-01-10 23:07:35'),
 (6, 'Service Due notification  before next week, next month,  admin,customer, employee', 'Service Due', 'Dear { user_name },\r\n\r\n          Your Pre approved free services is Coming up on  { month } - { year } This is Just a Reminder mail.\r\n    \r\n{ service_list }\r\n     \r\nRegards From { system_name }. ', '   Next { month_week } service Due on summery for { system name  }  for   { month } - { year } .', 'yatin.patel@dasinfomedia.com',0, 0, '{ user_name } = User name </br>\n{ service_date } = Service date </br>\n{ service_list } = Service List </br>\n{ system_name } = System name \n', NULL, '2018-09-15 04:33:34'),
-(8, 'Monthly service list notification to admin', 'Monthly_service_notification', 'Dear { admin },\r\n\r\n         Monthly Services list attached.\r\n\r\n\r\n { service_list }\r\n\r\n\r\nRegards From ,{ system_name }.', 'Monthly service completion summary for { system_name } for { month } - { year }', 'yatin.patel@dasinfomedia.com', 0,0, '{ admin } = admin name </br>\r\n{ service_list } = Service List Month </br>\r\n{ system_name } = System name', '2018-01-10 03:47:58', '2018-02-20 18:24:33'),
-(9, 'Weekly services list notification to employee', 'weekly_servicelist', 'Dear { employee },\r\n\r\n         Weekly Services list attached.\r\n\r\n\r\n { service_list }\r\n\r\n\r\nRegards From ,\r\n{ system_name }.', 'Weekly service completetion summry for { system_name } for { month } { year }', 'yatin.patel@dasinfomedia.com', 0,0, '{ employee } = Employee name </br>\r\n{ service_list } = Weekly service list </br>\r\n{ system_name } = system name', '2018-01-10 03:59:55', '2018-01-10 18:25:13')";
+(7, 'Monthly service list notification to admin', 'Monthly_service_notification', 'Dear { admin },\r\n\r\n         Monthly Services list attached.\r\n\r\n\r\n { service_list }\r\n\r\n\r\nRegards From ,{ system_name }.', 'Monthly service completion summary for { system_name } for { month } - { year }', 'yatin.patel@dasinfomedia.com', 0,0, '{ admin } = admin name </br>\r\n{ service_list } = Service List Month </br>\r\n{ system_name } = System name', '2018-01-10 03:47:58', '2018-02-20 18:24:33'),
+(8, 'Weekly services list notification to employee', 'weekly_servicelist', 'Dear { employee },\r\n\r\n         Weekly Services list attached.\r\n\r\n\r\n { service_list }\r\n\r\n\r\nRegards From ,\r\n{ system_name }.', 'Weekly service completetion summry for { system_name } for { month } { year }', 'yatin.patel@dasinfomedia.com', 0,0, '{ employee } = Employee name </br>\r\n{ service_list } = Weekly service list </br>\r\n{ system_name } = system name', '2018-01-10 03:59:55', '2018-01-10 18:25:13'),
+(9, 'Send quotation mail to customer for accept or declined', 'service_quotation_pdf_mail_accept_or_declined', 'Dear { customer_name },<br><br>\r\n        &emsp;Thank you for bringing your vehicle to our service center.\r\n<br>\r\nWe have checked your vehicle for service and create quotation.\r\n\r\n<br><br>Please see the attached service quotation of your vehicle <span style=\"color:red;\">{ vehicle_name }</span>\r\n\r\n<br><br>\r\n<a href=\"{ download_file_url }\" download=\"{ download_file_name }\" target=\"_self\" style=\"background-color:#007bff; border-radius: 5px; color:#ffffff; padding: 8px 10px; border:none; text-decoration: none;\">Download Quotation Pdf</a>\r\n\r\n\r\n<br><br>\r\nRegards From\r\n<br>\r\n{ system_name }', 'Quotation mail for your vehicle { vehicle_name } service', 'yatin.patel@dasinfomedia.com', 0,0, '{ customer_name } = Customer name </br>\r\n{ jobcard_number } = Jobcard number </br>\r\n{ service_date } = Service date </br>\r\n{ detail } = Service details </br>\r\n{ system_name } = System name </br>\r\n{ vehicle_name } = Vehicle name </br>\r\n{ invoice_number } = Invoice number</br>\r\n{ currency_symbol } = Currency Symbol</br>\r\n{ total_amount } = Total Amount </br>\r\n{ paid_amount } = Total Paid Amount </br>\r\n{ due_amount } = Total Due Amount </br>\r\n{ confirm_url } = Confirmation url for customer</br>\r\n{ reject_url } = Reject url for customer</br>\r\n{ download_file_url } = Quotation pdf file download url\r\n{ download_file_name } = Quotation pdf file name', '2018-01-10 03:59:55', '2018-01-10 18:25:13')";
 $data=$conn->exec($sql);
 //tbl_model_names
 $sql="CREATE TABLE IF NOT EXISTS `tbl_model_names` (
@@ -49447,6 +49544,7 @@ $sql="CREATE TABLE `tbl_products` (
 	`quantity` varchar(255) DEFAULT NULL,
 	`category` int(10) DEFAULT NULL,
 	`unit` int(11) DEFAULT NULL,
+	`custom_field` varchar(255) DEFAULT NULL,
 	`created_at` timestamp NULL DEFAULT NULL,
 	`updated_at` timestamp NULL DEFAULT NULL,
 	PRIMARY KEY (`id`)
@@ -49479,6 +49577,7 @@ $sql="CREATE TABLE IF NOT EXISTS `tbl_purchases` (
   `mobile` varchar(15) DEFAULT NULL,
   `email` varchar(255) DEFAULT NULL,
   `address` text DEFAULT NULL,
+  `custom_field` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -49506,6 +49605,7 @@ $sql="CREATE TABLE IF NOT EXISTS `tbl_rto_taxes` (
   `registration_tax` varchar(255) DEFAULT NULL,
   `number_plate_charge` varchar(255) DEFAULT NULL,
   `muncipal_road_tax` varchar(255) DEFAULT NULL,
+  `custom_field` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -49532,6 +49632,7 @@ $sql="CREATE TABLE IF NOT EXISTS `tbl_sales` (
   `date_gap` varchar(255) DEFAULT NULL,
   `salesmanname` varchar(255) DEFAULT NULL,
   `assigne_to` varchar(255) DEFAULT NULL,
+  `custom_field` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
 	`updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -49567,6 +49668,8 @@ $sql="CREATE TABLE IF NOT EXISTS `tbl_services` (
   `detail` text DEFAULT NULL,
   `employee_status` int(11) DEFAULT NULL,
   `is_appove` int(11) DEFAULT NULL,
+  `custom_field` varchar(255) DEFAULT NULL,
+  `mot_status` int(5) DEFAULT NULL COMMENT '{ 1 = Yes, 0 = No }',
   `created_at` timestamp NULL DEFAULT NULL,
 	`updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -49636,7 +49739,7 @@ $sql="CREATE TABLE IF NOT EXISTS `tbl_settings` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2";
 $data=$conn->exec($sql);
 $sql ="INSERT INTO `tbl_settings` (`id`, `address`, `system_name`, `starting_year`, `phone_number`, `email`, `city_id`, `state_id`, `country_id`, `logo_image`, `cover_image`, `paypal_id`, `date_format`, `currancy`, `created_at`, `updated_at`) VALUES
-(1, '', '$systemname', '', '', '$s_email', '783', '12', '101', 'SV0KVFfZjW2ETXN.png', 'YgTd1CqSnCkWokh.jpg', '', 'Y-m-d', '53', '2018-04-17 08:14:38', '2018-04-14 02:04:32')";
+(1, '$address', '$systemname', '', '', '$s_email', '783', '12', '101', 'SV0KVFfZjW2ETXN.png', 'YgTd1CqSnCkWokh.jpg', '', 'Y-m-d', '53', '2018-04-17 08:14:38', '2018-04-14 02:04:32')";
 $data=$conn->exec($sql);
 //tbl_states
 $sql="CREATE TABLE IF NOT EXISTS `tbl_states` (
@@ -53789,6 +53892,7 @@ $sql="CREATE TABLE IF NOT EXISTS `tbl_vehicles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `vehicletype_id` int(11) DEFAULT NULL,
   `chassisno` varchar(255) DEFAULT NULL,
+  `number_plate` varchar(255) DEFAULT NULL,
   `vehiclebrand_id` int(11) DEFAULT NULL,
   `modelyear` varchar(255) DEFAULT NULL,
   `fuel_id` int(11) DEFAULT NULL,
@@ -53804,6 +53908,7 @@ $sql="CREATE TABLE IF NOT EXISTS `tbl_vehicles` (
   `engine` varchar(255) DEFAULT NULL,
   `nogears` varchar(255) DEFAULT NULL,
   `registration_no` varchar(255) DEFAULT NULL,
+  `custom_field` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -53814,6 +53919,7 @@ $sql="CREATE TABLE IF NOT EXISTS `tbl_vehicle_brands` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `vehicle_id` int(11) DEFAULT NULL,
   `vehicle_brand` varchar(255) DEFAULT NULL,
+  `custom_field` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -53854,17 +53960,70 @@ $data=$conn->exec($sql);
 $sql="CREATE TABLE IF NOT EXISTS `tbl_vehicle_types` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `vehicle_type` varchar(255) DEFAULT NULL,
+  `custom_field` varchar(255) DEFAULT NULL,
  `created_at` timestamp NULL DEFAULT NULL,
  `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1";
 $data=$conn->exec($sql);
+
+//table vehicle_mot_test_reports
+$sql="CREATE TABLE IF NOT EXISTS `vehicle_mot_test_reports` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `vehicle_id` int(11) DEFAULT NULL,
+  `service_id` int(11) DEFAULT NULL,
+  `mot_vehicle_inspection_id` int(11) DEFAULT NULL,
+  `test_status` varchar(20) DEFAULT NULL COMMENT 'Pass and Fail',
+  `mot_test_number` varchar(50) DEFAULT NULL COMMENT '890060195240',
+  `date` date DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1";
+$data=$conn->exec($sql);
+
+//table roles
+$sql = "CREATE TABLE IF NOT EXISTS `roles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `role_slug` varchar(50) NOT NULL,
+  `role_name` varchar(50) NOT NULL,
+  `role_description` varchar(250) NULL DEFAULT NULL,
+  `is_admin` tinyint(5) NOT NULL DEFAULT '0',
+  `allow_access` tinyint(4) NOT NULL,
+  `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '0=Deactive, 1=Active',
+  `permissions` text DEFAULT NULL,
+  `created_by` int(5) DEFAULT NULL,
+  `updated_by` int(5) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1";
+$data = $conn->exec($sql);
+
+$sql = 'INSERT INTO `roles` (`id`, `role_slug`, `role_name`, `role_description`, `is_admin`,`allow_access`,`status`,`permissions`,`created_by`,`updated_by`) VALUES
+	(1, "super_admin", "Super Admin", "This is a Super Admin role", 1, 1, 1, null, null, null),
+	(2, "customer", "Customer", "This is customer role", 0, 1, 1, "{\"vehicle_view\":\"true\",\"dashboard_view\":\"true\",\"dashboard_owndata\":\"true\",\"customer_view\":\"true\",\"customer_owndata\":\"true\",\"employee_view\":\"true\",\"supportstaff_view\":\"true\",\"accountant_view\":\"true\",\"service_view\":\"true\",\"invoice_view\":\"true\",\"jobcard_view\":\"true\",\"gatepass_view\":\"true\",\"sales_view\":\"true\",\"timezone_view\":\"true\",\"timezone_edit\":\"true\",\"language_view\":\"true\",\"language_edit\":\"true\"}", null, null),
+	(3, "employee", "Employee", "This is a Employee role", 0, 1, 1, "{\"vehicle_view\":\"true\",\"vehicle_add\":\"true\",\"vehicle_edit\":\"true\",\"vehicle_delete\":\"true\",\"supplier_view\":\"true\",\"supplier_add\":\"true\",\"supplier_edit\":\"true\",\"supplier_delete\":\"true\",\"product_view\":\"true\",\"product_add\":\"true\",\"product_edit\":\"true\",\"product_delete\":\"true\",\"purchase_view\":\"true\",\"purchase_add\":\"true\",\"purchase_edit\":\"true\",\"purchase_delete\":\"true\",\"stock_view\":\"true\",\"stock_add\":\"true\",\"dashboard_view\":\"true\",\"dashboard_owndata\":\"true\",\"customer_view\":\"true\",\"employee_view\":\"true\",\"employee_owndata\":\"true\",\"supportstaff_view\":\"true\",\"accountant_view\":\"true\",\"vehicletype_view\":\"true\",\"vehicletype_add\":\"true\",\"vehicletype_edit\":\"true\",\"vehicletype_delete\":\"true\",\"vehiclebrand_view\":\"true\",\"vehiclebrand_add\":\"true\",\"vehiclebrand_edit\":\"true\",\"vehiclebrand_delete\":\"true\",\"colors_view\":\"true\",\"colors_add\":\"true\",\"colors_edit\":\"true\",\"colors_delete\":\"true\",\"service_view\":\"true\",\"invoice_view\":\"true\",\"jobcard_view\":\"true\",\"jobcard_edit\":\"true\",\"gatepass_view\":\"true\",\"sales_view\":\"true\",\"salespart_view\":\"true\",\"salespart_add\":\"true\",\"timezone_view\":\"true\",\"timezone_edit\":\"true\",\"language_view\":\"true\",\"language_edit\":\"true\"}", null, null),
+	(4, "support_staff", "Support Staff", "This is a Support Staff role", 0, 1, 1, "{\"vehicle_view\":\"true\",\"vehicle_add\":\"true\",\"vehicle_edit\":\"true\",\"vehicle_delete\":\"true\",\"supplier_view\":\"true\",\"supplier_add\":\"true\",\"supplier_edit\":\"true\",\"supplier_delete\":\"true\",\"product_view\":\"true\",\"product_add\":\"true\",\"product_edit\":\"true\",\"product_delete\":\"true\",\"purchase_view\":\"true\",\"purchase_add\":\"true\",\"purchase_edit\":\"true\",\"purchase_delete\":\"true\",\"stock_view\":\"true\",\"stock_add\":\"true\",\"dashboard_view\":\"true\",\"dashboard_owndata\":\"true\",\"customer_view\":\"true\",\"customer_add\":\"true\",\"customer_edit\":\"true\",\"customer_delete\":\"true\",\"employee_view\":\"true\",\"employee_add\":\"true\",\"employee_edit\":\"true\",\"employee_delete\":\"true\",\"supportstaff_view\":\"true\",\"supportstaff_add\":\"true\",\"supportstaff_edit\":\"true\",\"supportstaff_delete\":\"true\",\"supportstaff_owndata\":\"true\",\"accountant_view\":\"true\",\"accountant_add\":\"true\",\"accountant_edit\":\"true\",\"accountant_delete\":\"true\",\"vehicletype_view\":\"true\",\"vehicletype_add\":\"true\",\"vehicletype_edit\":\"true\",\"vehicletype_delete\":\"true\",\"vehiclebrand_view\":\"true\",\"vehiclebrand_add\":\"true\",\"vehiclebrand_edit\":\"true\",\"vehiclebrand_delete\":\"true\",\"colors_view\":\"true\",\"colors_add\":\"true\",\"colors_edit\":\"true\",\"colors_delete\":\"true\",\"service_view\":\"true\",\"service_add\":\"true\",\"service_edit\":\"true\",\"service_delete\":\"true\",\"invoice_view\":\"true\",\"invoice_add\":\"true\",\"invoice_edit\":\"true\",\"invoice_delete\":\"true\",\"jobcard_view\":\"true\",\"jobcard_add\":\"true\",\"jobcard_edit\":\"true\",\"gatepass_view\":\"true\",\"gatepass_add\":\"true\",\"gatepass_edit\":\"true\",\"gatepass_delete\":\"true\",\"taxrate_view\":\"true\",\"taxrate_add\":\"true\",\"taxrate_edit\":\"true\",\"taxrate_delete\":\"true\",\"paymentmethod_view\":\"true\",\"paymentmethod_add\":\"true\",\"paymentmethod_edit\":\"true\",\"paymentmethod_delete\":\"true\",\"income_view\":\"true\",\"income_add\":\"true\",\"income_edit\":\"true\",\"income_delete\":\"true\",\"expense_view\":\"true\",\"expense_add\":\"true\",\"expense_edit\":\"true\",\"expense_delete\":\"true\",\"sales_view\":\"true\",\"sales_add\":\"true\",\"sales_edit\":\"true\",\"sales_delete\":\"true\",\"salespart_view\":\"true\",\"salespart_add\":\"true\",\"salespart_edit\":\"true\",\"salespart_delete\":\"true\",\"rto_view\":\"true\",\"rto_add\":\"true\",\"rto_edit\":\"true\",\"rto_delete\":\"true\",\"report_view\":\"true\",\"emailtemplate_view\":\"true\",\"emailtemplate_edit\":\"true\",\"customfield_view\":\"true\",\"customfield_add\":\"true\",\"customfield_edit\":\"true\",\"customfield_delete\":\"true\",\"observationlibrary_view\":\"true\",\"observationlibrary_add\":\"true\",\"observationlibrary_edit\":\"true\",\"observationlibrary_delete\":\"true\",\"timezone_view\":\"true\",\"timezone_edit\":\"true\",\"language_view\":\"true\",\"language_edit\":\"true\"}", null, null),
+	(5, "accountant", "Accountant", "This is a Accountant role", 0, 1, 1, "{\"vehicle_view\":\"true\",\"vehicle_add\":\"true\",\"vehicle_edit\":\"true\",\"vehicle_delete\":\"true\",\"supplier_view\":\"true\",\"supplier_add\":\"true\",\"supplier_edit\":\"true\",\"supplier_delete\":\"true\",\"product_view\":\"true\",\"product_add\":\"true\",\"product_edit\":\"true\",\"product_delete\":\"true\",\"purchase_view\":\"true\",\"purchase_add\":\"true\",\"purchase_edit\":\"true\",\"purchase_delete\":\"true\",\"stock_view\":\"true\",\"stock_add\":\"true\",\"dashboard_view\":\"true\",\"dashboard_owndata\":\"true\",\"customer_view\":\"true\",\"customer_add\":\"true\",\"customer_edit\":\"true\",\"customer_delete\":\"true\",\"employee_view\":\"true\",\"employee_add\":\"true\",\"employee_edit\":\"true\",\"employee_delete\":\"true\",\"supportstaff_view\":\"true\",\"supportstaff_add\":\"true\",\"supportstaff_edit\":\"true\",\"supportstaff_delete\":\"true\",\"supportstaff_owndata\":\"true\",\"accountant_view\":\"true\",\"accountant_add\":\"true\",\"accountant_edit\":\"true\",\"accountant_delete\":\"true\",\"vehicletype_view\":\"true\",\"vehicletype_add\":\"true\",\"vehicletype_edit\":\"true\",\"vehicletype_delete\":\"true\",\"vehiclebrand_view\":\"true\",\"vehiclebrand_add\":\"true\",\"vehiclebrand_edit\":\"true\",\"vehiclebrand_delete\":\"true\",\"colors_view\":\"true\",\"colors_add\":\"true\",\"colors_edit\":\"true\",\"colors_delete\":\"true\",\"service_view\":\"true\",\"service_add\":\"true\",\"service_edit\":\"true\",\"service_delete\":\"true\",\"invoice_view\":\"true\",\"invoice_add\":\"true\",\"invoice_edit\":\"true\",\"invoice_delete\":\"true\",\"jobcard_view\":\"true\",\"jobcard_add\":\"true\",\"jobcard_edit\":\"true\",\"gatepass_view\":\"true\",\"gatepass_add\":\"true\",\"gatepass_edit\":\"true\",\"gatepass_delete\":\"true\",\"taxrate_view\":\"true\",\"taxrate_add\":\"true\",\"taxrate_edit\":\"true\",\"taxrate_delete\":\"true\",\"paymentmethod_view\":\"true\",\"paymentmethod_add\":\"true\",\"paymentmethod_edit\":\"true\",\"paymentmethod_delete\":\"true\",\"income_view\":\"true\",\"income_add\":\"true\",\"income_edit\":\"true\",\"income_delete\":\"true\",\"expense_view\":\"true\",\"expense_add\":\"true\",\"expense_edit\":\"true\",\"expense_delete\":\"true\",\"sales_view\":\"true\",\"sales_add\":\"true\",\"sales_edit\":\"true\",\"sales_delete\":\"true\",\"salespart_view\":\"true\",\"salespart_add\":\"true\",\"salespart_edit\":\"true\",\"salespart_delete\":\"true\",\"rto_view\":\"true\",\"rto_add\":\"true\",\"rto_edit\":\"true\",\"rto_delete\":\"true\",\"report_view\":\"true\",\"emailtemplate_view\":\"true\",\"emailtemplate_edit\":\"true\",\"customfield_view\":\"true\",\"customfield_add\":\"true\",\"customfield_edit\":\"true\",\"customfield_delete\":\"true\",\"observationlibrary_view\":\"true\",\"observationlibrary_add\":\"true\",\"observationlibrary_edit\":\"true\",\"observationlibrary_delete\":\"true\",\"timezone_view\":\"true\",\"timezone_edit\":\"true\",\"language_view\":\"true\",\"language_edit\":\"true\"}", null, null)';
+$data = $conn->exec($sql);
+
+//table role_user
+$sql="CREATE TABLE IF NOT EXISTS `role_users` (
+  `user_id` int(11) NOT NULL,
+  `role_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1";
+$data=$conn->exec($sql);
+
 //users
 $sql="CREATE TABLE `users` (
 	`id` int(11) NOT NULL AUTO_INCREMENT,
 	`name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
 	`lastname` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL,
 	`display_name` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL,
+	`company_name` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
 	`gender` tinyint(1) DEFAULT NULL,
 	`birth_date` date DEFAULT NULL,
 	`email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -53887,9 +54046,11 @@ $sql="CREATE TABLE `users` (
 	`state_id` int(11) DEFAULT NULL,
 	`city_id` int(11) DEFAULT NULL,
 	`role` varchar(30) COLLATE utf8_unicode_ci DEFAULT NULL,
+	`role_id` int(11) DEFAULT NULL,
 	`language` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
 	`timezone` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
 	`custom_field` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+	`soft_delete` tinyint(3) NULL DEFAULT 0 COMMENT '0=Not Deleted, 1=Deleted',
 	`remember_token` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
 	`created_at` timestamp NULL DEFAULT NULL,
 	`updated_at` timestamp NULL DEFAULT NULL,
@@ -53897,10 +54058,98 @@ $sql="CREATE TABLE `users` (
   ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci";
 $data=$conn->exec($sql);
 
-$sql ="INSERT INTO `users` (`id`, `name`, `lastname`, `display_name`, `gender`, `birth_date`, `email`, `contact_person`, `password`, `mobile_no`, `landline_no`, `address`, `image`, `join_date`, `designation`, `left_date`, `account_no`, `ifs_code`, `branch_name`, `tin_no`, `pan_no`, `gst_no`, `country_id`, `state_id`, `city_id`, `role`, `language`, `timezone`, `custom_field`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1,'$f_name', '$l_name', '', 0, NULL, '$email', '','$password', '', '','$address', 'system_m.png', NULL, '', NULL, '', '', '', '', '', '', 0, 0, 0, 'admin', 'en', 'UTC', '', 'Qe5y0kobcAwv9jk22AMyfKGBIT4Til3P9l8vSBpvx0zl8XVpuhzujpbPbpSq', NULL, NULL)";
+$sql ="INSERT INTO `users` (`id`, `name`, `lastname`, `display_name`, `gender`, `birth_date`, `email`, `contact_person`, `password`, `mobile_no`, `landline_no`, `address`, `image`, `join_date`, `designation`, `left_date`, `account_no`, `ifs_code`, `branch_name`, `tin_no`, `pan_no`, `gst_no`, `country_id`, `state_id`, `city_id`, `role`, `role_id`, `language`, `timezone`, `custom_field`, `soft_delete`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1,'$f_name', '$l_name', '', 0, NULL, '$email', '','$password', '', '','$address', 'system_m.png', NULL, '', NULL, '', '', '', '', '', '', 0, 0, 0, 'admin', 1, 'en', 'UTC', '', 0, 'Qe5y0kobcAwv9jk22AMyfKGBIT4Til3P9l8vSBpvx0zl8XVpuhzujpbPbpSq', NULL, NULL)";
 
 $data=$conn->exec($sql);
+
+/*soft_delete column added inside these all tables*/
+$sql = "ALTER TABLE `tbl_vehicles` ADD `soft_delete` INT NULL DEFAULT '0' COMMENT '0=Not Deleted, 1=Deleted' AFTER `registration_no`";
+$data = $conn->exec($sql);
+
+$sql = "ALTER TABLE `tbl_products` ADD `soft_delete` TINYINT(3) NOT NULL DEFAULT '0' COMMENT '0=Not Deleted, 1=Deleted' AFTER `custom_field`";
+$data = $conn->exec($sql);
+
+$sql = "ALTER TABLE `tbl_product_types` ADD `soft_delete` TINYINT(3) NOT NULL DEFAULT '0' COMMENT '0=Not Deleted, 1=Deleted' AFTER `type`";
+$data = $conn->exec($sql);
+
+$sql = "ALTER TABLE `tbl_vehicle_types` ADD `soft_delete` TINYINT(3) NOT NULL DEFAULT '0' COMMENT '0=Not Deleted, 1=Deleted' AFTER `custom_field`";
+$data = $conn->exec($sql);
+
+$sql = "ALTER TABLE `tbl_vehicle_brands` ADD `soft_delete` TINYINT(3) NOT NULL DEFAULT '0' COMMENT '0=Not Deleted, 1=Deleted' AFTER `custom_field`";
+$data = $conn->exec($sql);
+
+$sql = "ALTER TABLE `tbl_fuel_types` ADD `soft_delete` TINYINT(3) NOT NULL DEFAULT '0' COMMENT '0=Not Deleted, 1=Deleted' AFTER `fuel_type`";
+$data = $conn->exec($sql);
+
+$sql = "ALTER TABLE `tbl_colors` ADD `soft_delete` TINYINT(3) NOT NULL DEFAULT '0' COMMENT '0=Not Deleted, 1=Deleted' AFTER `custom_field`";
+$data = $conn->exec($sql);
+
+$sql = "ALTER TABLE `tbl_model_names` ADD `soft_delete` TINYINT(3) NOT NULL DEFAULT '0' COMMENT '0=Not Deleted, 1=Deleted' AFTER `model_name`";
+$data = $conn->exec($sql);
+
+$sql = "ALTER TABLE `tbl_checkout_categories` ADD `soft_delete` TINYINT(3) NOT NULL DEFAULT '0' COMMENT '0=Not Deleted, 1=Deleted' AFTER `create_by`";
+$data = $conn->exec($sql);
+
+$sql = "ALTER TABLE `tbl_points` ADD `soft_delete` TINYINT(3) NOT NULL DEFAULT '0' COMMENT '0=Not Deleted, 1=Deleted' AFTER `type`";
+$data = $conn->exec($sql);
+
+$sql = "ALTER TABLE `tbl_payment_records` ADD `soft_delete` TINYINT(3) NOT NULL DEFAULT '0' COMMENT '0=Not Deleted, 1=Deleted' AFTER `note`";
+$data = $conn->exec($sql);
+
+$sql = "ALTER TABLE `tbl_incomes` ADD `soft_delete` TINYINT(3) NOT NULL DEFAULT '0' COMMENT '0=Not Deleted, 1=Deleted' AFTER `custom_field`";
+$data = $conn->exec($sql);
+
+$sql = "ALTER TABLE `tbl_income_history_records` ADD `soft_delete` TINYINT(3) NOT NULL DEFAULT '0' COMMENT '0=Not Deleted, 1=Deleted' AFTER `income_label`";
+$data = $conn->exec($sql);
+
+$sql = "ALTER TABLE `tbl_jobcard_details` ADD `soft_delete` TINYINT(3) NOT NULL DEFAULT '0' COMMENT '0=Not Deleted, 1=Deleted' AFTER `coupan_no`";
+$data = $conn->exec($sql);
+
+$sql = "ALTER TABLE `tbl_service_pros` ADD `soft_delete` TINYINT(3) NOT NULL DEFAULT '0' COMMENT '0=Not Deleted, 1=Deleted' AFTER `chargeable`";
+$data = $conn->exec($sql);
+
+$sql = "ALTER TABLE `tbl_account_tax_rates` ADD `soft_delete` TINYINT(3) NOT NULL DEFAULT '0' COMMENT '0=Not Deleted, 1=Deleted' AFTER `tax`";
+$data = $conn->exec($sql);
+
+$sql = "ALTER TABLE `tbl_payments` ADD `soft_delete` TINYINT(3) NOT NULL DEFAULT '0' COMMENT '0=Not Deleted, 1=Deleted' AFTER `payment`";
+$data = $conn->exec($sql);
+
+$sql = "ALTER TABLE `tbl_sales` ADD `soft_delete` TINYINT(3) NOT NULL DEFAULT '0' COMMENT '0=Not Deleted, 1=Deleted' AFTER `custom_field`";
+$data = $conn->exec($sql);
+
+$sql = "ALTER TABLE `tbl_sale_parts` ADD `soft_delete` TINYINT(3) NOT NULL DEFAULT '0' COMMENT '0=Not Deleted, 1=Deleted' AFTER `custom_field`";
+$data = $conn->exec($sql);
+
+$sql = "ALTER TABLE `tbl_rto_taxes` ADD `soft_delete` TINYINT(3) NOT NULL DEFAULT '0' COMMENT '0=Not Deleted, 1=Deleted' AFTER `custom_field`";
+$data = $conn->exec($sql);
+
+$sql = "ALTER TABLE `tbl_custom_fields` ADD `soft_delete` TINYINT(3) NOT NULL DEFAULT '0' COMMENT '0=Not Deleted, 1=Deleted' AFTER `always_visable`";
+$data = $conn->exec($sql);
+
+$sql = "ALTER TABLE `tbl_services` ADD `soft_delete` TINYINT(3) NOT NULL DEFAULT '0' COMMENT '0=Not Deleted, 1=Deleted' AFTER `mot_status`";
+$data = $conn->exec($sql);
+
+$sql = "ALTER TABLE `tbl_invoices` ADD `soft_delete` TINYINT(3) NOT NULL DEFAULT '0' COMMENT '0=Not Deleted, 1=Deleted' AFTER `custom_field`";
+$data = $conn->exec($sql);
+
+$sql = "ALTER TABLE `tbl_vehicles` ADD `customer_id` INT(11) NULL DEFAULT NULL AFTER `soft_delete`";
+$data = $conn->exec($sql);
+
+$sql = "ALTER TABLE `tbl_vehicles` ADD `added_by_service` TINYINT(2) NOT NULL DEFAULT '0' COMMENT '0=Vehicle added by Sale Module,1=Vehicle added by Service Module' AFTER `customer_id`";
+$data = $conn->exec($sql);
+
+$sql = "ALTER TABLE `tbl_services` ADD `is_quotation` TINYINT(2) NOT NULL DEFAULT '0' COMMENT '0=Normal Service, 1=Quotation Service' AFTER `soft_delete`";
+$data = $conn->exec($sql);
+$sql = "ALTER TABLE `tbl_services` ADD `quotation_modify_status` TINYINT(2) NOT NULL DEFAULT '0' COMMENT '0=None Quotation, 1=Quotation Modify Enable, 2=Quotation Modify Disable(Quotation Modify final submit)' AFTER `is_quotation`";
+$data = $conn->exec($sql);
+$sql = "ALTER TABLE `tbl_services` ADD `tax_id` VARCHAR(255) NULL DEFAULT NULL AFTER `quotation_modify_status`";
+$data = $conn->exec($sql);
+
+$sql = "ALTER TABLE `tbl_custom_fields` ADD `radio_labels` TEXT NULL DEFAULT NULL AFTER `soft_delete`";
+$data = $conn->exec($sql);
+$sql = "ALTER TABLE `tbl_custom_fields` ADD `checkbox_labels` TEXT NULL DEFAULT NULL AFTER `radio_labels`";
+$data = $conn->exec($sql);
 
 	file_put_contents('installed.txt', date('Y-m-d, H:i:s'));
 		

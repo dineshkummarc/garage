@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\User;
+
+use DB;
 use Auth;
+use App\User;
+
+use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
-use App\Http\Requests;
-use DB;
 
 class Languagecontroller extends Controller
 {	
@@ -29,9 +31,9 @@ class Languagecontroller extends Controller
 	}
 	
 	//direction store
-	public function store1()
+	public function store1(Request $request)
 	{
-		$direction = Input::get('direction');
+		$direction = $request->direction;
 		$dire_table = DB::table('tbl_language_directions')->orderBy('id','desc')->first();
 		$id = $dire_table->id;
 		DB::update("update tbl_language_directions set direction='$direction' where id=$id");
@@ -39,9 +41,9 @@ class Languagecontroller extends Controller
 	}
 	
 	//language store
-	public function store()
+	public function store(Request $request)
 	{	
-		$lang= Input::get('language');
+		$lang= $request->language;
 		
 		$id = Auth::user()->id;
 		$users = DB::table('users')->where('id','=',$id)->first();

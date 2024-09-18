@@ -1,15 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Request;
-use App\Http\Requests;
-use Auth; 
+
 use DB;
-use \Validator;
-use Illuminate\Support\Facades\Input;
-use App\User;
 use Mail;
+use Auth; 
+use App\User;
+use \Validator;
+use App\Http\Requests;
 use Illuminate\Mail\Mailer;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 
 class PasswordResetController extends Controller
@@ -17,8 +18,8 @@ class PasswordResetController extends Controller
 	//password reset link
 	public function forgotpassword(Request $request)
 	{	
-		$token=Input::get('_token');
-		$email=Input::get('email');
+		$token=$request->_token;
+		$email=$request->email;
 		$user=DB::table('users')->where('email','=',$email)->first();
 		
 		if($user != '')
@@ -56,8 +57,6 @@ class PasswordResetController extends Controller
 			
 					$data = mail($email,$mail_sub,$email_content,$headers);
 			}
-			
-			
 				return redirect('/password/reset')->with('message','Your password reset link has been sent to your email address !');
 			
 		}
@@ -84,7 +83,7 @@ class PasswordResetController extends Controller
 		'password_confirmation.required'=>'Confirm Password Field is required',
 		'password_confirmation.same'=>'Confirm Password must be same as password',
 		]);
-		$email=Input::get('email');
+		$email=$request->email;
 		$user=DB::table('users')->where('email','=',$email)->first();
 		$id = $user->id;
 

@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\tbl_vehicals;
-use App\tbl_vehicle_discription_records;
-use App\Http\Requests;
 use DB;
+use App\tbl_vehicals;
+use App\Http\Requests;
+use Illuminate\Http\Request;
 use Illuminate\Support\facades\Input;
+use App\tbl_vehicle_discription_records;
 
 class VehicalDiscriptionsControler extends Controller
 {
@@ -31,10 +31,10 @@ class VehicalDiscriptionsControler extends Controller
 	}
 
    //vehicaldiscriptions store
-   public function vehicalstore()
+   public function vehicalstore(Request $request)
    {
-		$vehicle_id=Input::get('vehicaltypes');
-		$vehicaldescription=Input::get('vehicaldescription');
+		$vehicle_id=$request->vehicaltypes;
+		$vehicaldescription=$request->vehicaldescription;
 		$vdescription= new tbl_vehicle_discription_records;
 		$vdescription ->vehicle_id =$vehicle_id;
 		$vdescription->vehicle_description=$vehicaldescription;
@@ -60,10 +60,10 @@ class VehicalDiscriptionsControler extends Controller
 	}
 
 	//vehicaldiscriptions update
-	public function updatedescription($id)
+	public function updatedescription($id, Request $request)
 	{
-		$vehicle_id=Input::get('vehicaltypes');
-   	    $vehicaldescription=Input::get('vehicaldescription');
+		$vehicle_id=$request->vehicaltypes;
+   	    $vehicaldescription=$request->vehicaldescription;
 		$vdescription=tbl_vehicle_discription_records::find($id);
 		$vdescription ->vehicle_id =$vehicle_id;
 		$vdescription->vehicle_description=$vehicaldescription;

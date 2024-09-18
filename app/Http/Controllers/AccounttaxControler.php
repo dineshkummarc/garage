@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\tbl_account_tax_rates;
-use App\Http\Requests;
 use DB;
+
+use App\Http\Requests;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+
+use App\tbl_account_tax_rates;
+use App\AccountTaxRate;
+use App\Http\Requests\StoreAccountTaxRatesRequest;
 
 class AccounttaxControler extends Controller
 {
@@ -22,17 +26,18 @@ class AccounttaxControler extends Controller
 	}
 
 	//taxrates store
-	public function store(Request $request)
+	public function store(StoreAccountTaxRatesRequest $request)
 	{
-		$this->validate($request, [
-			'tax'=>'numeric',
-		]);
-		$taxrate = Input::get('taxrate');
-		$tax = Input::get('tax');
-		$count = DB::table('tbl_account_tax_rates')->where('taxname','=',$taxrate)->count();
+		// $this->validate($request, [
+		// 	'tax'=>'numeric',
+		// ]);
+		$taxrate = $request->taxrate;
+		$tax = $request->tax;
+		//$count = DB::table('tbl_account_tax_rates')->where('taxname','=',$taxrate)->count();
+		$count = AccountTaxRate::where('taxname','=',$taxrate)->count();
 		if($count == 0)
 		{
-			$account = new tbl_account_tax_rates;
+			$account = new AccountTaxRate;
 			$account->taxname = $taxrate;
 			$account->tax = $tax;
 			$account->save();
@@ -47,14 +52,20 @@ class AccounttaxControler extends Controller
 	//taxrates list
 	public function taxlist()
 	{
-		$account = DB::table('tbl_account_tax_rates')->orderBy('id','DESC')->get()->toArray();
+		//$account1 = DB::table('tbl_account_tax_rates')->orderBy('id','DESC')->get()->toArray();
+		//$account = AccountTaxRate::orderBy('id','DESC')->get();
+		$account = AccountTaxRate::where('soft_delete','=',0)->orderBy('id','DESC')->get();
+
 		return view('/taxrates/list',compact('account'));
 	}
 
 	//taxrates delete
 	public function destory($id)
 	{
-		$account = DB::table('tbl_account_tax_rates')->where('id','=',$id)->delete();
+		//$account = DB::table('tbl_account_tax_rates')->where('id','=',$id)->delete();
+		//$account = AccountTaxRate::where('id','=',$id)->delete();
+		$account = AccountTaxRate::where('id','=',$id)->update(['soft_delete' => 1]);
+		
 		return redirect('/taxrates/list')->with('message','Successfully Deleted');
 	}
 
@@ -62,22 +73,25 @@ class AccounttaxControler extends Controller
 	public function accountedit($id)
 	{
 		$editid = $id;
-		$account = DB::table('tbl_account_tax_rates')->where('id','=',$id)->first();
+		//$account = DB::table('tbl_account_tax_rates')->where('id','=',$id)->first();
+		$account = AccountTaxRate::where('id','=',$id)->first();
+
 		return view('/taxrates/edit',compact('account','editid'));
 	}
 
 	//taxrates update
-	public function updateaccount(Request $request,$id)
+	public function updateaccount(StoreAccountTaxRatesRequest $request,$id)
 	{
-		$this->validate($request, [
-			'tax' => 'numeric',
-		]);
-		$taxrate = Input::get('taxrate');
-		$tax = Input::get('tax');
-		$count = DB::table('tbl_account_tax_rates')->where([['taxname','=',$taxrate],['id','!=',$id]])->count();
+		// $this->validate($request, [
+		// 	'tax' => 'numeric',
+		// ]);
+		$taxrate = $request->taxrate;
+		$tax = $request->tax;
+		//$count = DB::table('tbl_account_tax_rates')->where([['taxname','=',$taxrate],['id','!=',$id]])->count();
+		$count = AccountTaxRate::where([['taxname','=',$taxrate],['id','!=',$id]])->count();
 		if($count == 0)
 		{
-			$account = tbl_account_tax_rates::find($id);
+			$account = AccountTaxRate::find($id);
 			$account->taxname = $taxrate;
 			$account->tax = $tax;
 			$account->save();
